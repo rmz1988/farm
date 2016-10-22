@@ -23,10 +23,11 @@
     <link href="${basePath}/images/farm.ico" type="image/x-icon" rel="icon">
     <link href="${basePath}/images/farm.ico" type="image/x-icon" rel="bookmark">
 
-    <link href="${basePath}/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="${basePath}/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet">
+    <link href="${basePath}/js/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="${basePath}/js/bootstrap/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet">
     <link href="${basePath}/css/style.css" type="text/css" rel="stylesheet">
 
+    <script type="text/javascript" src="${basePath}/js/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         var basePath = '${basePath}';
     </script>
