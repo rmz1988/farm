@@ -3,6 +3,13 @@ body {
     background-color: #a4ce48;
 }
 
+hr {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 .title {
     width: 100%;
     height: 200px;
@@ -11,11 +18,12 @@ body {
 
 .title-area {
     margin-right: 20px;
-    margin-top: 160px;
+    margin-top: 120px;
 }
 
 .title-area li {
-    display: inline-block;
+    display: table;
+    height: 60px;
     vertical-align: bottom;
     float: left;
     list-style-type: none;
@@ -23,10 +31,19 @@ body {
     padding: 5px;
 }
 
+.title-area li a, .title-area li span {
+    display: table-cell;
+    vertical-align: bottom;
+}
+
 .title-area li a, .title-area li a:hover, .title-area li a:visited, .title-area li a:focus {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
+}
+
+.navbar {
+    margin-bottom: 0;
 }
 
 .navbar .navbar-inner {
@@ -203,4 +220,29 @@ body {
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
+}
+
+.row {
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #fff;
+}
+
+.total-money-area {
+    background-color: #Fff;
+    padding: 20px;
+}
+
+.total-money-area span {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.total-money-area span img {
+    width: 40px;
+    height: 40px;
 }
