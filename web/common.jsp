@@ -23,19 +23,44 @@
     <link href="${basePath}/images/farm.ico" type="image/x-icon" rel="icon">
     <link href="${basePath}/images/farm.ico" type="image/x-icon" rel="bookmark">
 
-    <link href="${basePath}/js/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="${basePath}/js/bootstrap/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet">
-    <link href="${basePath}/css/style.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="${basePath}/js/frame/bootstrap/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="${basePath}/js/frame/bootstrap/css/bootstrap-responsive.min.css" type="text/css"/>
+    <link rel="stylesheet" href="${basePath}/css/style.css"/>
+    <link rel="stylesheet" href="${basePath}/css/jquery.fileupload-ui.css"/>
+    <link rel="stylesheet" href="${basePath}/css/jquery.fileupload.css"/>
 
-    <script type="text/javascript" src="${basePath}/js/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
+    <script src="${basePath}/js/frame/jquery-1.10.2.min.js"></script>
+
+    <script src="${basePath}/js/frame/vendor/jquery.ui.widget.js"></script>
+    <script src="${basePath}/js/frame/jquery.fileupload.js"></script>
+    <script src="${basePath}/js/frame/jquery.iframe-transport.js"></script>
+    <script src="${basePath}/js/frame/jquery.fileupload-process.js"></script>
+    <script src="${basePath}/js/frame/jquery.fileupload-validate.js"></script>
+
+    <script src="${basePath}/js/frame/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/frame/html5shiv.min.js"></script>
+    <script type="text/javascript" src="${basePath}/js/frame/respond.min.js"></script>
+
+    <script type="text/javascript" src="${basePath}/js/frame/sea.js"></script>
+    <script>
         var basePath = '${basePath}';
-    </script>
 
-    <!--[if lte IE 9]>
-    <script type="text/javascript" src="${basePath}/js/frameworks/html5shiv.min.js"></script>
-    <script type="text/javascript" src="${basePath}/js/frameworks/respond.min.js"></script>
-    <![endif]-->
+        seajs.config({
+            base: '${basePath}/js/',
+            alias: {
+                jquery: 'frame/jquery-1.10.2.min.js',
+                jqueryValidate: 'frame/jquery.validate.min.js',
+                bootstrap: 'frame/bootstrap/js/bootstrap.min.js',
+                jqueryFileupload: 'frame/jquery.fileupload.js',
+                jqueryFileuploadProcess: 'frame/jquery.fileupload-process.js',
+                jqueryFileuploadTransport: 'frame/jquery.iframe-transport.js',
+                jqueryFileuploadValidate: 'frame/jquery.fileupload-validate.js',
+                jqueryUiWidget: 'frame/vendor/jquery.ui.widget.js'
+            },
+            charset: 'UTF-8'
+        });
+
+    </script>
 </head>
 <body>
 

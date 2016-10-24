@@ -12,6 +12,7 @@ import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.plugin.spring.SpringPlugin;
 import com.jfinal.render.ViewType;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.swing.*;
 
@@ -30,7 +31,7 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configRoute(Routes routes) {
-		routes.add("/", IndexController.class);
+		routes.add("/", IndexController.class,"/index");
 	}
 
 	@Override
@@ -44,16 +45,15 @@ public class FarmConfig extends JFinalConfig {
 		c3p0Plugin.setMaxIdleTime(getPropertyToInt("c3p0.maxIdleTime"));
 		c3p0Plugin.setAcquireIncrement(getPropertyToInt("c3p0.acquireIncrement"));
 		c3p0Plugin.setInitialPoolSize(getPropertyToInt("c3p0.initialPoolSize"));
-		plugins.add(c3p0Plugin);
+		c3p0Plugin.start();
 
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		arp.setDialect(new MysqlDialect());
 		arp.setShowSql(true);
 //		arp.addMapping()
-		plugins.add(arp);
-//
-		SpringPlugin springPlugin = new SpringPlugin("classpath*:applicationContext.xml");
-		plugins.add(springPlugin);
+		arp.start();
+
+		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));
 	}
 
 	@Override
