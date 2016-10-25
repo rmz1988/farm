@@ -1,4 +1,3 @@
-
 <%--
   公共
   User: rmz19
@@ -24,7 +23,7 @@
     <link href="${basePath}/images/farm.ico" type="image/x-icon" rel="bookmark">
 
     <link rel="stylesheet" href="${basePath}/js/frame/bootstrap/css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="${basePath}/js/frame/bootstrap/css/bootstrap-responsive.min.css" type="text/css"/>
+    <link rel="stylesheet" href="${basePath}/js/frame/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
     <link rel="stylesheet" href="${basePath}/css/style.css"/>
     <link rel="stylesheet" href="${basePath}/css/jquery.fileupload-ui.css"/>
     <link rel="stylesheet" href="${basePath}/css/jquery.fileupload.css"/>

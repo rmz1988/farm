@@ -1,6 +1,10 @@
 package com.ingkoo.farm.config;
 
 import com.ingkoo.farm.controller.IndexController;
+import com.ingkoo.farm.controller.LoginController;
+import com.ingkoo.farm.controller.PetController;
+import com.ingkoo.farm.controller.RegisterController;
+import com.ingkoo.farm.controller.TradeController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -31,7 +35,11 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configRoute(Routes routes) {
-		routes.add("/", IndexController.class,"/index");
+		routes.add("/", IndexController.class, "/index");
+		routes.add("/login", LoginController.class, "/user");
+		routes.add("/register", RegisterController.class, "/user");
+		routes.add("/pet", PetController.class, "/pet");
+		routes.add("/trade", TradeController.class, "/trade");
 	}
 
 	@Override
@@ -50,7 +58,7 @@ public class FarmConfig extends JFinalConfig {
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		arp.setDialect(new MysqlDialect());
 		arp.setShowSql(true);
-//		arp.addMapping()
+		//		arp.addMapping()
 		arp.start();
 
 		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));
