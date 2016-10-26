@@ -1,5 +1,6 @@
 package com.ingkoo.farm.controller;
 
+import com.ingkoo.farm.utils.Validator;
 import com.jfinal.core.Controller;
 import com.jfinal.render.JsonRender;
 
@@ -15,5 +16,12 @@ public class CheckController extends Controller {
 	 */
 	public void uniqueUserId() {
 		render(new JsonRender(true).forIE());
+	}
+
+	/**
+	 * 合法身份证号码
+	 */
+	public void validIdCard() {
+		render(new JsonRender(Validator.checkIdCard(getPara("idCard"))).forIE());
 	}
 }

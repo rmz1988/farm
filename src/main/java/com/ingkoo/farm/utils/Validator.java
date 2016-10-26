@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author lichen
  */
-public class Validator {
+public final class Validator {
 
 	/**
 	 * 校验身份证号

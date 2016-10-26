@@ -28,5 +28,9 @@ define(function (require, exports, module) {
         $('#userId').blur(function () {
             $(this).valid();
         });
+
+        $('#backBtn').click(function () {
+            window.location = basePath + '/login';
+        });
     });
 });

@@ -6,7 +6,9 @@ import com.ingkoo.farm.controller.LoginController;
 import com.ingkoo.farm.controller.PetController;
 import com.ingkoo.farm.controller.RegisterController;
 import com.ingkoo.farm.controller.TradeController;
+import com.ingkoo.farm.controller.UeditorController;
 import com.ingkoo.farm.interceptor.LoginInterceptor;
+import com.ingkoo.farm.model.*;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -43,6 +45,7 @@ public class FarmConfig extends JFinalConfig {
 		routes.add("/register", RegisterController.class, "/user");
 		routes.add("/pet", PetController.class, "/pet");
 		routes.add("/trade", TradeController.class, "/trade");
+		routes.add("/ueditor", UeditorController.class);
 	}
 
 	@Override
@@ -61,7 +64,20 @@ public class FarmConfig extends JFinalConfig {
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		arp.setDialect(new MysqlDialect());
 		arp.setShowSql(true);
-		//		arp.addMapping()
+		arp.addMapping("active_apply", "applyId", ActiveApply.class);
+		arp.addMapping("active_auth_apply", "applyId", ActiveAuthApply.class);
+		arp.addMapping("active_income", ActiveIncome.class);
+		arp.addMapping("dict", Dict.class);
+		arp.addMapping("goods", "goodsId", Goods.class);
+		arp.addMapping("leader_rate", LeaderRate.class);
+		arp.addMapping("other_rate", "rateKey", OtherRate.class);
+		arp.addMapping("pet", "petNo", Pet.class);
+		arp.addMapping("pet_lifecycle", PetLifecycle.class);
+		arp.addMapping("recommend_income", RecommendIncome.class);
+		arp.addMapping("total_income", TotalIncome.class);
+		arp.addMapping("transfer", "transferId", Transfer.class);
+		arp.addMapping("withdraw", "withdrawId", Withdraw.class);
+		arp.addMapping("user", "userId", User.class);
 		arp.start();
 
 		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));
@@ -69,7 +85,7 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configInterceptor(Interceptors interceptors) {
-		interceptors.add(new LoginInterceptor("/login", "/register"));
+		interceptors.add(new LoginInterceptor("/login", "/register", "/check"));
 	}
 
 	@Override

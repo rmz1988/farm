@@ -35,7 +35,7 @@
                         电话：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请输入联系电话">
+                        <input type="text" id="mobile" name="mobile" class="form-control" placeholder="请输入联系电话">
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,7 +43,7 @@
                         身份证号：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请输入您的身份证号码">
+                        <input type="text" id="idCard" name="idCard" class="form-control" placeholder="请输入您的身份证号码">
                     </div>
                 </div>
                 <hr>
@@ -52,7 +52,7 @@
                         开户银行/支付宝：
                     </label>
                     <div class="col-md-6">
-                        <select class="form-control">
+                        <select id="bank" name="bank" class="form-control">
                             <option value="">请选择开户银行/支付宝</option>
                             <option value="0">中国银行</option>
                             <option value="1">中国工商银行</option>
@@ -72,7 +72,8 @@
                         户名/支付宝昵称：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请输入您的银行开户名称或支付宝昵称">
+                        <input type="text" id="bankAccountNam" name="bankAccountName" class="form-control"
+                               placeholder="请输入您的银行开户名称或支付宝昵称">
                     </div>
                 </div>
                 <div class="form-group">
@@ -80,7 +81,8 @@
                         银行卡号/支付宝账号：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请输入您的银行卡号或支付宝账号">
+                        <input type="text" id="bankCard" name="bankCard" class="form-control"
+                               placeholder="请输入您的银行卡号或支付宝账号">
                     </div>
                 </div>
                 <hr>
@@ -106,7 +108,8 @@
                         推荐人编号：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请填写您的推荐人编号">
+                        <input type="text" id="recommendUserId" name="recommendUserId" class="form-control"
+                               placeholder="请填写您的推荐人编号">
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,7 +117,8 @@
                         激活中心编号：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请填写您的激活中心编号：3位数字">
+                        <input type="text" id="activatedNo" name="activatedNo" class="form-control"
+                               placeholder="请填写您的激活中心编号：3位数字">
                     </div>
                 </div>
                 <div class="form-group">
@@ -122,31 +126,20 @@
                         您要购买的宠物：
                     </label>
                     <div class="col-md-10">
-                        <div class="col-md-4">
-                            <label class="select-pet text-center">
-                                <img src="${basePath}/images/tiane.gif" alt="天鹅">
-                                <input type="radio" name="selectPet" value="0">
-                                天鹅
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="select-pet text-center">
-                                <img src="${basePath}/images/kongque.gif" alt="孔雀">
-                                <input type="radio" name="selectPet" value="0">
-                                孔雀
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="select-pet text-center">
-                                <img src="${basePath}/images/qilin.gif" alt="麒麟">
-                                <input type="radio" name="selectPet" value="0">
-                                麒麟
-                            </label>
-                        </div>
+                        <c:forEach var="pet" items="${petList}" varStatus="st">
+                            <div class="col-md-4">
+                                <label class="select-pet text-center">
+                                    <img src="${imgUrl}${pet.img}" alt="${pet.name}">
+                                    <input type="radio" name="petNo" value="${pet.petNo}"
+                                           <c:if test="${st.index == 0}">checked</c:if>>
+                                        ${pet.name}
+                                </label>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success">提交</button>
-                <button type="button" class="btn btn-default">返回</button>
+                <button type="button" id="registerBtn" class="btn btn-success">提交</button>
+                <button type="button" id="backBtn" class="btn btn-default">返回</button>
             </form>
         </div>
     </div>
