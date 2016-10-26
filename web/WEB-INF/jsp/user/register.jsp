@@ -7,6 +7,9 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
+    <script>
+        seajs.use("user/register");
+    </script>
     <title>开鑫牧场-注册</title>
 </head>
 <body>
@@ -18,13 +21,13 @@
             <li class="active">用户注册</li>
         </ol>
         <div class="content">
-            <form action="#" class="form-horizontal" method="post">
+            <form id="registerForm" action="#" class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         玩家编号：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="6位以上数字">
+                        <input type="text" class="form-control" id="userId" name="userId" placeholder="6位以上数字">
                     </div>
                 </div>
                 <div class="form-group">
@@ -85,16 +88,16 @@
                     <label class="control-label col-md-2">
                         登录密码：
                     </label>
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" placeholder="用于登录系统">
+                    <div class="col-md-6 form-text">
+                        默认：111111，用于登录系统，请激活后自行修改。
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         交易密码：
                     </label>
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" placeholder="用于提现或金币互转">
+                    <div class="col-md-6 form-text">
+                        默认：222222，用于金币互转和提现操作，请激活后自行修改
                     </div>
                 </div>
                 <hr>

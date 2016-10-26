@@ -362,13 +362,12 @@ footer {
     font-size: 12px;
 }
 
-.rule-tip-lg {
+.rule-tip-lg, .error {
     display: block;
     clear: both;
     color: #f00;
     font-size: 14px;
 }
-
 
 .form-text {
     font-size: 16px;

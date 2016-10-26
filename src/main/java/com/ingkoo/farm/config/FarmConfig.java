@@ -1,10 +1,12 @@
 package com.ingkoo.farm.config;
 
+import com.ingkoo.farm.controller.CheckController;
 import com.ingkoo.farm.controller.IndexController;
 import com.ingkoo.farm.controller.LoginController;
 import com.ingkoo.farm.controller.PetController;
 import com.ingkoo.farm.controller.RegisterController;
 import com.ingkoo.farm.controller.TradeController;
+import com.ingkoo.farm.interceptor.LoginInterceptor;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -35,6 +37,7 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configRoute(Routes routes) {
+		routes.add("/check", CheckController.class);
 		routes.add("/", IndexController.class, "/index");
 		routes.add("/login", LoginController.class, "/user");
 		routes.add("/register", RegisterController.class, "/user");
@@ -66,7 +69,7 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configInterceptor(Interceptors interceptors) {
-
+		interceptors.add(new LoginInterceptor("/login", "/register"));
 	}
 
 	@Override

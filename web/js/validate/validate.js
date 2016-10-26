@@ -3,7 +3,6 @@
  */
 define(function (require, exports) {
     require('jqueryValidate');
-    var rsa = require('rsa');
 
     /**
      * 校验电话号码
@@ -13,17 +12,17 @@ define(function (require, exports) {
     });
 
     /**
-     * 校验唯一用户名
+     * 校验唯一用户id
      */
-    $.validator.addMethod("uniqueUsername", function (value, element, params) {
+    $.validator.addMethod("uniqueUserId", function (value, element, params) {
         var result = true;
         if (value != '' && params) {
             $.ajax({
-                url: basePath + '/verify/uniqueUsername',
+                url: basePath + '/check/uniqueUserId',
                 type: 'post',
                 async: false,
                 data: {
-                    username: value
+                    userId: value
                 },
                 dataType: 'json',
                 success: function (response) {
@@ -168,89 +167,12 @@ define(function (require, exports) {
     });
 
     /**
-     * 校验身份证
-     */
-    $.validator.addMethod("idCard", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/idCard',
-                type: 'post',
-                async: false,
-                data: {
-                    idCard: rsa.encrypt(value)
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验验证码
-     */
-    $.validator.addMethod("verifyCode", function (value, element, params) {
-        var result = true;
-        if (value != '' || params) {
-            $.ajax({
-                url: basePath + '/verify/verifyCode',
-                type: 'post',
-                async: false,
-                data: {
-                    verifyCode: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
      * 校验输入金额
      */
     $.validator.addMethod("money", function (value, element, params) {
         return value == '' || /^(?!0*$)(?!0*\.0*$)\d{1,10}(\.\d{1,2})?$/.test(value);
     });
 
-    /**
-     * 校验授权码、邀请码
-     */
-    $.validator.addMethod("authCode", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/authCode',
-                type: 'post',
-                async: false,
-                data: {
-                    authCode: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
 
     /**
      * 校验正则表达式
@@ -259,57 +181,6 @@ define(function (require, exports) {
         return value == '' || params.test(value);
     });
 
-    /**
-     * 校验正则表达式
-     */
-    $.validator.addMethod("sensitive", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/sensitive',
-                type: 'post',
-                async: false,
-                data: {
-                    sensitive: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验邀请码
-     */
-    $.validator.addMethod("inviteCode", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/inviteCode',
-                type: 'post',
-                async: false,
-                data: {
-                    inviteCode: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
 
     /**
      * 校验不一致
@@ -371,210 +242,4 @@ define(function (require, exports) {
         return result;
     });
 
-    /**
-     * 校验登录密码是否正确
-     */
-    $.validator.addMethod('loginPwd', function (value, element, params) {
-        var result = true;
-        if (value != '' && !!params) {
-            $.ajax({
-                url: basePath + '/verify/loginPassword',
-                type: 'post',
-                async: false,
-                data: {
-                    user: $(params).val(),
-                    password: rsa.encrypt(value)
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验支付密码是否正确
-     */
-    $.validator.addMethod('payPwd', function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/payPassword',
-                type: 'post',
-                async: false,
-                data: {
-                    payPassword: rsa.encrypt(value)
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验登录密码与支付密码是否相同
-     */
-    $.validator.addMethod('repeatPwd', function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/repeatPassword',
-                type: 'post',
-                async: false,
-                data: {
-                    password: rsa.encrypt(value)
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验激活卡号
-     */
-    $.validator.addMethod('activeNo', function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/activeNo',
-                type: 'post',
-                async: false,
-                data: {
-                    cardNo: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验激活卡密码
-     */
-    $.validator.addMethod('activePassword', function (value, element, params) {
-        var result = true;
-        if (value != '' && !!params) {
-            $.ajax({
-                url: basePath + '/verify/activePassword',
-                type: 'post',
-                async: false,
-                data: {
-                    cardNo: $(params).val(),
-                    password: rsa.encrypt(value)
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验登录密码与支付密码是否相同
-     */
-    $.validator.addMethod('userLock', function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/userLock',
-                type: 'post',
-                async: false,
-                data: {
-                    user: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验收银员唯一性
-     */
-    $.validator.addMethod('uniqueCashier', function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/uniqueCashier',
-                type: 'post',
-                async: false,
-                data: {
-                    username: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    exports.rsa = rsa;
-    exports.showError = function () {
-        alert("系统繁忙，请重试");
-    };
-
-    exports.checkUserRealInfo = function () {
-        var result = false;
-        $.ajax({
-            url: basePath + '/verify/checkRealInfo',
-            type: 'post',
-            async: false,
-            dataType: 'json',
-            success: function (response) {
-                result = response;
-            },
-            error: function () {
-                result = false;
-            }
-        });
-
-        return result;
-    }
 });
