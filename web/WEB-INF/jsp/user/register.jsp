@@ -26,24 +26,40 @@
                     <label class="control-label col-md-2">
                         玩家编号：
                     </label>
+
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="userId" name="userId" placeholder="6位以上数字">
+                        <input type="text" class="form-control" id="userId" name="userId" placeholder="6位以上数字"
+                               maxlength="60">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        玩家姓名：
+                    </label>
+
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="请输入您的姓名"
+                               maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         电话：
                     </label>
+
                     <div class="col-md-6">
-                        <input type="text" id="mobile" name="mobile" class="form-control" placeholder="请输入联系电话">
+                        <input type="text" id="mobile" name="mobile" class="form-control" placeholder="请输入联系电话"
+                               maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         身份证号：
                     </label>
+
                     <div class="col-md-6">
-                        <input type="text" id="idCard" name="idCard" class="form-control" placeholder="请输入您的身份证号码">
+                        <input type="text" id="idCard" name="idCard" class="form-control" placeholder="请输入您的身份证号码"
+                               maxlength="18">
                     </div>
                 </div>
                 <hr>
@@ -51,19 +67,13 @@
                     <label class="control-label col-md-2">
                         开户银行/支付宝：
                     </label>
+
                     <div class="col-md-6">
                         <select id="bank" name="bank" class="form-control">
                             <option value="">请选择开户银行/支付宝</option>
-                            <option value="0">中国银行</option>
-                            <option value="1">中国工商银行</option>
-                            <option value="2">中国农业银行</option>
-                            <option value="3">中国建设银行</option>
-                            <option value="4">招商银行</option>
-                            <option value="5">邮政储蓄银行</option>
-                            <option value="6">兴业银行</option>
-                            <option value="7">交通银行</option>
-                            <option value="8">其他银行</option>
-                            <option value="9">支付宝</option>
+                            <c:forEach var="dict" items="${bankList}">
+                                <option value="${dict.dictName}">${dict.dictValue}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -71,18 +81,20 @@
                     <label class="control-label col-md-2">
                         户名/支付宝昵称：
                     </label>
+
                     <div class="col-md-6">
-                        <input type="text" id="bankAccountNam" name="bankAccountName" class="form-control"
-                               placeholder="请输入您的银行开户名称或支付宝昵称">
+                        <input type="text" id="bankAccountName" name="bankAccountName" class="form-control"
+                               placeholder="请输入您的银行开户名称或支付宝昵称" maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         银行卡号/支付宝账号：
                     </label>
+
                     <div class="col-md-6">
                         <input type="text" id="bankCard" name="bankCard" class="form-control"
-                               placeholder="请输入您的银行卡号或支付宝账号">
+                               placeholder="请输入您的银行卡号或支付宝账号" maxlength="60">
                     </div>
                 </div>
                 <hr>
@@ -90,6 +102,7 @@
                     <label class="control-label col-md-2">
                         登录密码：
                     </label>
+
                     <div class="col-md-6 form-text">
                         默认：111111，用于登录系统，请激活后自行修改。
                     </div>
@@ -98,6 +111,7 @@
                     <label class="control-label col-md-2">
                         交易密码：
                     </label>
+
                     <div class="col-md-6 form-text">
                         默认：222222，用于金币互转和提现操作，请激活后自行修改
                     </div>
@@ -107,24 +121,27 @@
                     <label class="control-label col-md-2">
                         推荐人编号：
                     </label>
+
                     <div class="col-md-6">
                         <input type="text" id="recommendUserId" name="recommendUserId" class="form-control"
-                               placeholder="请填写您的推荐人编号">
+                               placeholder="请填写您的推荐人编号" maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         激活中心编号：
                     </label>
+
                     <div class="col-md-6">
                         <input type="text" id="activatedNo" name="activatedNo" class="form-control"
-                               placeholder="请填写您的激活中心编号：3位数字">
+                               placeholder="请填写您的激活中心编号：3位数字" maxlength="3">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         您要购买的宠物：
                     </label>
+
                     <div class="col-md-10">
                         <c:forEach var="pet" items="${petList}" varStatus="st">
                             <div class="col-md-4">

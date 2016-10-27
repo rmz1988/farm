@@ -21,10 +21,12 @@ define(function (require, exports, module) {
                 'user.loginPwd': loginPwd,
                 rememberUser: rememberUser
             }, function (response) {
-                if (response) {
+                if (response == '0') {
                     window.location = basePath + '/';
-                } else {
+                } else if (response == '1') {
                     alert("玩家编号或密码错误");
+                } else if (response == '2') {
+                    alert('玩家已被停用');
                 }
             }, 'json');
         });

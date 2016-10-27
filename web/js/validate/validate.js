@@ -38,42 +38,17 @@ define(function (require, exports) {
     });
 
     /**
-     * 校验唯一昵称
+     * 校验身份证号码合法性
      */
-    $.validator.addMethod("uniqueNickname", function (value, element, params) {
+    $.validator.addMethod('validIdCard', function (value, element, params) {
         var result = true;
         if (value != '' && params) {
             $.ajax({
-                url: basePath + '/verify/uniqueNickname',
+                url: basePath + '/check/validIdCard',
                 type: 'post',
                 async: false,
                 data: {
-                    nickname: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-        return result;
-    });
-
-    /**
-     * 校验唯一手机号
-     */
-    $.validator.addMethod("uniqueMobile", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/uniqueMobile',
-                type: 'post',
-                async: false,
-                data: {
-                    mobile: value
+                    idCard: value
                 },
                 dataType: 'json',
                 success: function (response) {
@@ -89,17 +64,17 @@ define(function (require, exports) {
     });
 
     /**
-     * 校验唯一邮箱
+     * 校验身份证唯一性
      */
-    $.validator.addMethod("uniqueEmail", function (value, element, params) {
+    $.validator.addMethod('uniqueIdCard', function (value, element, params) {
         var result = true;
         if (value != '' && params) {
             $.ajax({
-                url: basePath + '/verify/uniqueEmail',
+                url: basePath + '/check/uniqueIdCard',
                 type: 'post',
                 async: false,
                 data: {
-                    email: value
+                    idCard: value
                 },
                 dataType: 'json',
                 success: function (response) {
@@ -113,66 +88,6 @@ define(function (require, exports) {
 
         return result;
     });
-
-    /**
-     * 校验唯一角色名
-     */
-    $.validator.addMethod("uniqueRoleName", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/uniqueRoleName',
-                type: 'post',
-                async: false,
-                data: {
-                    roleName: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验唯一工号
-     */
-    $.validator.addMethod("uniqueStaffId", function (value, element, params) {
-        var result = true;
-        if (value != '' && params) {
-            $.ajax({
-                url: basePath + '/verify/uniqueStaffId',
-                type: 'post',
-                async: false,
-                data: {
-                    staffId: value
-                },
-                dataType: 'json',
-                success: function (response) {
-                    result = response;
-                },
-                error: function () {
-                    result = false;
-                }
-            });
-        }
-
-        return result;
-    });
-
-    /**
-     * 校验输入金额
-     */
-    $.validator.addMethod("money", function (value, element, params) {
-        return value == '' || /^(?!0*$)(?!0*\.0*$)\d{1,10}(\.\d{1,2})?$/.test(value);
-    });
-
 
     /**
      * 校验正则表达式
@@ -190,18 +105,17 @@ define(function (require, exports) {
     });
 
     /**
-     * 安保问题答案校验
+     * 合法推荐人编号
      */
-    $.validator.addMethod("secureAnswer", function (value, element, params) {
+    $.validator.addMethod('validRecommendId', function (value, element, params) {
         var result = true;
-        if (value != '' && params != '') {
+        if (value != '' && params) {
             $.ajax({
-                url: basePath + '/verify/secureAnswer',
+                url: basePath + '/check/validRecommendId',
                 type: 'post',
                 async: false,
                 data: {
-                    questionNo: $(params).val(),
-                    answer: value
+                    recommendUserId: value
                 },
                 dataType: 'json',
                 success: function (response) {
@@ -217,17 +131,17 @@ define(function (require, exports) {
     });
 
     /**
-     * 校验用户是否存在
+     * 合法激活中心编号
      */
-    $.validator.addMethod('existsUser', function (value, element, params) {
+    $.validator.addMethod('validActivatedNo', function (value, element, params) {
         var result = true;
         if (value != '' && params) {
             $.ajax({
-                url: basePath + '/verify/existsUser',
+                url: basePath + '/check/validActiveNo',
                 type: 'post',
                 async: false,
                 data: {
-                    user: value
+                    activatedNo: value
                 },
                 dataType: 'json',
                 success: function (response) {

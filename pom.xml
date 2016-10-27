@@ -189,7 +189,7 @@
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <webappDirectory>${basedir}/web</webappDirectory>
+                    <!--<webappDirectory>${basedir}/web</webappDirectory>-->
                     <warSourceDirectory>${basedir}/web</warSourceDirectory>
                 </configuration>
             </plugin>
