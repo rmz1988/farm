@@ -1,5 +1,6 @@
 package com.ingkoo.farm.config;
 
+import com.ingkoo.farm.controller.AccountController;
 import com.ingkoo.farm.controller.CheckController;
 import com.ingkoo.farm.controller.IndexController;
 import com.ingkoo.farm.controller.LoginController;
@@ -48,6 +49,7 @@ public class FarmConfig extends JFinalConfig {
 		routes.add("/trade", TradeController.class, "/trade");
 		routes.add("/ueditor", UeditorController.class);
 		routes.add("/self", SelfController.class, "/self");
+		routes.add("/account", AccountController.class,"/account");
 	}
 
 	@Override

@@ -5,12 +5,11 @@ import com.ingkoo.farm.model.Pet;
 import com.ingkoo.farm.model.RecommendIncome;
 import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
-import com.ingkoo.farm.utils.DateTimeConst;
-import com.ingkoo.farm.utils.DateUtils;
 import com.ingkoo.farm.utils.Money;
-import org.springframework.format.datetime.standard.DateTimeContext;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 推荐
@@ -48,5 +47,34 @@ public class RecommendService {
 				.set("userId", recommendUser.getStr("userId")).save();
 		//记录总收益明细
 		TotalIncome.dao.saveRecommendIncome(recommendUser, recommendIncome);
+	}
+
+	/**
+	 * 查询推荐列表，展示10级
+	 *
+	 * @param user 玩家
+	 */
+	public List<List<User>> queryRecommendList(User user) {
+		List<List<User>> recommendLevelList = new ArrayList<>();
+		List<User> parentUserList = Arrays.asList(user);
+		List<User> recommendUserList;
+		for (int i = 0; i < 10; i++) {
+			recommendUserList = new ArrayList<>();
+			for (User parentUser : parentUserList) {
+				List<User> userList =
+						User.dao.find("select * from user where recommendUserId = ?", parentUser.getStr("userId"));
+				if (userList.isEmpty()) {
+					break;
+				}
+				recommendUserList.addAll(userList);
+			}
+			if (recommendUserList.isEmpty()) {
+				break;
+			}
+			parentUserList = recommendUserList;
+			recommendLevelList.add(recommendUserList);
+		}
+
+		return recommendLevelList;
 	}
 }

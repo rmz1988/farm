@@ -31,9 +31,9 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">推荐列表</a></li>
-                        <li><a href="#">申请激活中心</a></li>
-                        <li><a href="#">激活管理</a></li>
+                        <li><a href="${basePath}/account/recommend">推荐列表</a></li>
+                        <li><a href="${basePath}/account/apply">申请激活中心</a></li>
+                        <li><a href="${basePath}/account/activate">激活管理</a></li>
                     </ul>
                 </li>
                 <li class="dropdown <c:if test="${current == 'finance'}">active</c:if>">
