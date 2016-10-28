@@ -21,11 +21,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="farmMenu" role="navigation">
             <ul class="nav navbar-nav">
-                <li>
+                <li <c:if test="${current == 'index'}">class="active"</c:if>>
                     <a href="${basePath}/">首页</a>
                 </li>
-                <li><a href="${basePath}/pet">牧场管理</a></li>
-                <li class="dropdown">
+                <li <c:if test="${current == 'pet'}">class="active"</c:if>><a href="${basePath}/pet">牧场管理</a></li>
+                <li class="dropdown <c:if test="${current == 'account'}">active</c:if>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         账号管理
                         <span class="caret"></span>
@@ -36,7 +36,7 @@
                         <li><a href="#">激活管理</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown <c:if test="${current == 'finance'}">active</c:if>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         财务管理
                         <span class="caret"></span>
@@ -48,7 +48,7 @@
                         <li><a href="#">收入总明细</a></li>
                     </ul>
                 </li>
-                <li class="dropdown active">
+                <li class="dropdown <c:if test="${current == 'trade'}">active</c:if>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         交易管理
                         <span class="caret"></span>
@@ -58,8 +58,8 @@
                         <li><a href="${basePath}/trade/withdraw">金币提现</a></li>
                     </ul>
                 </li>
-                <li><a href="#">商城</a></li>
-                <li><a href="#">个人信息</a></li>
+                <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="#">商城</a></li>
+                <li <c:if test="${current == 'person'}">class="active"</c:if>><a href="${basePath}/self">个人信息</a></li>
             </ul>
         </div>
     </div>

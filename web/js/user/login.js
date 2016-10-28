@@ -26,7 +26,9 @@ define(function (require, exports, module) {
                 } else if (response == '1') {
                     alert("玩家编号或密码错误");
                 } else if (response == '2') {
-                    alert('玩家已被停用');
+                    alert('玩家尚未激活');
+                } else if (response == '3') {
+                    alert('玩家已停用')
                 }
             }, 'json');
         });

@@ -34,21 +34,22 @@ public class RecommendService {
 
 		User recommendUser = User.dao.findById(user.getStr("recommendUserId"));
 		//修改推荐人金币余额和当天已获得收益
-		recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome))
-				.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome)).update();
+		recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
+				.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString())
+				.update();
 		//记录推荐奖励日志
 		new RecommendIncome().set("recommendUserId", user.getStr("userId"))
 				.set("name", user.getStr("name"))
 				.set("income", recommendIncome)
 				.set("createTime", System.currentTimeMillis())
-				.set("userId", recommendUser.getStr("userId"));
+				.set("userId", recommendUser.getStr("userId")).save();
 		//记录总收益明细
 		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						recommendUser.getStr("userId"), todayDate);
 		if (totalIncome != null) {
-			totalIncome.set("recommendIncome", recommendIncome)
+			totalIncome.set("recommendIncome", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
 					.set("currentTotal", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
 					.update();
 		} else {

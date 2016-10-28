@@ -1,5 +1,6 @@
 package com.ingkoo.farm.controller;
 
+import com.ingkoo.farm.model.ActiveApply;
 import com.ingkoo.farm.model.Dict;
 import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.Pet;
@@ -8,6 +9,7 @@ import com.ingkoo.farm.service.MoneyService;
 import com.ingkoo.farm.service.RecommendService;
 import com.ingkoo.farm.utils.AES;
 import com.ingkoo.farm.utils.MD5;
+import com.ingkoo.farm.utils.RandomCode;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
@@ -16,6 +18,7 @@ import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfinal.render.JsonRender;
 
 import java.sql.SQLException;
+import java.util.Random;
 
 /**
  * 注册
@@ -50,6 +53,15 @@ public class RegisterController extends Controller {
 							.set("tradePwd", MD5.encrypt("222222"))
 							.set("registerTime", System.currentTimeMillis())
 							.set("bankCard", AES.encrypt(user.getStr("bankCard"))).save();
+
+					//记录玩家激活申请
+					new ActiveApply().set("applyId", RandomCode.uuid())
+							.set("userId", user.getStr("userId"))
+							.set("name", user.getStr("name"))
+							.set("petName", Pet.dao.findById(user.getStr("petNo")).getStr("name"))
+							.set("activatedNo", user.getStr("activatedNo"))
+							.set("status", "0")
+							.set("applyTime", System.currentTimeMillis()).save();
 
 					//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
 					if (!moneyService.isOverDailyIncome(user.getStr("userId"))) {

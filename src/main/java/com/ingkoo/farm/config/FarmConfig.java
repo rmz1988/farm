@@ -5,6 +5,7 @@ import com.ingkoo.farm.controller.IndexController;
 import com.ingkoo.farm.controller.LoginController;
 import com.ingkoo.farm.controller.PetController;
 import com.ingkoo.farm.controller.RegisterController;
+import com.ingkoo.farm.controller.SelfController;
 import com.ingkoo.farm.controller.TradeController;
 import com.ingkoo.farm.controller.UeditorController;
 import com.ingkoo.farm.interceptor.LoginInterceptor;
@@ -46,6 +47,7 @@ public class FarmConfig extends JFinalConfig {
 		routes.add("/pet", PetController.class, "/pet");
 		routes.add("/trade", TradeController.class, "/trade");
 		routes.add("/ueditor", UeditorController.class);
+		routes.add("/self", SelfController.class, "/self");
 	}
 
 	@Override

@@ -98,10 +98,12 @@ define(function (require, exports, module) {
                 'user.bankAccountName': $.trim($('#bankAccountName').val()),
                 'user.bankCard': $.trim($('#bankCard').val()),
                 'user.recommendUserId': $.trim($('#recommendUserId').val()),
-                'user.activateNo': $.trim($('#activateNo').val())
+                'user.activatedNo': $.trim($('#activatedNo').val()),
+                'user.petNo': $('input[name="petNo"]:checked').val()
             }, function (response) {
                 if (response) {
                     alert('注册成功！等待激活中心激活后可登录系统！')
+                    window.location = basePath + '/login';
                 } else {
                     alert('系统繁忙，请稍后重试');
                 }

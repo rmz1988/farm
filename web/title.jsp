@@ -8,18 +8,18 @@
 <div class="title">
     <ul class="title-area pull-right">
         <li>
-            <img class="pull-right" src="${basePath}/images/tiane.gif" alt="" width="60" height="60"/>
+            <img class="pull-right" src="${sessionScope.imageUrl}${sessionScope.user.pet.img}" alt="" width="60" height="60"/>
         </li>
         <li>
-            <a href="#">
-                1111111
+            <a href="${basePath}/self">
+                ${sessionScope.user.userId}
             </a>
         </li>
         <li>
             <span>|</span>
         </li>
         <li>
-            <a href="#">退出</a>
+            <a href="${basePath}/login/logout">退出</a>
         </li>
         <li><span>|</span></li>
         <li>

@@ -10,6 +10,7 @@ import com.jfinal.core.Controller;
 public class PetController extends Controller {
 
 	public void index() {
+		setAttr("current", "pet");
 		render("pet.jsp");
 	}
 }
