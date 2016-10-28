@@ -71,7 +71,7 @@ public class FarmConfig extends JFinalConfig {
 		arp.addMapping("active_income", ActiveIncome.class);
 		arp.addMapping("dict", Dict.class);
 		arp.addMapping("goods", "goodsId", Goods.class);
-		arp.addMapping("leader_rate", LeaderRate.class);
+		arp.addMapping("leader_rate", "rateNo", LeaderRate.class);
 		arp.addMapping("other_rate", "rateKey", OtherRate.class);
 		arp.addMapping("pet", "petNo", Pet.class);
 		arp.addMapping("pet_lifecycle", PetLifecycle.class);

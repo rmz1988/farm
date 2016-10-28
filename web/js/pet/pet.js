@@ -7,14 +7,16 @@ define(function (require, exports, module) {
 
         //喂养
         $('#feedBtn').click(function () {
-            $(this).disable();
             window.location = basePath + '/pet/feed';
+            $(this).disable();
         });
 
         //复购
         $('#repurchaseBtn').click(function () {
-            $(this).disable();
-            window.location = basePath + '/pet/repurchase';
+            if (confirm('复购将扣除您' + $('#petPrice').val() + '金币，是否继续？')) {
+                window.location = basePath + '/pet/repurchase';
+                $(this).disable();
+            }
         })
     });
 

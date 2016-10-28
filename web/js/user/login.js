@@ -33,6 +33,12 @@ define(function (require, exports, module) {
             }, 'json');
         });
 
+        $('#loginPwd').keypress(function (e) {
+            if (e.keyCode == 13) {
+                $('#loginBtn').click();
+            }
+        });
+
         $('#registerBtn').click(function () {
             window.location = basePath + '/register';
         });

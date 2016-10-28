@@ -1,7 +1,6 @@
 package com.ingkoo.farm.service;
 
 import com.ingkoo.farm.model.OtherRate;
-import com.ingkoo.farm.model.Pet;
 import com.ingkoo.farm.model.PetLifecycle;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.utils.Money;
@@ -39,5 +38,20 @@ public class MoneyService {
 		}
 
 		return output.toString();
+	}
+
+	/**
+	 * 修改宠物生命周期金币产量
+	 *
+	 * @param userId 用户Id
+	 */
+	public void saveDailyOutput(String userId) {
+		List<PetLifecycle> lifecycleList = PetLifecycle.dao
+				.find("select * from pet_lifecycle where status = '1' and liveDays > 0 and userId = ?", userId);
+		for (PetLifecycle lifecycle : lifecycleList) {
+			lifecycle.set("totalOutput",
+					new Money(lifecycle.getStr("totalOutput")).add(lifecycle.getStr("dailyOutput")).toString())
+					.update();
+		}
 	}
 }

@@ -23,11 +23,13 @@ public class RecommendService {
 	 * 保存推荐奖励
 	 *
 	 * @param user 玩家信息
+	 * @param type 0:直推玩家提成，1：玩家复购提成
 	 */
-	public void saveRecommendIncome(User user) {
+	public void saveRecommendIncome(User user, String type) {
 		Pet pet = Pet.dao.findById(user.getStr("petNo"));
 		//直推提成比例
-		String recommendRate = OtherRate.dao.findById("redirect_recommend_rate").getStr("rate");
+		String recommendRate = "0".equals(type) ? OtherRate.dao.findById("redirect_recommend_rate").getStr("rate") :
+				OtherRate.dao.findById("redirect_repurchase_rate").getStr("rate");
 		//直推收益
 		String recommendIncome =
 				new Money(pet.getStr("price")).multiply(new Money(recommendRate)).divide(100).toString();
@@ -45,19 +47,6 @@ public class RecommendService {
 				.set("createTime", System.currentTimeMillis())
 				.set("userId", recommendUser.getStr("userId")).save();
 		//记录总收益明细
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-		TotalIncome totalIncome = TotalIncome.dao
-				.findFirst("select * from total_income where userId = ? and createTime = ?",
-						recommendUser.getStr("userId"), todayDate);
-		if (totalIncome != null) {
-			totalIncome.set("recommendIncome", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
-					.set("currentTotal", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
-					.update();
-		} else {
-			new TotalIncome().set("recommendIncome", recommendIncome)
-					.set("currentTotal", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
-					.set("userId", recommendUser.getStr("userId"))
-					.set("createTime", todayDate).save();
-		}
+		TotalIncome.dao.saveRecommendIncome(recommendUser, recommendIncome);
 	}
 }

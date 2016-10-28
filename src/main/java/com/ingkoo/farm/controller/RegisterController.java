@@ -64,8 +64,8 @@ public class RegisterController extends Controller {
 							.set("applyTime", System.currentTimeMillis()).save();
 
 					//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
-					if (!moneyService.isOverDailyIncome(user.getStr("userId"))) {
-						recommendService.saveRecommendIncome(user);
+					if (!moneyService.isOverDailyIncome(user.getStr("recommendUserId"))) {
+						recommendService.saveRecommendIncome(user, "0");
 					}
 
 					return true;
