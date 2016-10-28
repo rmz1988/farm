@@ -25,7 +25,7 @@
                 <img src="${basePath}/images/money.png" alt="">
             </span>
             <span id="totalMoney">
-                ${sessionScope.user.money}
+                ${total}
             </span>
         </div>
         <hr>
@@ -69,24 +69,24 @@
                     </div>
                     <div class="panel-body">
                         <div class="pet col-md-6 col-sm-12 col-xs-12">
-                            <img src="${sessionScope.imageUrl}${sessionScope.user.pet.img}"
-                                 alt="${sessionScope.user.pet.name}">
+                            <img src="${sessionScope.imageUrl}${pet.img}"
+                                 alt="${pet.name}">
                         </div>
                         <div class="pet-info col-md-6 col-sm-12 col-xs-12">
                             <p>
-                                宠物名称：${sessionScope.user.pet.name}
+                                宠物名称：${pet.name}
                             </p>
 
                             <p>
-                                价值：${sessionScope.user.pet.price}金币
+                                价值：${pet.price}金币
                             </p>
 
                             <p>
-                                复购次数：${sessionScope.user.rePurchase}次
+                                复购次数：${repurchase}次
                             </p>
 
                             <p>
-                                今日是否喂养：<data:dict dictgroup="feedStatus" value="${sessionScope.user.isFeed}"/>
+                                今日是否喂养：<data:dict dictgroup="feedStatus" value="${isFeed}"/>
                             </p>
 
                             <p>

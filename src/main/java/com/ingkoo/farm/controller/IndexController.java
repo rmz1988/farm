@@ -15,8 +15,12 @@ public class IndexController extends Controller {
 
 	public void index() {
 		setAttr("current", "index");
-		User user = getSessionAttr("user");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		setAttr("petDailyOutput", moneyService.getPetDailyOutput(user.getStr("userId")));
+		setAttr("total",user.getStr("money"));
+		setAttr("isFeed",user.getStr("isFeed"));
+		setAttr("repurchase",user.getInt("rePurchase"));
+		setAttr("pet",user.getUserPet());
 		render("index.jsp");
 	}
 

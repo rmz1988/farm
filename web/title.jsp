@@ -8,7 +8,7 @@
 <div class="title">
     <ul class="title-area pull-right">
         <li>
-            <img class="pull-right" src="${sessionScope.imageUrl}${sessionScope.user.pet.img}" alt="" width="60" height="60"/>
+            <img class="pull-right" src="${sessionScope.imageUrl}${pet.img}" alt="" width="60" height="60"/>
         </li>
         <li>
             <a href="${basePath}/self">
@@ -23,7 +23,7 @@
         </li>
         <li><span>|</span></li>
         <li>
-            <a href="#">系统公告</a>
+            <a href="#">公告</a>
         </li>
         <li><span>|</span></li>
         <li>

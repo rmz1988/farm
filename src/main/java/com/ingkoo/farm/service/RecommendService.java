@@ -33,9 +33,10 @@ public class RecommendService {
 				new Money(pet.getStr("price")).multiply(new Money(recommendRate)).divide(100).toString();
 
 		User recommendUser = User.dao.findById(user.getStr("recommendUserId"));
-		//修改推荐人金币余额和当天已获得收益
+		//修改推荐人金币余额和当天已获得收益,添加已推荐人数量
 		recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
 				.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString())
+				.set("recommendCount", recommendUser.getInt("recommendCount") + 1)
 				.update();
 		//记录推荐奖励日志
 		new RecommendIncome().set("recommendUserId", user.getStr("userId"))
