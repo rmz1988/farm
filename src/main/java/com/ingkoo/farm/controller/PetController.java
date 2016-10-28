@@ -42,6 +42,7 @@ public class PetController extends Controller {
 	 */
 	public void feed(){
 		//判断当日已收入是否超过上限
+		//修改用户状态，今日已喂养
 		//用户余额以及每日收入增加当日产币量
 		//记录总收益记录
 		//计算领导奖，该用户上级的日产币额收益，记录相应收益记录
@@ -53,6 +54,7 @@ public class PetController extends Controller {
 	 */
 	public void repurchase(){
 		//判断是否推荐超过4个人，生成pet lifecycle 活跃0天（收益比例：10%or13%）
+		//增加个人复购次数，以及今日复购次数
 		//该用户的推荐人获得复购金额的10%，记录推荐人的推荐奖记录，记录推荐人的总收益记录
 		redirect("/pet");
 	}
