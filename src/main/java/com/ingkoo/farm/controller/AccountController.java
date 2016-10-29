@@ -1,10 +1,24 @@
 package com.ingkoo.farm.controller;
 
+import com.ingkoo.farm.model.ActiveApply;
 import com.ingkoo.farm.model.ActiveAuthApply;
+import com.ingkoo.farm.model.ActiveIncome;
+import com.ingkoo.farm.model.OtherRate;
+import com.ingkoo.farm.model.Pet;
+import com.ingkoo.farm.model.PetLifecycle;
+import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
+import com.ingkoo.farm.service.ActiveService;
 import com.ingkoo.farm.service.RecommendService;
+import com.ingkoo.farm.utils.Money;
+import com.ingkoo.farm.utils.RandomCode;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.IAtom;
+import com.jfinal.render.JsonRender;
+
+import java.sql.SQLException;
 
 /**
  * 账号管理
@@ -14,6 +28,7 @@ import com.jfinal.core.Controller;
 public class AccountController extends Controller {
 
 	private RecommendService recommendService = new RecommendService();
+	private ActiveService activeService = new ActiveService();
 
 	/**
 	 * 推荐列表
@@ -43,7 +58,24 @@ public class AccountController extends Controller {
 	 * 提交申请
 	 */
 	public void doApply() {
+		final String userId = getPara("userId");
+		final String activeNo = getPara("activeNo");
+		boolean result = Db.tx(new IAtom() {
 
+			@Override
+			public boolean run() throws SQLException {
+				User user = User.dao.findById(userId);
+				return new ActiveAuthApply().set("applyId", RandomCode.uuid())
+						.set("userId", user.getStr("userId"))
+						.set("name", user.getStr("name"))
+						.set("recommendCount", user.getInt("recommendCount"))
+						.set("activeNo", activeNo)
+						.set("applyTime", System.currentTimeMillis())
+						.save();
+			}
+		});
+
+		render(new JsonRender(result).forIE());
 	}
 
 	@ActionKey("/account/apply/edit")
@@ -53,14 +85,31 @@ public class AccountController extends Controller {
 		setAttr("user", user);
 		setAttr("activeAuthApply", ActiveAuthApply.dao.findById(getPara("applyId")));
 
-		render("active_apply_edit.jsp");
+		render("activate_apply_edit.jsp");
 	}
 
 	/**
 	 * 提交编辑
 	 */
 	public void doApplyEdit() {
+		final String applyId = getPara("applyId");
+		final String userId = getPara("userId");
+		final String activeNo = getPara("activeNo");
+		boolean result = Db.tx(new IAtom() {
 
+			@Override
+			public boolean run() throws SQLException {
+				User user = User.dao.findById(userId);
+				return new ActiveAuthApply().set("applyId", applyId)
+						.set("recommendCount", user.getInt("recommendCount"))
+						.set("activeNo", activeNo)
+						.set("applyTime", System.currentTimeMillis())
+						.set("status", "0")
+						.update();
+			}
+		});
+
+		render(new JsonRender(result).forIE());
 	}
 
 	/**
@@ -68,5 +117,82 @@ public class AccountController extends Controller {
 	 */
 	public void activate() {
 		setAttr("current", "account");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		setAttr("user", user);
+		render("activate_manage.jsp");
+	}
+
+	/**
+	 * 查询待激活用户列表
+	 */
+	public void queryActivateApplyList() {
+		String userId = getPara("userId");
+		String status = getPara("status");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		setAttr("userId", userId);
+		setAttr("status", status);
+		setAttr("page", activeService
+				.queryActiatedApplyList(userId, status, user.getStr("activeNo"), getParaToInt("pageNumber", 1),
+						getParaToInt("pageSize", 20)));
+
+		render("activate_manage_list.jsp");
+	}
+
+	/**
+	 * 激活
+	 */
+	public void doActive() {
+		final String applyId = getPara("applyId");
+		final User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		boolean result = Db.tx(new IAtom() {
+
+			@Override
+			public boolean run() throws SQLException {
+				//修改用户激活状态
+				ActiveApply activeApply = ActiveApply.dao.findById(applyId);
+				User activatedUser = User.dao.findById(activeApply.getStr("userId"));
+				Pet pet = activatedUser.getUserPet();
+
+				String activeDecrease = OtherRate.dao.findById("active_decrease_rate").getStr("rate");
+				String activeGet = OtherRate.dao.findById("active_get_rate").getStr("rate");
+
+				if (Double.parseDouble(activeDecrease) > Double.parseDouble(user.getStr("money"))) {
+					return false;
+				} else {
+					activeApply.set("status", "1")
+							.set("statusTime", System.currentTimeMillis())
+							.update();
+					activatedUser.set("status", "2").update();
+					//为用户生成宠物生命周期，生存1天
+					new PetLifecycle().set("userId", activatedUser.getStr("userId"))
+							.set("petNo", activatedUser.getStr("petNo"))
+							.set("liveDays", 1)
+							.set("overtimeDays", pet.getInt("lifecycle"))
+							.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
+							.set("dailyOutput", Money.format(Double.parseDouble(pet.getStr("dailyOutput"))))
+							.set("dailyOutputRate", OtherRate.dao.findById("daily_output_normal_rate").getStr("rate"))
+							.set("totalOutput", "0.00")
+							.set("createTime", System.currentTimeMillis())
+							.set("status", "1")
+							.save();
+					//扣除操作员相应（300）金币，如果金币不足300，则激活失败,增加操作员激活奖励（余额）
+					user.set("money",
+							new Money(user.getStr("money")).subtract(activeDecrease).add(activeGet).toString())
+							.update();
+					//操作员记录激活收益
+					new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
+							.set("name", activatedUser.getStr("name"))
+							.set("income", activeGet)
+							.set("createTime", System.currentTimeMillis())
+							.set("userId", user.getStr("userId"))
+							.save();
+					TotalIncome.dao.saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
+
+					return true;
+				}
+			}
+		});
+
+		render(new JsonRender(result).forIE());
 	}
 }

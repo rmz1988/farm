@@ -1,14 +1,6 @@
 package com.ingkoo.farm.config;
 
-import com.ingkoo.farm.controller.AccountController;
-import com.ingkoo.farm.controller.CheckController;
-import com.ingkoo.farm.controller.IndexController;
-import com.ingkoo.farm.controller.LoginController;
-import com.ingkoo.farm.controller.PetController;
-import com.ingkoo.farm.controller.RegisterController;
-import com.ingkoo.farm.controller.SelfController;
-import com.ingkoo.farm.controller.TradeController;
-import com.ingkoo.farm.controller.UeditorController;
+import com.ingkoo.farm.controller.*;
 import com.ingkoo.farm.interceptor.LoginInterceptor;
 import com.ingkoo.farm.model.*;
 import com.jfinal.config.Constants;
@@ -49,7 +41,8 @@ public class FarmConfig extends JFinalConfig {
 		routes.add("/trade", TradeController.class, "/trade");
 		routes.add("/ueditor", UeditorController.class);
 		routes.add("/self", SelfController.class, "/self");
-		routes.add("/account", AccountController.class,"/account");
+		routes.add("/account", AccountController.class, "/account");
+		routes.add("/finance", FinanceController.class, "/finance");
 	}
 
 	@Override

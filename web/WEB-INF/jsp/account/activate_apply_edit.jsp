@@ -27,6 +27,7 @@
         <div class="content">
             <form id="applyForm" class="form-horizontal" role="form" method="post">
                 <input type="hidden" id="applyId" value="${activeAuthApply.applyId}">
+                <input type="hidden" id="userId" value="${activeAuthApply.userId}">
                 <div class="form-group">
                     <label class="control-label col-md-3">
                         玩家编号：

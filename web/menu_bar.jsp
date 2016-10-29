@@ -42,10 +42,10 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">激活收入明细</a></li>
-                        <li><a href="#">每日收入列表</a></li>
-                        <li><a href="#">推荐奖励</a></li>
-                        <li><a href="#">收入总明细</a></li>
+                        <li><a href="${basePath}/finance/active">激活收入明细</a></li>
+                        <li><a href="${basePath}/finance/daily">每日收入列表</a></li>
+                        <li><a href="${basePath}/finance/recommend">推荐奖励</a></li>
+                        <li><a href="${basePath}/finance/total">收入总明细</a></li>
                     </ul>
                 </li>
                 <li class="dropdown <c:if test="${current == 'trade'}">active</c:if>">

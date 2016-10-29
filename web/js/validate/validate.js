@@ -156,4 +156,30 @@ define(function (require, exports) {
         return result;
     });
 
+    /**
+     * 唯一激活编号
+     */
+    $.validator.addMethod('uniqueActiveNo',function(value,element,params){
+        var result = true;
+        if (value != '' && params) {
+            $.ajax({
+                url: basePath + '/check/uniqueActiveNo',
+                type: 'post',
+                async: false,
+                data: {
+                    activateNo: value
+                },
+                dataType: 'json',
+                success: function (response) {
+                    result = response;
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+        }
+
+        return result;
+    });
+
 });

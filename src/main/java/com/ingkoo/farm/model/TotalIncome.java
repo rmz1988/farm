@@ -111,6 +111,28 @@ public class TotalIncome extends Model<TotalIncome> {
 	}
 
 	/**
+	 * 保存激活收益记录
+	 * @param user 用户
+	 * @param income 收入
+	 */
+	public void saveActiveIncome(User user, String income) {
+		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		TotalIncome totalIncome = TotalIncome.dao
+				.findFirst("select * from total_income where userId = ? and createTime = ?",
+						user.getStr("userId"), todayDate);
+		if (totalIncome != null) {
+			totalIncome.set("activeIncome", new Money(totalIncome.getStr("activeIncome")).add(income).toString())
+					.set("currentTotal", user.getStr("money"))
+					.update();
+		} else {
+			new TotalIncome().set("activeIncome", income)
+					.set("currentTotal", user.getStr("money"))
+					.set("userId", user.getStr("userId"))
+					.set("createTime", todayDate).save();
+		}
+	}
+
+	/**
 	 * 记录系统维护费扣除
 	 *
 	 * @param user   用户
