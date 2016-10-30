@@ -18,7 +18,7 @@ public class PetLifecycleJob {
 		for (PetLifecycle lifecycle : lifecycleList) {
 			Pet pet = Pet.dao.findById(lifecycle.getStr("petNo"));
 			if (lifecycle.getInt("liveDays") == pet.getInt("lifecycle")) {
-				lifecycle.set("status", "0").update();
+				lifecycle.set("status", "0").set("outTime", System.currentTimeMillis()).update();
 			} else {
 				lifecycle.set("liveDays", lifecycle.getInt("liveDays") + 1).update();
 			}
