@@ -104,26 +104,3 @@
 </div>
 </body>
 </html>
-<%--<script src="${basePath}/js/ueditor/ueditor.config.js"></script>--%>
-<%--<script src="${basePath}/js/ueditor/ueditor.all.min.js"></script>--%>
-<%--<script>--%>
-<%--//    describe为div的id--%>
-<%--var editor = UE.getEditor('describe', {--%>
-<%--initialFrameHeight: 500,--%>
-<%--scaleEnabled: true,--%>
-<%--toolbars: [--%>
-<%--[--%>
-<%--'fontsize', '|',--%>
-<%--'blockquote', 'horizontal', '|',--%>
-<%--'removeformat', '|',--%>
-<%--'insertimage', '|',--%>
-<%--'bold', 'italic', 'underline', 'forecolor', 'backcolor', '|',--%>
-<%--'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',--%>
-<%--'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',--%>
-<%--'insertorderedlist', 'insertunorderedlist', '|',--%>
-<%--'link', 'unlink', '|',--%>
-<%--'emotion'--%>
-<%--]--%>
-<%--]--%>
-<%--});--%>
-<%--</script>--%>

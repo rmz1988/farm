@@ -43,6 +43,9 @@ public class FarmConfig extends JFinalConfig {
 		routes.add("/self", SelfController.class, "/self");
 		routes.add("/account", AccountController.class, "/account");
 		routes.add("/finance", FinanceController.class, "/finance");
+		routes.add("/notice", NoticeController.class, "/index");
+		routes.add("/feedback", FeedbackController.class, "/index");
+		routes.add("/shop", ShopController.class, "/shop");
 	}
 
 	@Override
@@ -75,6 +78,8 @@ public class FarmConfig extends JFinalConfig {
 		arp.addMapping("transfer", "transferId", Transfer.class);
 		arp.addMapping("withdraw", "withdrawId", Withdraw.class);
 		arp.addMapping("user", "userId", User.class);
+		arp.addMapping("notice", "noticeId", Notice.class);
+		arp.addMapping("feedback", "feedbackId", Feedback.class);
 		arp.start();
 
 		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));

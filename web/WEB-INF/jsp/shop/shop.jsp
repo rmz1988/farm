@@ -1,5 +1,5 @@
 <%--
-  反馈
+  商城
   User: rmz19
 --%>
 <!DOCTYPE html>
@@ -7,9 +7,9 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-反馈</title>
+    <title>开鑫牧场-商城</title>
     <script>
-        seajs.use('user/feedback');
+        seajs.use('shop/shop');
     </script>
 </head>
 <body>
@@ -20,17 +20,10 @@
     <div class="row">
         <ol class="breadcrumb">
             <li>当前位置：</li>
-            <li><a href="${basePath}">首页</a></li>
-            <li class="active">反馈</li>
+            <li class="active">商城</li>
         </ol>
-        <div class="content">
-            <button id="feedbackBtn" type="button" class="btn btn-success">
-                问题反馈
-            </button>
-            <hr>
-            <div id="content">
-                <jsp:include page="feedback_list.jsp" flush="true"/>
-            </div>
+        <div id="content" class="content">
+            <jsp:include page="shop_list.jsp" flush="true"/>
         </div>
     </div>
     <jsp:include page="/foot.jsp" flush="true"/>

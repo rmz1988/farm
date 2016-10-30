@@ -118,6 +118,17 @@ public final class Money {
 		return df.format(value);
 	}
 
+	/**
+	 * 获取小于等于原数字的符合整倍数的最大值
+	 *
+	 * @param origin 原数字
+	 * @param times  倍数
+	 */
+	public static String maxOfTimes(String origin, String times) {
+		BigDecimal money = new BigDecimal(origin);
+		return format(money.subtract(money.remainder(new BigDecimal(times))).doubleValue());
+	}
+
 	@Override
 	public String toString() {
 		return this.value == null ? "0.00" : this.value;

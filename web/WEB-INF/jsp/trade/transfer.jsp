@@ -8,6 +8,9 @@
 <html>
 <head lang="zh-CN">
     <title>开鑫牧场-金币互转</title>
+    <script>
+        seajs.use('trade/transfer');
+    </script>
 </head>
 <body>
 <div class="container">
@@ -27,7 +30,7 @@
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
                 <span>
-                    1000
+                    ${user.money}
                 </span>
             </div>
             <div class="balance-tip col-md-6">
@@ -36,17 +39,17 @@
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
                 <span>
-                    1000
+                    ${allowMoney}
                 </span>
             </div>
             <hr>
-            <form action="#" class="form-horizontal" method="post">
+            <form id="transferForm" action="#" class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         玩家编号：
                     </label>
                     <div class="form-text col-md-6">
-                        1111111
+                        ${user.userId}
                     </div>
                 </div>
                 <div class="form-group">
@@ -54,7 +57,7 @@
                         玩家姓名：
                     </label>
                     <div class="form-text col-md-6">
-                        无名氏
+                        ${user.name}
                     </div>
                 </div>
                 <div class="form-group">
@@ -62,7 +65,7 @@
                         转出玩家编号：
                     </label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="请输入转出玩家编号">
+                        <input type="text" id="userId" name="userId" class="form-control" placeholder="请输入转出玩家编号">
                     </div>
                 </div>
                 <div class="form-group">
@@ -70,7 +73,8 @@
                         转出金额：
                     </label>
                     <div class="col-md-6">
-                        <input type="number" class="form-control" placeholder="请输入转出金额，只能是整百的倍数">
+                        <input type="number" id="money" name="money" class="form-control"
+                               placeholder="请输入转出金额，只能是${minTransfer}的倍数">
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,10 +82,12 @@
                         交易密码：
                     </label>
                     <div class="col-md-6">
-                        <input type="password" class="form-control" placeholder="请输入交易密码">
+                        <input type="password" id="tradePwd" name="tradePwd" class="form-control" placeholder="请输入交易密码">
                     </div>
                 </div>
-                <button type="button" class="btn btn-success">提交</button>
+                <input type="hidden" id="max" value="${user.money}"/>
+                <input type="hidden" id="times" value="${minTransfer}" 、>
+                <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2">提交</button>
             </form>
             <hr>
             <div class="panel panel-warning">
@@ -90,7 +96,7 @@
                 </div>
                 <div class="panel-body">
                     <span class="rule-tip-lg">
-                        1、金币互转金额只能是100的倍数；<br/>
+                        1、金币互转金额只能是${minTransfer}的倍数；<br/>
                         2、金币互转直接计入对方金币余额，操作不可撤销；<br/>
                         3、金币互转不收取手续费，每天互转次数无限制。
                     </span>
@@ -100,37 +106,8 @@
                 <div class="panel-heading">
                     金币互转记录
                 </div>
-                <div class="panel-body">
-                    <table class="table table-responsive">
-                        <thead>
-                        <tr>
-                            <th>操作类型</th>
-                            <th>转入编号</th>
-                            <th>转出编号</th>
-                            <th>金额</th>
-                            <th>操作日期</th>
-                            <th>状态</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>转入</td>
-                            <td>2222222</td>
-                            <td></td>
-                            <td>500</td>
-                            <td>2016-10-20 23:00:00</td>
-                            <td>成功</td>
-                        </tr>
-                        <tr>
-                            <td>转出</td>
-                            <td></td>
-                            <td>2222222</td>
-                            <td>200</td>
-                            <td>2016-10-25 12:00:03</td>
-                            <td>失败</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div id="content" class="panel-body">
+                    <jsp:include page="transfer_list.jsp" flush="true"/>
                 </div>
             </div>
         </div>

@@ -11,19 +11,19 @@ public class User extends Model<User> {
 
 	private static final long serialVersionUID = -6231238741246896138L;
 
-	private Pet pet;
-
 	public static final User dao = new User();
 
 	public Pet getUserPet() {
 		return Pet.dao.findById(get("petNo"));
 	}
 
-	public Pet getPet() {
-		return pet;
-	}
-
-	public void setPet(Pet pet) {
-		this.pet = pet;
+	/**
+	 * 能否提现
+	 */
+	public boolean canWithdraw() {
+		return getInt("rePurchase") > 0 && getStr("isWithdraw").equals("0") && !PetLifecycle.dao
+				.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
+						get("userId"), get("petNo"))
+				.isEmpty();
 	}
 }

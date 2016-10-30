@@ -370,6 +370,54 @@ footer {
 }
 
 .form-text {
-    font-size: 16px;
+    font-size: 14px;
     padding-top: 7px;
+}
+
+.goods-area {
+    border: 1px solid #51a351;
+    width: 222px;
+    height: 350px;
+    margin: 0 auto 20px auto;
+}
+
+.goods-area img {
+    display: block;
+    width: 220px;
+    height: 220px;
+    clear: both;
+}
+
+.goods-name {
+    width: 220px;
+    height: 36px;
+    padding: 4px;
+    line-height: 16px;
+    font-size: 14px;
+    word-wrap: break-word;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.goods-price {
+    padding: 4px;
+    color: #51a351;
+}
+
+.goods-price span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.goods-price .tip {
+    font-size: 12px;
+}
+
+.goods-price .main {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.goods-btn {
+    padding: 4px;
 }

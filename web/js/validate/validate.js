@@ -98,10 +98,10 @@ define(function (require, exports) {
 
 
     /**
-     * 校验不一致
+     * 校验一致
      */
-    $.validator.addMethod("notEqualTo", function (value, element, params) {
-        return value == '' || ($(params) != undefined && $(params).val() != value);
+    $.validator.addMethod("equalTo", function (value, element, params) {
+        return value == '' || ($(params) != undefined && $(params).val() == value);
     });
 
     /**
@@ -159,7 +159,7 @@ define(function (require, exports) {
     /**
      * 唯一激活编号
      */
-    $.validator.addMethod('uniqueActiveNo',function(value,element,params){
+    $.validator.addMethod('uniqueActiveNo', function (value, element, params) {
         var result = true;
         if (value != '' && params) {
             $.ajax({
@@ -182,4 +182,91 @@ define(function (require, exports) {
         return result;
     });
 
+    /**
+     * 用户编号是否存在
+     */
+    $.validator.addMethod('existsUser', function (value, element, params) {
+        var result = true;
+        if (value != '' && params) {
+            $.ajax({
+                url: basePath + '/check/existsUser',
+                type: 'post',
+                async: false,
+                data: {
+                    userId: value
+                },
+                dataType: 'json',
+                success: function (response) {
+                    result = response;
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+        }
+
+        return result;
+    });
+
+    /**
+     * 是否是不大于某数的整倍数
+     */
+    $.validator.addMethod('maxOfTimes', function (value, element, params) {
+        var max = Number(params[0]);
+        var times = Number(params[1]);
+
+        return value <= max && value % times == 0;
+    });
+
+    /**
+     * 校验登录密码
+     */
+    $.validator.addMethod('loginPwd', function (value, element, params) {
+        var result = true;
+        if (value != '' && params) {
+            $.ajax({
+                url: basePath + '/check/loginPwd',
+                type: 'post',
+                async: false,
+                data: {
+                    loginPwd: value
+                },
+                dataType: 'json',
+                success: function (response) {
+                    result = response;
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+        }
+
+        return result;
+    });
+
+    /**
+     * 校验交易密码
+     */
+    $.validator.addMethod('tradePwd', function (value, element, params) {
+        var result = true;
+        if (value != '' && params) {
+            $.ajax({
+                url: basePath + '/check/tradePwd',
+                type: 'post',
+                async: false,
+                data: {
+                    tradePwd: value
+                },
+                dataType: 'json',
+                success: function (response) {
+                    result = response;
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+        }
+
+        return result;
+    });
 });
