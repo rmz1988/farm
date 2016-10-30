@@ -3,4 +3,46 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="userResetJob" class="com.ingkoo.farm.schedule.UserResetJob"/>
+    <bean id="userResetJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="userResetJob"/>
+        <property name="targetMethod" value="reset"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="userResetTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="userResetJobDetail"/>
+        <property name="cronExpression" value="0 0 0 * * ?"/>
+    </bean>
+
+    <bean id="petLifecycleJob" class="com.ingkoo.farm.schedule.PetLifecycleJob"/>
+    <bean id="petLifecycleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="petLifecycleJob"/>
+        <property name="targetMethod" value="growUp"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="petLifecycleTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="petLifecycleJobDetail"/>
+        <property name="cronExpression" value="0 0 0 * * ?"/>
+    </bean>
+
+    <bean id="operationFeeJob" class="com.ingkoo.farm.schedule.OperationFeeJob" />
+    <bean id="operationFeeJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="operationFeeJob"/>
+        <property name="targetMethod" value="decreaseFee"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="operationFeeTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="operationFeeJobDetail"/>
+        <property name="cronExpression" value="59 59 23 L * ?"/>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="userResetTrigger"/>
+                <ref bean="petLifecycleTrigger"/>
+                <ref bean="operationFeeTrigger"/>
+            </list>
+        </property>
+    </bean>
 </beans>
