@@ -33,7 +33,7 @@
     </bean>
     <bean id="operationFeeTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="operationFeeJobDetail"/>
-        <property name="cronExpression" value="59 59 23 L * ?"/>
+        <property name="cronExpression" value="0 0 0 1 * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
