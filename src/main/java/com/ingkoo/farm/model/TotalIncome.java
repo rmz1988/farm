@@ -1,6 +1,5 @@
 package com.ingkoo.farm.model;
 
-import com.ingkoo.farm.service.RecommendService;
 import com.ingkoo.farm.utils.DateTimeConst;
 import com.ingkoo.farm.utils.DateUtils;
 import com.ingkoo.farm.utils.Money;
@@ -32,16 +31,22 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveRecommendIncome(User user, String income) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("recommendIncome", new Money(totalIncome.getStr("recommendIncome")).add(income).toString())
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("recommendIncome", income)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal",
+							new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
+									.add(income).toString())
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -66,16 +71,22 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void savePetOutput(User user, String income) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("output", new Money(totalIncome.getStr("output")).add(income).toString())
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("output", income)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal",
+							new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
+									.add(income).toString())
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -100,16 +111,22 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveLeaderIncome(User user, String income) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("leaderIncome", new Money(totalIncome.getStr("leaderIncome")).add(income).toString())
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("leaderIncome", income)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal",
+							new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
+									.add(income).toString())
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -134,16 +151,22 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveTrasferIn(User user, String income) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("transferIncome", new Money(totalIncome.getStr("transferIncome")).add(income).toString())
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("transferIncome", income)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal",
+							new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
+									.add(income).toString())
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -168,16 +191,22 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveActiveIncome(User user, String income) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("activeIncome", new Money(totalIncome.getStr("activeIncome")).add(income).toString())
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("activeIncome", income)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal",
+							new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
+									.add(income).toString())
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -202,16 +231,19 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveOperationFee(User user, String output) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("operationFee", new Money(totalIncome.getStr("operationFee")).add(output).toString())
-					.set("currentTotal", user.getStr("money"))
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("operationFee", output)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -236,16 +268,19 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveWithdrawOutput(User user, String output) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("withdrawOutput", new Money(totalIncome.getStr("withdrawOutput")).add(output).toString())
-					.set("currentTotal", user.getStr("money"))
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("withdrawOutput", output)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -270,16 +305,19 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveTransferOutput(User user, String output) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("transferOutput", new Money(totalIncome.getStr("transferOutput")).add(output).toString())
-					.set("currentTotal", user.getStr("money"))
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("transferOutput", output)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
@@ -304,16 +342,19 @@ public class TotalIncome extends Model<TotalIncome> {
 	 */
 	public void saveRepurchaseOutput(User user, String output) {
 		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
 		if (totalIncome != null) {
 			totalIncome.set("repurchase", new Money(totalIncome.getStr("repurchase")).add(output).toString())
-					.set("currentTotal", user.getStr("money"))
 					.update();
 		} else {
+			TotalIncome yesterdayIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), yesterday);
 			new TotalIncome().set("repurchase", output)
-					.set("currentTotal", user.getStr("money"))
+					.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
