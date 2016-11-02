@@ -17,8 +17,8 @@
     <c:forEach var="daily" items="${page.list}">
         <tr>
             <td>${daily.createTime}</td>
-            <td>${daily.output}</td>
-            <td>${daily.recommendIncome + daily.leaderIncome}</td>
+            <td>${daily.dailyOutput}</td>
+            <td>${daily.teamIncome}</td>
         </tr>
     </c:forEach>
     <data:emptyData cols="3"/>

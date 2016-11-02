@@ -9,6 +9,7 @@ import com.ingkoo.farm.model.PetLifecycle;
 import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.service.ActiveService;
+import com.ingkoo.farm.service.MoneyService;
 import com.ingkoo.farm.service.RecommendService;
 import com.ingkoo.farm.utils.Money;
 import com.ingkoo.farm.utils.RandomCode;
@@ -29,6 +30,7 @@ public class AccountController extends Controller {
 
 	private RecommendService recommendService = new RecommendService();
 	private ActiveService activeService = new ActiveService();
+	private MoneyService moneyService = new MoneyService();
 
 	/**
 	 * 推荐列表
@@ -36,7 +38,7 @@ public class AccountController extends Controller {
 	public void recommend() {
 		setAttr("current", "account");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("recommendLevelList", recommendService.queryRecommendList(user));
+		setAttr("recommendResult", recommendService.queryRecommendList(user));
 		render("recommend_list.jsp");
 	}
 
@@ -179,6 +181,12 @@ public class AccountController extends Controller {
 					user.set("money",
 							new Money(user.getStr("money")).subtract(activeDecrease).add(activeGet).toString())
 							.update();
+
+					//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
+					if (!moneyService.isOverDailyIncome(activatedUser.getStr("recommendUserId"))) {
+						recommendService.saveRecommendIncome(activatedUser, "0");
+					}
+
 					//操作员记录激活收益
 					new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
 							.set("name", activatedUser.getStr("name"))

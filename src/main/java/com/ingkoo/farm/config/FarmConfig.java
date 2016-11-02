@@ -25,7 +25,7 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configConstant(Constants constants) {
-		constants.setDevMode(true);
+		constants.setDevMode(false);
 		constants.setEncoding("utf-8");
 		constants.setBaseViewPath("/WEB-INF/jsp");
 		constants.setViewType(ViewType.JSP);
@@ -63,7 +63,7 @@ public class FarmConfig extends JFinalConfig {
 
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		arp.setDialect(new MysqlDialect());
-		arp.setShowSql(true);
+		arp.setShowSql(false);
 		arp.addMapping("active_apply", "applyId", ActiveApply.class);
 		arp.addMapping("active_auth_apply", "applyId", ActiveAuthApply.class);
 		arp.addMapping("active_income", ActiveIncome.class);
@@ -80,6 +80,7 @@ public class FarmConfig extends JFinalConfig {
 		arp.addMapping("user", "userId", User.class);
 		arp.addMapping("notice", "noticeId", Notice.class);
 		arp.addMapping("feedback", "feedbackId", Feedback.class);
+		arp.addMapping("daily_income", DailyIncome.class);
 		arp.start();
 
 		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));

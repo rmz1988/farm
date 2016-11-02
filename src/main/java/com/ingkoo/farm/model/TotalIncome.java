@@ -1,11 +1,15 @@
 package com.ingkoo.farm.model;
 
+import com.ingkoo.farm.service.RecommendService;
 import com.ingkoo.farm.utils.DateTimeConst;
 import com.ingkoo.farm.utils.DateUtils;
 import com.ingkoo.farm.utils.Money;
 import com.jfinal.plugin.activerecord.Model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 总收入明细
@@ -18,6 +22,8 @@ public class TotalIncome extends Model<TotalIncome> {
 
 	public static final TotalIncome dao = new TotalIncome();
 
+	private static ExecutorService es = Executors.newFixedThreadPool(5);
+
 	/**
 	 * 保存推荐收益
 	 *
@@ -25,7 +31,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param income 收益
 	 */
 	public void saveRecommendIncome(User user, String income) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -39,6 +45,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -48,7 +65,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param income 收益
 	 */
 	public void savePetOutput(User user, String income) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -62,6 +79,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -71,7 +99,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param income 收益
 	 */
 	public void saveLeaderIncome(User user, String income) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -85,6 +113,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -94,7 +133,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param income 金额
 	 */
 	public void saveTrasferIn(User user, String income) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -108,15 +147,27 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
 	 * 保存激活收益记录
-	 * @param user 用户
+	 *
+	 * @param user   用户
 	 * @param income 收入
 	 */
 	public void saveActiveIncome(User user, String income) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -130,6 +181,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -139,7 +201,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param output 支出
 	 */
 	public void saveOperationFee(User user, String output) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -153,6 +215,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -162,7 +235,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param output 提现金额
 	 */
 	public void saveWithdrawOutput(User user, String output) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -176,6 +249,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -185,7 +269,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param output 转出金额
 	 */
 	public void saveTransferOutput(User user, String output) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -199,6 +283,17 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 
 	/**
@@ -208,7 +303,7 @@ public class TotalIncome extends Model<TotalIncome> {
 	 * @param output 复购金额
 	 */
 	public void saveRepurchaseOutput(User user, String output) {
-		String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
 		TotalIncome totalIncome = TotalIncome.dao
 				.findFirst("select * from total_income where userId = ? and createTime = ?",
 						user.getStr("userId"), todayDate);
@@ -222,5 +317,16 @@ public class TotalIncome extends Model<TotalIncome> {
 					.set("userId", user.getStr("userId"))
 					.set("createTime", todayDate).save();
 		}
+		//计算每日团队收益
+		es.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				List<User> userList = User.dao.find("select * from user");
+				for (User user : userList) {
+					DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+				}
+			}
+		});
 	}
 }

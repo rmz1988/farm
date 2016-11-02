@@ -1,6 +1,7 @@
 package com.ingkoo.farm.controller;
 
 import com.ingkoo.farm.model.ActiveIncome;
+import com.ingkoo.farm.model.DailyIncome;
 import com.ingkoo.farm.model.RecommendIncome;
 import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
@@ -39,9 +40,8 @@ public class FinanceController extends Controller {
 
 	public void queryDailyList() {
 		User user = getSessionAttr("user");
-		setAttr("page", TotalIncome.dao
-				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from total_income where userId = ?", user.getStr("userId")));
+		setAttr("page", DailyIncome.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+				"from daily_income where userId = ?", user.getStr("userId")));
 		render("daily_list.jsp");
 	}
 

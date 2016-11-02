@@ -21,10 +21,10 @@
             <li class="active">推荐列表</li>
         </ol>
         <div class="content">
-            <p>
-                <span class="rule-tip-lg">仅展示10代以内的推荐列表</span>
-            </p>
-            <c:forEach var="recommendList" items="${recommendLevelList}" varStatus="st">
+            <div class="total-money-area">
+                <span>团队人数：${recommendResult[0]}</span>
+            </div>
+            <c:forEach var="recommendList" items="${recommendResult[1]}" varStatus="st">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         第${st.index + 1}代

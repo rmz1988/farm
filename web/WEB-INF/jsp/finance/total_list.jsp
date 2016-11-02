@@ -23,19 +23,21 @@
     </thead>
     <tbody>
     <c:forEach var="total" items="${page.list}">
-        <td>${total.output}</td>
-        <td>${total.recommendIncome}</td>
-        <td>${total.leaderIncome}</td>
-        <td>${total.activeIncome}</td>
-        <td>${total.transferIncome}</td>
-        <td>${total.repurchase}</td>
-        <td>${total.transferOutput}</td>
-        <td>${total.withdrawOutput}</td>
-        <td>${total.operationFee}</td>
-        <td>${total.currentTotal}</td>
-        <td>${total.createTime}</td>
+        <tr>
+            <td>${total.output}</td>
+            <td>${total.recommendIncome}</td>
+            <td>${total.leaderIncome}</td>
+            <td>${total.activeIncome}</td>
+            <td>${total.transferIncome}</td>
+            <td>${total.repurchase}</td>
+            <td>${total.transferOutput}</td>
+            <td>${total.withdrawOutput}</td>
+            <td>${total.operationFee}</td>
+            <td>${total.currentTotal}</td>
+            <td>${total.createTime}</td>
+        </tr>
     </c:forEach>
-    </tbody>
     <data:emptyData cols="11"/>
+    </tbody>
 </table>
 <data:page contentId="content" url="${basePath}/finance/queryTotalList"/>

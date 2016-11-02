@@ -21,7 +21,7 @@
         <ol class="breadcrumb">
             <li>当前位置：</li>
             <li>财务管理</li>
-            <li class="active">每日收入明列表/li>
+            <li class="active">每日收入明列表</li>
         </ol>
         <div id="content" class="content">
             <jsp:include page="daily_list.jsp" flush="true"/>

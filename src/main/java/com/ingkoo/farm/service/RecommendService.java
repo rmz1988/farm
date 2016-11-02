@@ -50,31 +50,77 @@ public class RecommendService {
 	}
 
 	/**
-	 * 查询推荐列表，展示10级
+	 * 查询推荐，递归展示
 	 *
 	 * @param user 玩家
+	 * @return 数组，0：团队人数，1：团队列表
 	 */
-	public List<List<User>> queryRecommendList(User user) {
+	public Object[] queryRecommendList(User user) {
+		Object[] recommendResult = new Object[2];
 		List<List<User>> recommendLevelList = new ArrayList<>();
 		List<User> parentUserList = Arrays.asList(user);
+		int teamCount = 1;
 		List<User> recommendUserList;
-		for (int i = 0; i < 10; i++) {
+		while (true) {
 			recommendUserList = new ArrayList<>();
 			for (User parentUser : parentUserList) {
 				List<User> userList =
 						User.dao.find("select * from user where recommendUserId = ?", parentUser.getStr("userId"));
 				if (userList.isEmpty()) {
-					break;
+					continue;
 				}
 				recommendUserList.addAll(userList);
 			}
 			if (recommendUserList.isEmpty()) {
 				break;
 			}
+			teamCount += recommendUserList.size();
 			parentUserList = recommendUserList;
 			recommendLevelList.add(recommendUserList);
 		}
 
-		return recommendLevelList;
+		recommendResult[0] = teamCount;
+		recommendResult[1] = recommendLevelList;
+
+		return recommendResult;
+	}
+
+	/**
+	 * 统计团队收益
+	 *
+	 * @param user 用户
+	 */
+	public String addUpTeamIncome(User user, String date) {
+		List<User> parentUserList = Arrays.asList(user);
+		Money teamIncome = new Money(user.getStr("todayIncome"));
+		List<User> recommendUserList;
+		while (true) {
+			recommendUserList = new ArrayList<>();
+			for (User parentUser : parentUserList) {
+				List<User> userList =
+						User.dao.find("select * from user where recommendUserId = ?", parentUser.getStr("userId"));
+				if (userList.isEmpty()) {
+					continue;
+				}
+				for (User recommendedUser : userList) {
+					TotalIncome totalIncome = TotalIncome.dao
+							.findFirst("select * from total_income where userId = ? and createTime = ?",
+									recommendedUser.getStr("userId"), date);
+					teamIncome = teamIncome.add(totalIncome != null ? totalIncome.getStr("output") : "0.00")
+							.add(totalIncome != null ? totalIncome.getStr("recommendIncome") : "0.00")
+							.add(totalIncome != null ? totalIncome.getStr("leaderIncome") : "0.00")
+							.add(totalIncome != null ? totalIncome.getStr("activeIncome") : "0.00");
+				}
+
+				recommendUserList.addAll(userList);
+			}
+			if (recommendUserList.isEmpty()) {
+				break;
+			}
+			parentUserList = recommendUserList;
+		}
+
+		return teamIncome.toString();
+
 	}
 }
