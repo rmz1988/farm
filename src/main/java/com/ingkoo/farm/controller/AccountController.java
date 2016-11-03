@@ -164,7 +164,7 @@ public class AccountController extends Controller {
 					activeApply.set("status", "1")
 							.set("statusTime", System.currentTimeMillis())
 							.update();
-					activatedUser.set("status", "2").update();
+					activatedUser.set("status", "2").set("activateTime", System.currentTimeMillis()).update();
 					//为用户生成宠物生命周期，生存1天
 					new PetLifecycle().set("userId", activatedUser.getStr("userId"))
 							.set("petNo", activatedUser.getStr("petNo"))
