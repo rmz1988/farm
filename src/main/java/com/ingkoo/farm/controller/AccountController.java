@@ -158,7 +158,7 @@ public class AccountController extends Controller {
 				String activeDecrease = OtherRate.dao.findById("active_decrease_rate").getStr("rate");
 				String activeGet = OtherRate.dao.findById("active_get_rate").getStr("rate");
 
-				if (Double.parseDouble(activeDecrease) > Double.parseDouble(user.getStr("money"))) {
+				if (Double.parseDouble(activeDecrease) > Double.parseDouble(user.getStr("activeMoney"))) {
 					return false;
 				} else {
 					activeApply.set("status", "1")
@@ -177,9 +177,10 @@ public class AccountController extends Controller {
 							.set("createTime", System.currentTimeMillis())
 							.set("status", "1")
 							.save();
-					//扣除操作员相应（300）金币，如果金币不足300，则激活失败,增加操作员激活奖励（余额）
-					user.set("money",
-							new Money(user.getStr("money")).subtract(activeDecrease).add(activeGet).toString())
+					//扣除操作员相应（300）激活币，如果激活币不足300，则激活失败；若成功，增加操作员激活奖励（余额）
+					user.set("activeMoney",
+							new Money(user.getStr("activeMoney")).subtract(activeDecrease).toString())
+							.set("money", new Money(user.getStr("money")).add(activeGet).toString())
 							.update();
 
 					//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细

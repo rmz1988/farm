@@ -29,8 +29,8 @@
                     <div class="panel-heading">
                         第${st.index + 1}代
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-responsive">
+                    <div class="panel-body table-responsive">
+                        <table class="table">
                             <thead>
                             <tr>
                                 <th>玩家编号</th>

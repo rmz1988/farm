@@ -40,8 +40,8 @@ public class LeaderService {
 							generation > 7 ? LeaderRate.dao.findById(999) : LeaderRate.dao.findById(generation);
 					String income = new Money(dailyOutput).multiply(leaderRate.getStr("rate")).divide(100).toString();
 					//用户余额和今日收益增加相应提成
-					leaderUser.set("money", new Money(leaderUser.getStr("money")).add(income))
-							.set("todayIncome", new Money(leaderUser.getStr("todayIncome")).add(income))
+					leaderUser.set("money", new Money(leaderUser.getStr("money")).add(income).toString())
+							.set("todayIncome", new Money(leaderUser.getStr("todayIncome")).add(income).toString())
 							.update();
 					//记录用户领导奖收益记录
 					TotalIncome.dao.saveLeaderIncome(leaderUser, income);

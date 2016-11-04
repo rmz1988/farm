@@ -14,6 +14,9 @@
 </head>
 <body>
 <div class="login-area col-md-6">
+    <div class="login-title col-md-12 text-center">
+        开 鑫 牧 场
+    </div>
     <form action="#" class="login-form form-horizontal" method="post">
         <div class="form-group">
             <label class="control-label col-md-3">玩家编号：</label>

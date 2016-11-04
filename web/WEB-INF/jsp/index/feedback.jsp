@@ -28,7 +28,7 @@
                 问题反馈
             </button>
             <hr>
-            <div id="content">
+            <div id="content" class="table-responsive">
                 <jsp:include page="feedback_list.jsp" flush="true"/>
             </div>
         </div>

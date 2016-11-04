@@ -16,6 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <a class="navbar-title navbar-brand" href="${basePath}/">开鑫牧场</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

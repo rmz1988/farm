@@ -40,13 +40,13 @@
             </p>
 
             <p>
-                开户银行(支付宝)：<data:dict dictgroup="bank" value="${user.bank}"/>
+                开户银行：<data:dict dictgroup="bank" value="${user.bank}"/>
             </p>
             <p>
-                户名(昵称)：${user.bankAccountName}
+                户名：${user.bankAccountName}
             </p>
             <p>
-                银行卡号(支付宝账号)：<data:bankcard value="${user.bankCard}"/>
+                银行卡号：<data:bankcard value="${user.bankCard}"/>
             </p>
             <p>
                 <button id="loginPwdBtn" class="btn btn-success">

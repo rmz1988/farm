@@ -45,14 +45,14 @@
                             <c:if test="${isFeed == 1}">
                                 （今日已喂养）
                             </c:if>
-                            <span class="rule-tip">今天喂养将产生${petDailyOutput}枚金币，每天只能喂养1次。</span>
+                            <span class="rule-tip">今天喂养将产生${petDailyOutput}奖励币，每天只能喂养1次。</span>
                         </p>
                         <p>
                             <button id="repurchaseBtn" type="button" class="btn btn-info btn-lg"
                                     <c:if test="${total <= pet.price || repurchase >= repurchaseLimit}">disabled</c:if>>
                                 复购
                             </button>
-                            <span class="rule-tip">复购将消耗${pet.price}枚金币，当前金币：${total}。</span>
+                            <span class="rule-tip">复购将消耗${pet.price}奖励币，当前奖励币：${total}。</span>
                             <span class="rule-tip">每天复购不超过${repurchaseLimit}次，今日已复购${repurchase}次。</span>
                         </p>
                         <input type="hidden" id="petPrice" value="${pet.price}"/>
@@ -63,7 +63,7 @@
                 <div class="panel-heading">
                     宠物明细
                 </div>
-                <div id="content" class="panel-body">
+                <div id="content" class="panel-body table-responsive">
                     <jsp:include page="pet_content.jsp" flush="true"/>
                 </div>
             </div>

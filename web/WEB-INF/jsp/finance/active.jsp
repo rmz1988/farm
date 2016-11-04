@@ -23,7 +23,7 @@
             <li>财务管理</li>
             <li class="active">激活收入明细</li>
         </ol>
-        <div id="content" class="content">
+        <div id="content" class="content table-responsive">
             <jsp:include page="active_list.jsp" flush="true"/>
         </div>
     </div>

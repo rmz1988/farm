@@ -19,13 +19,22 @@
             <li>当前位置：</li>
             <li class="active">首页</li>
         </ol>
-        <div class="total-money-area col-md-12">
-            <span>金币总额：</span>
+        <div class="total-money-area col-md-6">
+            <span>奖励币：</span>
             <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
             </span>
             <span id="totalMoney">
-                ${total}
+                ${totalMoney}
+            </span>
+        </div>
+        <div class="total-money-area col-md-6">
+            <span>激活币：</span>
+            <span class="money-img">
+                <img src="${basePath}/images/money.png" alt="">
+            </span>
+            <span id="activeMoney">
+                ${activeMoney}
             </span>
         </div>
         <hr>
@@ -78,7 +87,7 @@
                             </p>
 
                             <p>
-                                价值：${pet.price}金币
+                                价值：${pet.price}奖励币
                             </p>
 
                             <p>
@@ -90,7 +99,7 @@
                             </p>
 
                             <p>
-                                今日金币产量：${petDailyOutput}币
+                                今日币产量：${petDailyOutput}奖励币
                             </p>
                         </div>
                     </div>

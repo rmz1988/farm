@@ -65,7 +65,7 @@ public class RecommendService {
 			recommendUserList = new ArrayList<>();
 			for (User parentUser : parentUserList) {
 				List<User> userList =
-						User.dao.find("select * from user where recommendUserId = ?", parentUser.getStr("userId"));
+						User.dao.find("select * from user where recommendUserId = ? and status = '2'", parentUser.getStr("userId"));
 				if (userList.isEmpty()) {
 					continue;
 				}
@@ -98,7 +98,7 @@ public class RecommendService {
 			recommendUserList = new ArrayList<>();
 			for (User parentUser : parentUserList) {
 				List<User> userList =
-						User.dao.find("select * from user where recommendUserId = ?", parentUser.getStr("userId"));
+						User.dao.find("select * from user where recommendUserId = ? and status = '2'", parentUser.getStr("userId"));
 				if (userList.isEmpty()) {
 					continue;
 				}

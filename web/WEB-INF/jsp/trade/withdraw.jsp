@@ -30,7 +30,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="balance-tip col-md-6">
-                        <span>金币余额：</span>
+                        <span>奖励币余额：</span>
                         <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -39,7 +39,7 @@
                         </span>
                     </div>
                     <div class="balance-tip col-md-6">
-                        <span>可提现金币：</span>
+                        <span>可提现奖励币：</span>
                         <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                开户银行(支付宝)：
+                                开户银行：
                             </label>
                             <div class="form-text col-md-6">
                                 <data:dict dictgroup="bank" value="${user.bank}"/>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                银行户名(昵称)：
+                                银行户名：
                             </label>
                             <div class="form-text col-md-6">
                                     ${user.bankAccountName}
@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                银行卡号(支付宝账号)：
+                                银行卡号：
                             </label>
                             <div class="form-text col-md-6">
                                 <data:bankcard value="${user.bankCard}"/>
@@ -137,7 +137,7 @@
                         2、每名玩家每天只能提现1次；<br/>
                         3、每次提现金额只能是${minWithdraw}的倍数；<br/>
                         4、每次提现需缴纳${fee}%的手续费，该笔费用在提现金额中扣除；<br/>
-                        5、提现申请提交后，将由系统工作人员审核后将金额转入您预留的银行(支付宝)账号。
+                        5、提现申请提交后，将由系统工作人员审核后将金额转入您预留的银行账号。
                     </span>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                 <div class="panel-heading">
                     提现记录
                 </div>
-                <div id="content" class="panel-body">
+                <div id="content" class="panel-body table-responsive">
                     <jsp:include page="withdraw_list.jsp" flush="true"/>
                 </div>
             </div>

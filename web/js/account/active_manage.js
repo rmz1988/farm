@@ -13,7 +13,7 @@ define(function (require, exports, module) {
                         alert('激活成功');
                         $('#queryBtn').click();
                     } else {
-                        alert('您的金币余额不足，不能执行激活操作');
+                        alert('您的激活币余额不足，不能执行激活操作');
                     }
                 }, 'json');
             }

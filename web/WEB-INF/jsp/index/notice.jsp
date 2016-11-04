@@ -23,7 +23,7 @@
             <li><a href="${basePath}">首页</a></li>
             <li class="active">公告</li>
         </ol>
-        <div id="content" class="content">
+        <div id="content" class="content table-responsive">
             <jsp:include page="notice_list.jsp" flush="true"/>
         </div>
     </div>

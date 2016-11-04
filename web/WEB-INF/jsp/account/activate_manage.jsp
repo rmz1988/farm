@@ -47,7 +47,7 @@
                         <button id="queryBtn" type="button" class="btn btn-success">查 询</button>
                     </form>
                     <hr>
-                    <div id="content">
+                    <div id="content" class="table-responsive">
                         <jsp:include page="activate_manage_list.jsp" flush="true"/>
                     </div>
                 </c:otherwise>

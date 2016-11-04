@@ -23,7 +23,7 @@
             <li>账号管理</li>
             <li class="active">申请激活中心</li>
         </ol>
-        <div class="content">
+        <div class="content table-responsive">
             <c:choose>
                 <c:when test="${not empty activeNo}">
                     <span class="rule-tip-lg">您已具备激活中心权限，请点击菜单【账号管理】-【激活管理】进行操作！</span>
@@ -33,7 +33,7 @@
                 </c:when>
                 <c:when test="${not empty activeAuthApply}">
                     <%--展示激活申请列表--%>
-                    <table class="table table-responsive">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th>玩家编号</th>

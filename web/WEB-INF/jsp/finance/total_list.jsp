@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/taglib.jsp" %>
-<table class="table table-responsive">
+<table class="table">
     <thead>
     <tr>
         <th>产币量</th>

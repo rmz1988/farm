@@ -23,7 +23,7 @@
             <li>财务管理</li>
             <li class="active">推荐奖励</li>
         </ol>
-        <div id="content" class="content">
+        <div id="content" class="content table-responsive">
             <jsp:include page="recommend_list.jsp" flush="true"/>
         </div>
     </div>

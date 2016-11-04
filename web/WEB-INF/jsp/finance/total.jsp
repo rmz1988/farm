@@ -23,7 +23,7 @@
             <li>财务管理</li>
             <li class="active">收入总明细</li>
         </ol>
-        <div id="content" class="content">
+        <div id="content" class="content table-responsive">
             <jsp:include page="total_list.jsp" flush="true"/>
         </div>
     </div>

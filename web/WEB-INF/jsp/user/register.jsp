@@ -65,12 +65,12 @@
                 <hr>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        开户银行/支付宝：
+                        开户银行：
                     </label>
 
                     <div class="col-md-6">
                         <select id="bank" name="bank" class="form-control">
-                            <option value="">请选择开户银行/支付宝</option>
+                            <option value="">请选择开户银行</option>
                             <c:forEach var="dict" items="${bankList}">
                                 <option value="${dict.dictName}">${dict.dictValue}</option>
                             </c:forEach>
@@ -79,22 +79,22 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        户名/支付宝昵称：
+                        户名：
                     </label>
 
                     <div class="col-md-6">
                         <input type="text" id="bankAccountName" name="bankAccountName" class="form-control"
-                               placeholder="请输入您的银行开户名称或支付宝昵称" maxlength="60">
+                               placeholder="请输入您的银行开户名称" maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        银行卡号/支付宝账号：
+                        银行卡号：
                     </label>
 
                     <div class="col-md-6">
                         <input type="text" id="bankCard" name="bankCard" class="form-control"
-                               placeholder="请输入您的银行卡号或支付宝账号" maxlength="60">
+                               placeholder="请输入您的银行卡号" maxlength="60">
                     </div>
                 </div>
                 <hr>

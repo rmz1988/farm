@@ -6,6 +6,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/taglib.jsp" %>
 <div class="title">
+    <div class="title-brand">
+        开鑫牧场
+    </div>
     <ul class="title-area pull-right">
         <li>
             <img class="pull-right" src="${sessionScope.imageUrl}${sessionScope.user.pet.img}" alt="" width="60"

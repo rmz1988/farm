@@ -25,7 +25,7 @@
         </ol>
         <div class="content">
             <div class="balance-tip col-md-6">
-                <span>金币余额：</span>
+                <span>奖励币余额：</span>
                 <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -34,7 +34,7 @@
                 </span>
             </div>
             <div class="balance-tip col-md-6">
-                <span>可转出金币：</span>
+                <span>可转出奖励币：</span>
                 <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <input type="hidden" id="max" value="${user.money}"/>
-                <input type="hidden" id="times" value="${minTransfer}" 、>
+                <input type="hidden" id="times" value="${minTransfer}" />
                 <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2">提交</button>
             </form>
             <hr>
@@ -97,7 +97,7 @@
                 <div class="panel-body">
                     <span class="rule-tip-lg">
                         1、金币互转金额只能是${minTransfer}的倍数；<br/>
-                        2、金币互转直接计入对方金币余额，操作不可撤销；<br/>
+                        2、金币互转直接计入对方奖励币余额，操作不可撤销；<br/>
                         3、金币互转不收取手续费，每天互转次数无限制。
                     </span>
                 </div>
@@ -106,7 +106,7 @@
                 <div class="panel-heading">
                     金币互转记录
                 </div>
-                <div id="content" class="panel-body">
+                <div id="content" class="panel-body table-responsive">
                     <jsp:include page="transfer_list.jsp" flush="true"/>
                 </div>
             </div>
