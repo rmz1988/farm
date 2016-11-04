@@ -58,7 +58,7 @@
                         <li><a href="${basePath}/trade/withdraw">金币提现</a></li>
                     </ul>
                 </li>
-                <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="${basePath}/shop">商城</a></li>
+                <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="${basePath}/shop">物联网+商城</a></li>
                 <li <c:if test="${current == 'person'}">class="active"</c:if>><a href="${basePath}/self">个人信息</a></li>
             </ul>
         </div>
