@@ -137,4 +137,5 @@ public final class Money {
 	public double doubleValue() {
 		return this.value == null ? 0.0d : Double.parseDouble(this.value);
 	}
+
 }

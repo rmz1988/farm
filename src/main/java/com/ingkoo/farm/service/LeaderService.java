@@ -6,9 +6,6 @@ import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.utils.Money;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * 领导
  *
@@ -30,15 +27,12 @@ public class LeaderService {
 			//存在上级，则计算领导奖
 			if (StringUtils.isNotEmpty(user.getStr("recommendUserId"))) {
 				User leaderUser = User.dao.findById(user.getStr("recommendUserId"));
-				if (moneyService.isOverDailyIncome(leaderUser.getStr("userId"))) {
-					//如果超过每日收益，则该用户不计算，计算其上一代用户
-					generation++;
-					user = leaderUser;
-				} else {
+				if (!moneyService.isOverDailyIncome(leaderUser.getStr("userId"))) {
 					//计算当代用户应获得的提成
 					LeaderRate leaderRate =
 							generation > 7 ? LeaderRate.dao.findById(999) : LeaderRate.dao.findById(generation);
-					String income = new Money(dailyOutput).multiply(leaderRate.getStr("rate")).divide(100).toString();
+					String income = new Money(dailyOutput).multiply(leaderRate.getInt("rate")).divide(100).toString();
+
 					//用户余额和今日收益增加相应提成
 					leaderUser.set("money", new Money(leaderUser.getStr("money")).add(income).toString())
 							.set("todayIncome", new Money(leaderUser.getStr("todayIncome")).add(income).toString())
@@ -46,6 +40,9 @@ public class LeaderService {
 					//记录用户领导奖收益记录
 					TotalIncome.dao.saveLeaderIncome(leaderUser, income);
 				}
+
+				generation++;
+				user = leaderUser;
 			} else {
 				break;
 			}
