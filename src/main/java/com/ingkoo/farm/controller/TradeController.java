@@ -4,11 +4,13 @@ import com.ingkoo.farm.model.Dict;
 import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.Transfer;
+import com.ingkoo.farm.model.TransferToActive;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.model.Withdraw;
 import com.ingkoo.farm.utils.AES;
 import com.ingkoo.farm.utils.Money;
 import com.ingkoo.farm.utils.RandomCode;
+import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
@@ -159,5 +161,49 @@ public class TradeController extends Controller {
 		});
 
 		render(new JsonRender(result).forIE());
+	}
+
+	/**
+	 * 奖励币转激活币
+	 */
+	@ActionKey("/trade/activate/transfer")
+	public void transferMoney2ActiveMoney() {
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		setAttr("user", user);
+
+		render("activate_transfer.jsp");
+	}
+
+	/**
+	 * 奖励币转激活币
+	 */
+	public void doTransferToActiveMoney() {
+		final User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		final String activeMoney = Money.format(Double.parseDouble(getPara("money")));
+		boolean result = Db.tx(new IAtom() {
+
+			@Override
+			public boolean run() throws SQLException {
+				String currentActiveMoney = user.getStr("activeMoney");
+				return user.set("money", new Money(user.getStr("money")).subtract(activeMoney).toString())
+						.set("activeMoney", new Money(user.getStr("activeMoney")).add(activeMoney).toString())
+						.update() && new TransferToActive().set("transferId", RandomCode.uuid())
+						.set("userId", user.getStr("userId"))
+						.set("transferMoney", activeMoney)
+						.set("activeMoney", new Money(currentActiveMoney).add(activeMoney).toString())
+						.set("createTime", System.currentTimeMillis()).save();
+			}
+		});
+
+		render(new JsonRender(result).forIE());
+	}
+
+	public void queryTransferToActiveList() {
+		User user = getSessionAttr("user");
+		setAttr("page", TransferToActive.dao
+				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+						"from transfer_to_active where userId = ? order by createTime desc", user.getStr("userId")));
+
+		render("activate_transfer_list.jsp");
 	}
 }

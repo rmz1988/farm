@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 
         //复购
         $('#repurchaseBtn').click(function () {
-            if (confirm('复购将扣除您' + $('#petPrice').val() + '金币，是否继续？')) {
+            if (confirm('复购将扣除您' + $('#petPrice').val() + '奖励币，是否继续？')) {
                 window.location = basePath + '/pet/repurchase';
                 $(this).disable();
             }

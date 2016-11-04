@@ -81,6 +81,7 @@ public class FarmConfig extends JFinalConfig {
 		arp.addMapping("notice", "noticeId", Notice.class);
 		arp.addMapping("feedback", "feedbackId", Feedback.class);
 		arp.addMapping("daily_income", DailyIncome.class);
+		arp.addMapping("transfer_to_active", "transferId", TransferToActive.class);
 		arp.start();
 
 		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));
@@ -93,6 +94,5 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configHandler(Handlers handlers) {
-
 	}
 }

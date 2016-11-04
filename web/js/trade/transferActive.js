@@ -1,0 +1,49 @@
+define(function (require, exports, module) {
+    var validator = require('validate/validate');
+    var tools = require('tools/tools');
+
+    $(function () {
+        tools.query(basePath + '/trade/queryTransferToActiveList', 'content');
+
+        $('#transferForm').validate({
+            rules: {
+                money: {
+                    required: true,
+                    max: $('#max').val()
+                },
+                tradePwd: {
+                    required: true,
+                    tradePwd: true
+                }
+            }, messages: {
+                money: {
+                    required: '请填写转换金额',
+                    max: '转换金额必须大于0，不得超过奖励币余额'
+                },
+                tradePwd: {
+                    required: '请输入交易密码',
+                    tradePwd: '交易密码不正确'
+                }
+            }
+        });
+
+        $('#money,#tradePwd').blur(function () {
+            $(this).valid();
+        });
+
+        $('#transferBtn').click(function () {
+            if ($('#transferForm').valid()) {
+                $.post(basePath + '/trade/doTransferToActiveMoney', {
+                    'money': $.trim($('#money').val())
+                }, function (response) {
+                    if (response) {
+                        alert('转换成功！');
+                        window.location = basePath + '/trade/activate/transfer'
+                    } else {
+                        alert('系统繁忙，请稍后重试！')
+                    }
+                }, 'json');
+            }
+        });
+    });
+});

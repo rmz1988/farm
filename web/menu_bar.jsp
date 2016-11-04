@@ -57,6 +57,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="${basePath}/trade/transfer">金币互转</a></li>
                         <li><a href="${basePath}/trade/withdraw">金币提现</a></li>
+                        <li><a href="${basePath}/trade/activate/transfer">奖励币转激活币</a></li>
                     </ul>
                 </li>
                 <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="${basePath}/shop">物联网+商城</a></li>

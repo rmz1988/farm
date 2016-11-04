@@ -215,8 +215,9 @@ define(function (require, exports) {
         var max = Number(params[0]);
         var times = Number(params[1]);
 
-        return value <= max && value % times == 0;
+        return Number(value) > 0 && Number(value) <= max && Number(value) % times == 0;
     });
+
 
     /**
      * 校验登录密码
