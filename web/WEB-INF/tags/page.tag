@@ -74,11 +74,108 @@
 
 </script>
 
-<div style="display: block;position:relative;height:50px;clear:both;">
-    <div class="pagination pull-right form-group form-inline" style="margin-top: 0;margin-left:20px;">
-        <div class="input-group">
+<%--<div style="display: block;position:relative;height:50px;clear:both;">--%>
+<%--<div class="pagination pull-right form-group form-inline" style="margin-top: 0;margin-left:20px;">--%>
+<%--<div class="input-group">--%>
+<%--<input id="currentPage" class="form-control" type="text"--%>
+<%--style="width:50px;padding:6px 2px;"--%>
+<%--<c:choose>--%>
+<%--<c:when test="${empty page}">--%>
+<%--value="1"--%>
+<%--</c:when>--%>
+<%--<c:otherwise>--%>
+<%--value="${page.pageNumber}"--%>
+<%--</c:otherwise>--%>
+<%--</c:choose> />--%>
+<%--<span class="input-group-btn">--%>
+<%--<button class="btn btn-default" onclick="go($('#currentPage').val())">--%>
+<%--go--%>
+<%--</button>--%>
+<%--</span>--%>
+<%--</div>--%>
+
+<%--共--%>
+<%--<c:choose>--%>
+<%--<c:when test="${empty page}">--%>
+<%--0--%>
+<%--</c:when>--%>
+<%--<c:otherwise>--%>
+<%--${page.totalPage}--%>
+<%--</c:otherwise>--%>
+<%--</c:choose>--%>
+<%--页&nbsp;&nbsp;每页显示20条,共<c:choose>--%>
+<%--<c:when test="${empty page}">--%>
+<%--0--%>
+<%--</c:when>--%>
+<%--<c:otherwise>--%>
+<%--${page.totalRow}--%>
+<%--</c:otherwise>--%>
+<%--</c:choose>条记录--%>
+<%--</div>--%>
+<%--<!--</div>-->--%>
+<%--<ul class="pagination pull-right" style="margin-top:0;">--%>
+<%--<li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goFirst()">首页</a>--%>
+<%--</li>--%>
+<%--<li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goPrev()">上一页</a>--%>
+<%--</li>--%>
+<%--<c:choose>--%>
+<%--<c:when test="${page.pageNumber > 2 && page.pageNumber < page.totalPage - 2}">--%>
+<%--<c:forEach var="pageNo" begin="${page.pageNumber - 2}" end="${page.pageNumber + 2}">--%>
+<%--<li <c:if test="${page.pageNumber == pageNo}">class="active"</c:if>><a href="#"--%>
+<%--onclick="go('${pageNo}')">${pageNo}</a>--%>
+<%--</li>--%>
+<%--</c:forEach>--%>
+<%--</c:when>--%>
+<%--<c:when test="${page.pageNumber <= 2}">--%>
+<%--<c:forEach var="pageNo" begin="1" end="${page.totalPage > 5 ? 5 : page.totalPage}">--%>
+<%--<li <c:if test="${page.pageNumber == pageNo}">class="active"</c:if>><a href="#"--%>
+<%--onclick="go('${pageNo}')">${pageNo}</a>--%>
+<%--</li>--%>
+<%--</c:forEach>--%>
+<%--</c:when>--%>
+<%--<c:otherwise>--%>
+<%--<c:forEach var="pageNo" begin="${page.totalPage - 4 < 1 ? 1 : page.totalPage - 4}"--%>
+<%--end="${page.pageNumber}">--%>
+<%--<li <c:if test="${page.pageNumber == pageNo}">class="active"</c:if>><a href="#"--%>
+<%--onclick="go('${pageNo}')">${pageNo}</a>--%>
+<%--</li>--%>
+<%--</c:forEach>--%>
+<%--</c:otherwise>--%>
+<%--</c:choose>--%>
+<%--<li <c:if test="${empty page || page.pageNumber >= page.totalPage}">class="disabled"</c:if>><a href="#"--%>
+<%--onclick="goNext()">下一页</a>--%>
+<%--</li>--%>
+<%--<li <c:if test="${empty page || page.pageNumber >= page.totalPage}">class="disabled"</c:if>><a href="#"--%>
+<%--onclick="goLast()">尾页</a>--%>
+<%--</li>--%>
+<%--</ul>--%>
+<%--</div>--%>
+<div style="display: block;position:relative;height:50px;clear:both; margin-top: 15px;">
+    <div class="form-group pull-right">
+        <p class="text-left" style="margin-left: 5px;padding-top:7px;margin-bottom:0;">
+            共
+            <c:choose>
+                <c:when test="${empty page}">
+                    0
+                </c:when>
+                <c:otherwise>
+                    ${page.totalPage}
+                </c:otherwise>
+            </c:choose>
+            页&nbsp;&nbsp;每页显示20条,共<c:choose>
+            <c:when test="${empty page}">
+                0
+            </c:when>
+            <c:otherwise>
+                ${page.totalRow}
+            </c:otherwise>
+        </c:choose>条记录
+        </p>
+    </div>
+    <div class="form-group pull-right">
+        <div class="input-group"
+             style="width:100px;margin-left: 5px;">
             <input id="currentPage" class="form-control" type="text"
-                   style="width:50px;padding:6px 2px;"
                     <c:choose>
                         <c:when test="${empty page}">
                             value="1"
@@ -93,27 +190,9 @@
                 </button>
             </span>
         </div>
-
-        共
-        <c:choose>
-            <c:when test="${empty page}">
-                0
-            </c:when>
-            <c:otherwise>
-                ${page.totalPage}
-            </c:otherwise>
-        </c:choose>
-        页&nbsp;&nbsp;每页显示20条,共<c:choose>
-        <c:when test="${empty page}">
-            0
-        </c:when>
-        <c:otherwise>
-            ${page.totalRow}
-        </c:otherwise>
-    </c:choose>条记录
     </div>
     <!--</div>-->
-    <ul class="pagination pull-right" style="margin-top:0;">
+    <ul class="pagination form-group pull-right" style="margin-top:0;">
         <li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goFirst()">首页</a>
         </li>
         <li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goPrev()">上一页</a>
