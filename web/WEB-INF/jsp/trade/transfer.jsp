@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        转出玩家编号：
+                        转出到玩家编号：
                     </label>
                     <div class="col-md-6">
                         <input type="text" id="userId" name="userId" class="form-control" placeholder="请输入转出玩家编号">

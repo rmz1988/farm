@@ -40,6 +40,17 @@ public class MoneyService {
 		return output.toString();
 	}
 
+	public String getPetDailyOutputTip(String userId) {
+		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
+				.find("select * from pet_lifecycle where userId = ? and status = '1' and liveDays > 0", userId);
+		StringBuilder tipBuilder = new StringBuilder();
+		for (PetLifecycle lifecycle : petLifecycleList) {
+			tipBuilder.append(lifecycle.getStr("dailyOutput")).append("/");
+		}
+
+		return tipBuilder.deleteCharAt(tipBuilder.lastIndexOf("/")).toString();
+	}
+
 	/**
 	 * 修改宠物生命周期金币产量
 	 *
@@ -53,5 +64,21 @@ public class MoneyService {
 					new Money(lifecycle.getStr("totalOutput")).add(lifecycle.getStr("dailyOutput")).toString())
 					.update();
 		}
+	}
+
+	/**
+	 * 查询产币总量
+	 * @param userId 用户id
+	 */
+	public String getTotalOutput(String userId) {
+		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
+				.find("select * from pet_lifecycle where userId = ? and liveDays > 0", userId);
+
+		Money output = new Money("0.00");
+		for (PetLifecycle lifecycle : petLifecycleList) {
+			output = output.add(lifecycle.getStr("totalOutput"));
+		}
+
+		return output.toString();
 	}
 }

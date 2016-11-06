@@ -17,6 +17,7 @@
     <jsp:include page="/title.jsp" flush="true"/>
     <jsp:include page="/menu_bar.jsp" flush="true"/>
 
+    <input type="hidden" id="overIncome" value="${overIncome}"/>
     <div class="row">
         <ol class="breadcrumb">
             <li>当前位置：</li>
@@ -45,7 +46,7 @@
                             <c:if test="${isFeed == 1}">
                                 （今日已喂养）
                             </c:if>
-                            <span class="rule-tip">今天喂养将产生${petDailyOutput}奖励币，每天只能喂养1次。</span>
+                            <span class="rule-tip">今天喂养将产生${petDailyOutput}元，每天只能喂养1次。</span>
                         </p>
                         <p>
                             <button id="repurchaseBtn" type="button" class="btn btn-info btn-lg"
@@ -61,7 +62,7 @@
             </div>
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    宠物明细
+                    宠物明细(总产币量：${totalOutput})
                 </div>
                 <div id="content" class="panel-body table-responsive">
                     <jsp:include page="pet_content.jsp" flush="true"/>

@@ -21,7 +21,7 @@ public class LeaderService {
 	 * @param user        基本用户
 	 * @param dailyOutput 每日产币金额
 	 */
-	public void calcLeaderIncome(User user, String dailyOutput) {
+	public synchronized void calcLeaderIncome(User user, String dailyOutput) {
 		int generation = 1;
 		while (true) {
 			//存在上级，则计算领导奖
@@ -39,6 +39,9 @@ public class LeaderService {
 							.update();
 					//记录用户领导奖收益记录
 					TotalIncome.dao.saveLeaderIncome(leaderUser, income);
+
+					//获得领导奖的提成需要加到上一级用户
+					calcLeaderIncome(leaderUser, income);
 				}
 
 				generation++;

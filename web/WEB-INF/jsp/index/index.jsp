@@ -99,7 +99,7 @@
                             </p>
 
                             <p>
-                                今日币产量：${petDailyOutput}奖励币
+                                今日币产量：${petDailyOutput}元
                             </p>
                         </div>
                     </div>

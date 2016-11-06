@@ -49,6 +49,11 @@ footer {
     .title-brand {
         display: none;
     }
+
+    .title-area .short-hidden {
+        display: none;
+    }
+
 }
 
 .navbar-default .navbar-brand {
@@ -64,6 +69,10 @@ footer {
 
 @media (min-width: 768px) {
     .navbar-title {
+        display: none;
+    }
+
+    .nav .short-show {
         display: none;
     }
 }

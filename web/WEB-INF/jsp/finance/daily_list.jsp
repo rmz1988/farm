@@ -10,15 +10,15 @@
     <tr>
         <th>日期</th>
         <th>产币数</th>
-        <th>团队所得金币</th>
+        <th>团队奖</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="daily" items="${page.list}">
         <tr>
             <td>${daily.createTime}</td>
-            <td>${daily.dailyOutput}</td>
-            <td>${daily.teamIncome}</td>
+            <td>${daily.output}</td>
+            <td>${daily.recommendIncome + daily.leaderIncome}</td>
         </tr>
     </c:forEach>
     <data:emptyData cols="3"/>

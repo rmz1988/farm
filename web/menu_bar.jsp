@@ -62,6 +62,8 @@
                 </li>
                 <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="${basePath}/shop">物联网+商城</a></li>
                 <li <c:if test="${current == 'person'}">class="active"</c:if>><a href="${basePath}/self">个人信息</a></li>
+                <li class="short-show"><a href="${basePath}/notice">公告</a></li>
+                <li class="short-show"><a href="${basePath}/feedback">反馈</a></li>
             </ul>
         </div>
     </div>

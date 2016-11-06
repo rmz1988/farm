@@ -2,6 +2,11 @@ define(function (require, exports, module) {
     var tools = require('tools/tools');
 
     $(function () {
+        if ($('#overIncome').val() == 'true') {
+            alert('您今日收入已达上限，今日喂养将不再产生收益！');
+        }
+
+
         //查询宠物周期
         tools.query(basePath + '/pet/queryLifecycleList', 'content');
 

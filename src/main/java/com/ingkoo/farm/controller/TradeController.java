@@ -169,6 +169,9 @@ public class TradeController extends Controller {
 	@ActionKey("/trade/activate/transfer")
 	public void transferMoney2ActiveMoney() {
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		String minTransfer = OtherRate.dao.findById("min_withdraw").getStr("rate");
+		setAttr("minTransfer", minTransfer);
+		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), minTransfer));
 		setAttr("user", user);
 
 		render("activate_transfer.jsp");

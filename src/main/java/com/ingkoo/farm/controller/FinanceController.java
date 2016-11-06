@@ -26,7 +26,7 @@ public class FinanceController extends Controller {
 		User user = getSessionAttr("user");
 		setAttr("page", ActiveIncome.dao
 				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from active_income where userId = ?", user.getStr("userId")));
+						"from active_income where userId = ? order by createTime desc", user.getStr("userId")));
 		render("active_list.jsp");
 	}
 
@@ -40,8 +40,11 @@ public class FinanceController extends Controller {
 
 	public void queryDailyList() {
 		User user = getSessionAttr("user");
-		setAttr("page", DailyIncome.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-				"from daily_income where userId = ?", user.getStr("userId")));
+		/*setAttr("page", DailyIncome.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+				"from daily_income where userId = ? order by id desc", user.getStr("userId")));*/
+		setAttr("page", TotalIncome.dao
+				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+						"from total_income where userId = ? order by id desc", user.getStr("userId")));
 		render("daily_list.jsp");
 	}
 
@@ -57,7 +60,7 @@ public class FinanceController extends Controller {
 		User user = getSessionAttr("user");
 		setAttr("page", RecommendIncome.dao
 				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from recommend_income where userId = ?", user.getStr("userId")));
+						"from recommend_income where userId = ? order by createTime desc", user.getStr("userId")));
 		render("recommend_list.jsp");
 	}
 
@@ -73,7 +76,7 @@ public class FinanceController extends Controller {
 		User user = getSessionAttr("user");
 		setAttr("page", TotalIncome.dao
 				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from total_income where userId = ?", user.getStr("userId")));
+						"from total_income where userId = ? order by id desc", user.getStr("userId")));
 		render("total_list.jsp");
 	}
 

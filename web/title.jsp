@@ -25,12 +25,12 @@
         <li>
             <a href="${basePath}/login/logout">退出</a>
         </li>
-        <li><span>|</span></li>
-        <li>
+        <li class="short-hidden"><span>|</span></li>
+        <li class="short-hidden">
             <a href="${basePath}/notice">公告</a>
         </li>
-        <li><span>|</span></li>
-        <li>
+        <li class="short-hidden"><span>|</span></li>
+        <li class="short-hidden">
             <a href="${basePath}/feedback">反馈</a>
         </li>
     </ul>

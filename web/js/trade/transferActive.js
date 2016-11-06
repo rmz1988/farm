@@ -9,7 +9,7 @@ define(function (require, exports, module) {
             rules: {
                 money: {
                     required: true,
-                    max: $('#max').val()
+                    maxOfTimes: [$('#max').val(), $('#times').val()]
                 },
                 tradePwd: {
                     required: true,
@@ -18,7 +18,7 @@ define(function (require, exports, module) {
             }, messages: {
                 money: {
                     required: '请填写转换金额',
-                    max: '转换金额必须大于0，不得超过奖励币余额'
+                    max: '转出金额须是' + $('#times').val() + '的倍数，不得超过' + $('#max').val()
                 },
                 tradePwd: {
                     required: '请输入交易密码',
