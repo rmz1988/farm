@@ -1,7 +1,9 @@
 define(function (require, exports, module) {
     var validator = require('validate/validate');
+    var upload = require('tools/upload');
 
     $(function () {
+        upload.imgUpload(basePath + '/feedback/uploadImg', basePath + '/feedback/deleteImg', 'pics');
 
         $('#feedbackForm').validate({
             rules: {
@@ -24,7 +26,8 @@ define(function (require, exports, module) {
             if ($('#feedbackForm').valid()) {
                 $.post(basePath + '/feedback/doPublish', {
                     'feedback.title': $.trim($('#title').val()),
-                    'feedback.content': UE.getEditor('content').getContent()
+                    'feedback.content': $.trim($('#content').val()),
+                    'feedback.pics':$('#uploadedPics').val()
                 }, function (response) {
                     if (response) {
                         alert('发布成功');

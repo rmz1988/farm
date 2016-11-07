@@ -30,6 +30,7 @@
                     <label class="col-md-2 control-label">
                         标题：
                     </label>
+
                     <div class="col-md-8">
                         <input type="text" class="form-control" id="title" name="title" placeholder="请填写反馈标题">
                     </div>
@@ -38,8 +39,17 @@
                     <label class="col-md-2 control-label">
                         反馈内容：
                     </label>
+
                     <div class="col-md-8">
-                        <div id="content"></div>
+                        <textarea class="form-control" name="content" id="content" cols="30" rows="10"
+                                  placeholder="请填写反馈内容"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="col-md-offset-2 col-md-10 rule-tip-lg">最多上传5张图片</span>
+
+                    <div class="col-md-10 col-md-offset-2">
+                        <data:imgUpload id="pics" name="pics"/>
                     </div>
                 </div>
                 <button id="feedbackPublishBtn" type="button" class="btn btn-success">
@@ -55,6 +65,7 @@
 </div>
 </body>
 </html>
+<%--
 <script src="${basePath}/js/ueditor/ueditor.config.js"></script>
 <script src="${basePath}/js/ueditor/ueditor.all.min.js"></script>
 <script>
@@ -77,3 +88,4 @@
         ]
     });
 </script>
+--%>

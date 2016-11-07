@@ -45,7 +45,7 @@ public class TradeController extends Controller {
 	 * 查询提现记录
 	 */
 	public void queryWithdrawList() {
-		User user = getSessionAttr("user");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		setAttr("page", Withdraw.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
 				"from withdraw where userId = ? order by createTime desc", user.getStr("userId")));
 
@@ -56,7 +56,7 @@ public class TradeController extends Controller {
 	 * 提现
 	 */
 	public void doWithdraw() {
-		final User user = getSessionAttr("user");
+		final User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		final String money = getPara("money");
 		boolean result = Db.tx(new IAtom() {
 
@@ -109,7 +109,7 @@ public class TradeController extends Controller {
 	 * 查询转账记录
 	 */
 	public void queryTransferList() {
-		User user = getSessionAttr("user");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		setAttr("page", Transfer.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
 				"from transfer where userId = ? order by createTime desc", user.getStr("userId")));
 
@@ -120,7 +120,7 @@ public class TradeController extends Controller {
 	 * 转出
 	 */
 	public void doTransfer() {
-		final User user = getSessionAttr("user");
+		final User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		final Transfer transferOut = getModel(Transfer.class, "transfer");
 
 		boolean result = Db.tx(new IAtom() {

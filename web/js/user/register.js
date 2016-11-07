@@ -64,13 +64,13 @@ define(function (require, exports, module) {
                     phone: '电话号码不合法'
                 },
                 bank: {
-                    required: '请选择开户行或支付宝'
+                    required: '请选择开户行'
                 },
                 bankAccountName: {
-                    required: '请输入银行开户名或支付宝昵称'
+                    required: '请输入银行开户名'
                 },
                 bankCard: {
-                    required: '请输入银行卡号或支付宝账号'
+                    required: '请输入银行卡号'
                 },
                 recommendUserId: {
                     required: '请输入推荐玩家编号',

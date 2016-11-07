@@ -30,6 +30,7 @@
                     <label class="col-md-2 control-label">
                         标题：
                     </label>
+
                     <div class="col-md-8 form-text">
                         ${feedback.title}
                     </div>
@@ -38,6 +39,7 @@
                     <label class="col-md-2 control-label">
                         反馈时间：
                     </label>
+
                     <div class="col-md-8 form-text">
                         <data:date value="${feedback.createTime}" fmt="yyyy-MM-dd HH:mm:ss"/>
                     </div>
@@ -46,6 +48,7 @@
                     <label class="col-md-2 control-label">
                         状态：
                     </label>
+
                     <div class="col-md-8 form-text">
                         <data:dict dictgroup="feedbackStatus" value="${feedback.status}"/>
                     </div>
@@ -55,6 +58,7 @@
                         <label class="col-md-2 control-label">
                             回复时间：
                         </label>
+
                         <div class="col-md-8 form-text">
                             <data:date value="${feedback.replyTime}" fmt="yyyy-MM-dd HH:mm:ss"/>
                         </div>
@@ -64,15 +68,32 @@
                     <label class="col-md-2 control-label">
                         反馈内容：
                     </label>
+
                     <div class="col-md-8 form-text">
                         ${feedback.content}
                     </div>
                 </div>
+                <c:if test="${not empty feedback.pics}">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            反馈图片：
+                        </label>
+
+                        <div class="col-md-8 form-text">
+                            <c:forEach var="pic" items="${fn:split(feedback.pics, ';')}">
+                                <div class="col-md-12">
+                                    <img class="img-thumbnail img-responsive" src="${sessionScope.imageUrl}${pic}"/>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
                 <c:if test="${feedback.status == 1}">
                     <div class="form-group">
                         <label class="col-md-2 control-label">
                             回复内容：
                         </label>
+
                         <div class="col-md-8 form-text">
                                 ${feedback.reply}
                         </div>
