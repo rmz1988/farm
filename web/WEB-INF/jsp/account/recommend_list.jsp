@@ -21,10 +21,13 @@
             <li class="active">推荐列表</li>
         </ol>
         <div class="content">
-            <div class="total-money-area">
+            <div class="total-money-area col-md-6">
                 <span>团队人数：${recommendResult[0]}</span>
             </div>
-            <c:forEach var="recommendList" items="${recommendResult[1]}" varStatus="st">
+            <div class="total-money-area col-md-6">
+                <span>直推人数：${recommendResult[1]}</span>
+            </div>
+            <c:forEach var="recommendList" items="${recommendResult[2]}" varStatus="st">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         第${st.index + 1}代

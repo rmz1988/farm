@@ -32,13 +32,14 @@ public class LeaderService {
 					LeaderRate leaderRate =
 							generation > 7 ? LeaderRate.dao.findById(999) : LeaderRate.dao.findById(generation);
 					String income = new Money(dailyOutput).multiply(leaderRate.getInt("rate")).divide(100).toString();
+					String actualIncome = moneyService.actualIncome(leaderUser.getStr("userId"),income);
 
 					//用户余额和今日收益增加相应提成
-					leaderUser.set("money", new Money(leaderUser.getStr("money")).add(income).toString())
-							.set("todayIncome", new Money(leaderUser.getStr("todayIncome")).add(income).toString())
+					leaderUser.set("money", new Money(leaderUser.getStr("money")).add(actualIncome).toString())
+							.set("todayIncome", new Money(leaderUser.getStr("todayIncome")).add(actualIncome).toString())
 							.update();
 					//记录用户领导奖收益记录
-					TotalIncome.dao.saveLeaderIncome(leaderUser, income);
+					TotalIncome.dao.saveLeaderIncome(leaderUser, actualIncome);
 
 					//获得领导奖的提成需要加到上一级用户
 					calcLeaderIncome(leaderUser, income);

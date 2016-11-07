@@ -23,10 +23,10 @@
                     <span class="tip">元</span>
                 </div>
                 <div class="goods-btn text-center">
-                    <button class="btn btn-success">
+                    <button type="button" class="btn btn-success">
                         购买
                     </button>
-                    <button class="btn btn-danger">
+                    <button type="button" class="btn btn-danger">
                         加入购物车
                     </button>
                 </div>

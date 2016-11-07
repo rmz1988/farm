@@ -27,7 +27,7 @@
             <td><data:dict dictgroup="activatedApplyStatus" value="${activeApply.status}"/></td>
             <td><data:date value="${activeApply.statusTime}" fmt="yyyy-MM-dd"/></td>
             <td>
-                <button id="${activeApply.applyId}" name="activeBtn" class="btn btn-info btn-sm"
+                <button type="button" id="${activeApply.applyId}" name="activeBtn" class="btn btn-info btn-sm"
                         <c:if test="${activeApply.status != 0}">disabled </c:if>>
                     激 活
                 </button>

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ActiveService {
 
-	public Page<ActiveApply> queryActiatedApplyList(String userId, String status, String activeNo, int pageNumber,
+	public Page<ActiveApply> queryActivatedApplyList(String userId, String status, String activeNo, int pageNumber,
 	                                                int pageSize) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sqlBuilder = new StringBuilder("from active_apply where activatedNo = ? ");
@@ -29,7 +29,7 @@ public class ActiveService {
 			paramList.add(status);
 		}
 
-		sqlBuilder.append("order by applyTime desc");
+		sqlBuilder.append("order by status asc,applyTime desc");
 
 		return ActiveApply.dao.paginate(pageNumber, pageSize, "select *", sqlBuilder.toString(), paramList.toArray());
 	}

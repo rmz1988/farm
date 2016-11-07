@@ -134,7 +134,7 @@ public class AccountController extends Controller {
 		setAttr("userId", userId);
 		setAttr("status", status);
 		setAttr("page", activeService
-				.queryActiatedApplyList(userId, status, user.getStr("activeNo"), getParaToInt("pageNumber", 1),
+				.queryActivatedApplyList(userId, status, user.getStr("activeNo"), getParaToInt("pageNumber", 1),
 						getParaToInt("pageSize", 20)));
 
 		render("activate_manage_list.jsp");
@@ -152,53 +152,59 @@ public class AccountController extends Controller {
 			public boolean run() throws SQLException {
 				//修改用户激活状态
 				ActiveApply activeApply = ActiveApply.dao.findById(applyId);
-				User activatedUser = User.dao.findById(activeApply.getStr("userId"));
-				Pet pet = activatedUser.getUserPet();
+				if("0".equals(activeApply.getStr("status"))) {
+					User activatedUser = User.dao.findById(activeApply.getStr("userId"));
+					Pet pet = activatedUser.getUserPet();
 
-				String activeDecrease = OtherRate.dao.findById("active_decrease_rate").getStr("rate");
-				String activeGet = OtherRate.dao.findById("active_get_rate").getStr("rate");
+					String activeDecrease = OtherRate.dao.findById("active_decrease_rate").getStr("rate");
+					String activeGet = OtherRate.dao.findById("active_get_rate").getStr("rate");
 
-				if (Double.parseDouble(activeDecrease) > Double.parseDouble(user.getStr("activeMoney"))) {
-					return false;
-				} else {
-					activeApply.set("status", "1")
-							.set("statusTime", System.currentTimeMillis())
-							.update();
-					activatedUser.set("status", "2").set("activateTime", System.currentTimeMillis()).update();
-					//为用户生成宠物生命周期，生存1天
-					new PetLifecycle().set("userId", activatedUser.getStr("userId"))
-							.set("petNo", activatedUser.getStr("petNo"))
-							.set("liveDays", 1)
-							.set("overtimeDays", pet.getInt("lifecycle"))
-							.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
-							.set("dailyOutput", Money.format(Double.parseDouble(pet.getStr("dailyOutput"))))
-							.set("dailyOutputRate", OtherRate.dao.findById("daily_output_normal_rate").getStr("rate"))
-							.set("totalOutput", "0.00")
-							.set("createTime", System.currentTimeMillis())
-							.set("status", "1")
-							.save();
-					//扣除操作员相应（300）激活币，如果激活币不足300，则激活失败；若成功，增加操作员激活奖励（余额）
-					user.set("activeMoney",
-							new Money(user.getStr("activeMoney")).subtract(activeDecrease).toString())
-							.set("money", new Money(user.getStr("money")).add(activeGet).toString())
-							.update();
+					if (Double.parseDouble(activeDecrease) > Double.parseDouble(user.getStr("activeMoney"))) {
+						return false;
+					} else {
+						activeApply.set("status", "1")
+								.set("statusTime", System.currentTimeMillis())
+								.update();
+						activatedUser.set("status", "2").set("activateTime", System.currentTimeMillis()).update();
+						//为用户生成宠物生命周期，生存1天
+						new PetLifecycle().set("userId", activatedUser.getStr("userId"))
+								.set("petNo", activatedUser.getStr("petNo"))
+								.set("liveDays", 1)
+								.set("overtimeDays", pet.getInt("lifecycle"))
+								.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
+								.set("dailyOutput", Money.format(Double.parseDouble(pet.getStr("dailyOutput"))))
+								.set("dailyOutputRate",
+										OtherRate.dao.findById("daily_output_normal_rate").getStr("rate"))
+								.set("totalOutput", "0.00")
+								.set("createTime", System.currentTimeMillis())
+								.set("status", "1")
+								.save();
+						//扣除操作员相应（300）激活币，如果激活币不足300，则激活失败；若成功，增加操作员激活奖励（余额）
+						user.set("activeMoney",
+								new Money(user.getStr("activeMoney")).subtract(activeDecrease).toString())
+								.set("money", new Money(user.getStr("money")).add(activeGet).toString())
+								.update();
 
-					//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
-					if (!moneyService.isOverDailyIncome(activatedUser.getStr("recommendUserId"))) {
-						recommendService.saveRecommendIncome(activatedUser, "0");
+						//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
+						if (!moneyService.isOverDailyIncome(activatedUser.getStr("recommendUserId"))) {
+							recommendService.saveRecommendIncome(activatedUser, "0");
+						}
+
+						//操作员记录激活收益
+						new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
+								.set("name", activatedUser.getStr("name"))
+								.set("income", activeGet)
+								.set("createTime", System.currentTimeMillis())
+								.set("userId", user.getStr("userId"))
+								.save();
+						TotalIncome.dao.saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
+
+
+						return true;
 					}
-
-					//操作员记录激活收益
-					new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
-							.set("name", activatedUser.getStr("name"))
-							.set("income", activeGet)
-							.set("createTime", System.currentTimeMillis())
-							.set("userId", user.getStr("userId"))
-							.save();
-					TotalIncome.dao.saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
-
-					return true;
 				}
+
+				return true;
 			}
 		});
 

@@ -87,7 +87,7 @@
                             </p>
 
                             <p>
-                                价值：${pet.price}奖励币
+                                价值：${pet.price}元
                             </p>
 
                             <p>
@@ -99,7 +99,7 @@
                             </p>
 
                             <p>
-                                今日币产量：${petDailyOutput}元
+                                每日币产：30/39元
                             </p>
                         </div>
                     </div>

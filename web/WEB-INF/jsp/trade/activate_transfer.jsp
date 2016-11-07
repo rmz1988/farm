@@ -31,8 +31,8 @@
                 </span>
                 </c:when>
                 <c:otherwise>
-                    <div class="balance-tip col-md-6">
-                        <span>奖励币余额：</span>
+                    <div class="balance-tip col-md-4">
+                        <span>奖励币：</span>
                         <span class="money-img">
                             <img src="${basePath}/images/money.png" alt="">
                         </span>
@@ -40,8 +40,17 @@
                                 ${user.money}
                         </span>
                     </div>
-                    <div class="balance-tip col-md-6">
-                        <span>激活币余额：</span>
+                    <div class="balance-tip col-md-4">
+                        <span>可转金额：</span>
+                        <span class="money-img">
+                            <img src="${basePath}/images/money.png" alt="">
+                        </span>
+                        <span>
+                                ${allowMoney}
+                        </span>
+                    </div>
+                    <div class="balance-tip col-md-4">
+                        <span>激活币：</span>
                         <span class="money-img">
                             <img src="${basePath}/images/money.png" alt="">
                         </span>

@@ -24,6 +24,20 @@ public class MoneyService {
 	}
 
 	/**
+	 * 获取实际收益
+	 *
+	 * @param userId       用户Id
+	 * @param expectIncome 期望收益
+	 */
+	public String actualIncome(String userId, String expectIncome) {
+		String maxDailyIncome = OtherRate.dao.findById("daily_input_limit").getStr("rate");
+		String todayIncome = User.dao.findById(userId).getStr("todayIncome");
+
+		Money leftIncome = new Money(maxDailyIncome).subtract(todayIncome);
+		return leftIncome.doubleValue() > Double.parseDouble(expectIncome) ? expectIncome : leftIncome.toString();
+	}
+
+	/**
 	 * 获取每日宠物产币量
 	 *
 	 * @param userId 用户id
@@ -40,34 +54,24 @@ public class MoneyService {
 		return output.toString();
 	}
 
-	public String getPetDailyOutputTip(String userId) {
-		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
-				.find("select * from pet_lifecycle where userId = ? and status = '1' and liveDays > 0", userId);
-		StringBuilder tipBuilder = new StringBuilder();
-		for (PetLifecycle lifecycle : petLifecycleList) {
-			tipBuilder.append(lifecycle.getStr("dailyOutput")).append("/");
-		}
-
-		return tipBuilder.deleteCharAt(tipBuilder.lastIndexOf("/")).toString();
-	}
-
 	/**
 	 * 修改宠物生命周期金币产量
 	 *
 	 * @param userId 用户Id
 	 */
-	public void saveDailyOutput(String userId) {
+	public void saveDailyOutput(String userId, String dailyOutput) {
 		List<PetLifecycle> lifecycleList = PetLifecycle.dao
 				.find("select * from pet_lifecycle where status = '1' and liveDays > 0 and userId = ?", userId);
 		for (PetLifecycle lifecycle : lifecycleList) {
 			lifecycle.set("totalOutput",
-					new Money(lifecycle.getStr("totalOutput")).add(lifecycle.getStr("dailyOutput")).toString())
+					new Money(lifecycle.getStr("totalOutput")).add(dailyOutput).toString())
 					.update();
 		}
 	}
 
 	/**
 	 * 查询产币总量
+	 *
 	 * @param userId 用户id
 	 */
 	public String getTotalOutput(String userId) {

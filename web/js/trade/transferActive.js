@@ -18,7 +18,7 @@ define(function (require, exports, module) {
             }, messages: {
                 money: {
                     required: '请填写转换金额',
-                    max: '转出金额须是' + $('#times').val() + '的倍数，不得超过' + $('#max').val()
+                    maxOfTimes: '转出金额须是' + $('#times').val() + '的倍数，不得超过' + $('#max').val()
                 },
                 tradePwd: {
                     required: '请输入交易密码',

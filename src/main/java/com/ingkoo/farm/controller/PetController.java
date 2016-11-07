@@ -34,14 +34,13 @@ public class PetController extends Controller {
 	public void index() {
 		setAttr("current", "pet");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("petDailyOutput", moneyService.getPetDailyOutputTip(user.getStr("userId")));
 		setAttr("total", user.getStr("money"));
 		setAttr("isFeed", user.getStr("isFeed"));
 		setAttr("repurchase", user.getInt("todayRepurchase"));
 		setAttr("pet", user.getUserPet());
 		setAttr("repurchaseLimit", OtherRate.dao.findById("daily_repurchase_limit").getStr("rate"));
 		setAttr("overIncome", moneyService.isOverDailyIncome(user.getStr("userId")));
-		setAttr("totalOutput",moneyService.getTotalOutput(user.getStr("userId")));
+		setAttr("totalOutput", moneyService.getTotalOutput(user.getStr("userId")));
 		render("pet.jsp");
 	}
 
@@ -66,14 +65,15 @@ public class PetController extends Controller {
 			//修改用户状态，今日已喂养
 			//用户余额以及每日收入增加当日产币量
 			final String dailyPetOutput = moneyService.getPetDailyOutput(userId);
+			String actualIncome = moneyService.actualIncome(userId, dailyPetOutput);
 			user.set("isFeed", "1")
-					.set("money", new Money(user.getStr("money")).add(dailyPetOutput).toString())
-					.set("todayIncome", new Money(user.getStr("todayIncome")).add(dailyPetOutput).toString())
+					.set("money", new Money(user.getStr("money")).add(actualIncome).toString())
+					.set("todayIncome", new Money(user.getStr("todayIncome")).add(actualIncome).toString())
 					.update();
 			//修改宠物生命周期
-			moneyService.saveDailyOutput(userId);
+			moneyService.saveDailyOutput(userId, actualIncome);
 			//记录总收益记录
-			TotalIncome.dao.savePetOutput(user, dailyPetOutput);
+			TotalIncome.dao.savePetOutput(user, actualIncome);
 			//计算领导奖，该用户上级的日产币额收益，记录相应收益记录
 			es.submit(new Runnable() {
 

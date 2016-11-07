@@ -49,10 +49,10 @@
                 银行卡号：<data:bankcard value="${user.bankCard}"/>
             </p>
             <p>
-                <button id="loginPwdBtn" class="btn btn-success">
+                <button id="loginPwdBtn" type="button" class="btn btn-success">
                     修改登录密码
                 </button>
-                <button id="tradePwdBtn" class="btn btn-success">
+                <button id="tradePwdBtn" type="button" class="btn btn-success">
                     修改交易密码
                 </button>
             </p>

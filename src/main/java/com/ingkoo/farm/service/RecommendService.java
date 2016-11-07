@@ -6,6 +6,7 @@ import com.ingkoo.farm.model.RecommendIncome;
 import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.utils.Money;
+import com.jfinal.plugin.activerecord.Db;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
 public class RecommendService {
 
 	private LeaderService leaderService = new LeaderService();
+	private MoneyService moneyService = new MoneyService();
 	public static final Object recommendLock = new Object();
 
 	private static ExecutorService es = Executors.newFixedThreadPool(5);
@@ -39,10 +41,13 @@ public class RecommendService {
 			String recommendRate = "0".equals(type) ? OtherRate.dao.findById("redirect_recommend_rate").getStr("rate") :
 					OtherRate.dao.findById("redirect_repurchase_rate").getStr("rate");
 			//直推收益
-			final String recommendIncome =
+			final String income =
 					new Money(pet.getStr("price")).multiply(new Money(recommendRate)).divide(100).toString();
-
 			final User recommendUser = User.dao.findById(user.getStr("recommendUserId"));
+
+			//判断实际收益
+			final String recommendIncome = moneyService.actualIncome(recommendUser.getStr("userId"), income);
+
 			//修改推荐人金币余额和当天已获得收益,添加已推荐人数量
 			recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
 					.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString())
@@ -62,7 +67,7 @@ public class RecommendService {
 
 				@Override
 				public void run() {
-					leaderService.calcLeaderIncome(recommendUser, recommendIncome);
+					leaderService.calcLeaderIncome(recommendUser, income);
 				}
 			});
 		}
@@ -72,10 +77,10 @@ public class RecommendService {
 	 * 查询推荐，递归展示
 	 *
 	 * @param user 玩家
-	 * @return 数组，0：团队人数，1：团队列表
+	 * @return 数组，0：团队人数，1:直推人数，2：团队列表
 	 */
 	public Object[] queryRecommendList(User user) {
-		Object[] recommendResult = new Object[2];
+		Object[] recommendResult = new Object[3];
 		List<List<User>> recommendLevelList = new ArrayList<>();
 		List<User> parentUserList = Arrays.asList(user);
 		int teamCount = 0;
@@ -100,7 +105,8 @@ public class RecommendService {
 		}
 
 		recommendResult[0] = teamCount;
-		recommendResult[1] = recommendLevelList;
+		recommendResult[1] = Db.queryLong("select count(*) from user where recommendUserId = ? and status = '2'", user.getStr("userId"));
+		recommendResult[2] = recommendLevelList;
 
 		return recommendResult;
 	}
