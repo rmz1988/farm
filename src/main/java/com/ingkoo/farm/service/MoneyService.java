@@ -14,13 +14,17 @@ import java.util.List;
  */
 public class MoneyService {
 
+	public static final Object MONEY_LOCK = new Object();
+
 	/**
 	 * 判断今日收入是否达到上限
 	 */
 	public boolean isOverDailyIncome(String userId) {
-		User user = User.dao.findById(userId);
-		return Double.parseDouble(user.getStr("todayIncome")) >=
-				Double.parseDouble(OtherRate.dao.findById("daily_input_limit").getStr("rate"));
+		synchronized (MONEY_LOCK) {
+			User user = User.dao.findById(userId);
+			return Double.parseDouble(user.getStr("todayIncome")) >=
+					Double.parseDouble(OtherRate.dao.findById("daily_input_limit").getStr("rate"));
+		}
 	}
 
 	/**
@@ -30,11 +34,13 @@ public class MoneyService {
 	 * @param expectIncome 期望收益
 	 */
 	public String actualIncome(String userId, String expectIncome) {
-		String maxDailyIncome = OtherRate.dao.findById("daily_input_limit").getStr("rate");
-		String todayIncome = User.dao.findById(userId).getStr("todayIncome");
+		synchronized (MONEY_LOCK) {
+			String maxDailyIncome = OtherRate.dao.findById("daily_input_limit").getStr("rate");
+			String todayIncome = User.dao.findById(userId).getStr("todayIncome");
 
-		Money leftIncome = new Money(maxDailyIncome).subtract(todayIncome);
-		return leftIncome.doubleValue() > Double.parseDouble(expectIncome) ? expectIncome : leftIncome.toString();
+			Money leftIncome = new Money(maxDailyIncome).subtract(todayIncome);
+			return leftIncome.doubleValue() > Double.parseDouble(expectIncome) ? expectIncome : leftIncome.toString();
+		}
 	}
 
 	/**
@@ -43,15 +49,17 @@ public class MoneyService {
 	 * @param userId 用户id
 	 */
 	public String getPetDailyOutput(String userId) {
-		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
-				.find("select * from pet_lifecycle where userId = ? and status = '1' and liveDays > 0", userId);
+		synchronized (MONEY_LOCK) {
+			List<PetLifecycle> petLifecycleList = PetLifecycle.dao
+					.find("select * from pet_lifecycle where userId = ? and status = '1' and liveDays > 0", userId);
 
-		Money output = new Money("0.00");
-		for (PetLifecycle lifecycle : petLifecycleList) {
-			output = output.add(lifecycle.getStr("dailyOutput"));
+			Money output = new Money("0.00");
+			for (PetLifecycle lifecycle : petLifecycleList) {
+				output = output.add(lifecycle.getStr("dailyOutput"));
+			}
+
+			return output.toString();
 		}
-
-		return output.toString();
 	}
 
 	/**
@@ -60,12 +68,14 @@ public class MoneyService {
 	 * @param userId 用户Id
 	 */
 	public void saveDailyOutput(String userId, String dailyOutput) {
-		List<PetLifecycle> lifecycleList = PetLifecycle.dao
-				.find("select * from pet_lifecycle where status = '1' and liveDays > 0 and userId = ?", userId);
-		for (PetLifecycle lifecycle : lifecycleList) {
-			lifecycle.set("totalOutput",
-					new Money(lifecycle.getStr("totalOutput")).add(dailyOutput).toString())
-					.update();
+		synchronized (MONEY_LOCK) {
+			List<PetLifecycle> lifecycleList = PetLifecycle.dao
+					.find("select * from pet_lifecycle where status = '1' and liveDays > 0 and userId = ?", userId);
+			for (PetLifecycle lifecycle : lifecycleList) {
+				lifecycle.set("totalOutput",
+						new Money(lifecycle.getStr("totalOutput")).add(dailyOutput).toString())
+						.update();
+			}
 		}
 	}
 
@@ -75,14 +85,16 @@ public class MoneyService {
 	 * @param userId 用户id
 	 */
 	public String getTotalOutput(String userId) {
-		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
-				.find("select * from pet_lifecycle where userId = ? and liveDays > 0", userId);
+		synchronized (MONEY_LOCK) {
+			List<PetLifecycle> petLifecycleList = PetLifecycle.dao
+					.find("select * from pet_lifecycle where userId = ? and liveDays > 0", userId);
 
-		Money output = new Money("0.00");
-		for (PetLifecycle lifecycle : petLifecycleList) {
-			output = output.add(lifecycle.getStr("totalOutput"));
+			Money output = new Money("0.00");
+			for (PetLifecycle lifecycle : petLifecycleList) {
+				output = output.add(lifecycle.getStr("totalOutput"));
+			}
+
+			return output.toString();
 		}
-
-		return output.toString();
 	}
 }

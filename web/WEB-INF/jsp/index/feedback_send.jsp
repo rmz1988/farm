@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <span class="col-md-offset-2 col-md-10 rule-tip-lg">最多上传5张图片</span>
+                    <span class="col-md-offset-2 col-md-10 rule-tip-lg">最多上传5张图片,每张大小不超过2Mb</span>
 
                     <div class="col-md-10 col-md-offset-2">
                         <data:imgUpload id="pics" name="pics"/>

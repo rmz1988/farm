@@ -21,34 +21,38 @@ public class LeaderService {
 	 * @param user        基本用户
 	 * @param dailyOutput 每日产币金额
 	 */
-	public synchronized void calcLeaderIncome(User user, String dailyOutput) {
-		int generation = 1;
-		while (true) {
-			//存在上级，则计算领导奖
-			if (StringUtils.isNotEmpty(user.getStr("recommendUserId"))) {
-				User leaderUser = User.dao.findById(user.getStr("recommendUserId"));
-				if (!moneyService.isOverDailyIncome(leaderUser.getStr("userId"))) {
-					//计算当代用户应获得的提成
-					LeaderRate leaderRate =
-							generation > 7 ? LeaderRate.dao.findById(999) : LeaderRate.dao.findById(generation);
-					String income = new Money(dailyOutput).multiply(leaderRate.getInt("rate")).divide(100).toString();
-					String actualIncome = moneyService.actualIncome(leaderUser.getStr("userId"),income);
+	public void calcLeaderIncome(User user, String dailyOutput) {
+		synchronized (MoneyService.MONEY_LOCK) {
+			int generation = 1;
+			while (true) {
+				//存在上级，则计算领导奖
+				if (StringUtils.isNotEmpty(user.getStr("recommendUserId"))) {
+					User leaderUser = User.dao.findById(user.getStr("recommendUserId"));
+					if (!moneyService.isOverDailyIncome(leaderUser.getStr("userId"))) {
+						//计算当代用户应获得的提成
+						LeaderRate leaderRate =
+								generation > 7 ? LeaderRate.dao.findById(999) : LeaderRate.dao.findById(generation);
+						String income =
+								new Money(dailyOutput).multiply(leaderRate.getInt("rate")).divide(100).toString();
+						String actualIncome = moneyService.actualIncome(leaderUser.getStr("userId"), income);
 
-					//用户余额和今日收益增加相应提成
-					leaderUser.set("money", new Money(leaderUser.getStr("money")).add(actualIncome).toString())
-							.set("todayIncome", new Money(leaderUser.getStr("todayIncome")).add(actualIncome).toString())
-							.update();
-					//记录用户领导奖收益记录
-					TotalIncome.dao.saveLeaderIncome(leaderUser, actualIncome);
+						//用户余额和今日收益增加相应提成
+						leaderUser.set("money", new Money(leaderUser.getStr("money")).add(actualIncome).toString())
+								.set("todayIncome",
+										new Money(leaderUser.getStr("todayIncome")).add(actualIncome).toString())
+								.update();
+						//记录用户领导奖收益记录
+						TotalIncome.dao.saveLeaderIncome(leaderUser, actualIncome);
 
-					//获得领导奖的提成需要加到上一级用户
-					calcLeaderIncome(leaderUser, income);
+						//获得领导奖的提成需要加到上一级用户
+						calcLeaderIncome(leaderUser, income);
+					}
+
+					generation++;
+					user = leaderUser;
+				} else {
+					break;
 				}
-
-				generation++;
-				user = leaderUser;
-			} else {
-				break;
 			}
 		}
 	}

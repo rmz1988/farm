@@ -27,9 +27,6 @@ import java.util.Random;
  */
 public class RegisterController extends Controller {
 
-	private MoneyService moneyService = new MoneyService();
-	private RecommendService recommendService = new RecommendService();
-
 	public void index() {
 		setAttr("imgUrl", OtherRate.dao.findById("img_url").getStr("rate"));
 		setAttr("petList", Pet.dao.find("select * from pet"));

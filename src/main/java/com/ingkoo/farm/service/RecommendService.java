@@ -23,7 +23,6 @@ public class RecommendService {
 
 	private LeaderService leaderService = new LeaderService();
 	private MoneyService moneyService = new MoneyService();
-	public static final Object recommendLock = new Object();
 
 	private static ExecutorService es = Executors.newFixedThreadPool(5);
 
@@ -35,7 +34,7 @@ public class RecommendService {
 	 * @param type 0:直推玩家提成，1：玩家复购提成
 	 */
 	public void saveRecommendIncome(User user, String type) {
-		synchronized (recommendLock) {
+		synchronized (MoneyService.MONEY_LOCK) {
 			Pet pet = Pet.dao.findById(user.getStr("petNo"));
 			//直推提成比例
 			String recommendRate = "0".equals(type) ? OtherRate.dao.findById("redirect_recommend_rate").getStr("rate") :
