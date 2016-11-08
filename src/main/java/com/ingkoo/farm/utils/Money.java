@@ -115,6 +115,7 @@ public final class Money {
 	 * 格式化金额，格式：0.00
 	 */
 	public static String format(Number value) {
+		df.setRoundingMode(RoundingMode.DOWN);
 		return df.format(value);
 	}
 

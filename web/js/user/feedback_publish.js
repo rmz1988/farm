@@ -9,11 +9,17 @@ define(function (require, exports, module) {
             rules: {
                 title: {
                     required: true
+                },
+                content: {
+                    required: true
                 }
             },
             messages: {
                 title: {
                     required: '请填写反馈标题'
+                },
+                content: {
+                    required: '请填写反馈内容'
                 }
             }
         });
@@ -27,7 +33,7 @@ define(function (require, exports, module) {
                 $.post(basePath + '/feedback/doPublish', {
                     'feedback.title': $.trim($('#title').val()),
                     'feedback.content': $.trim($('#content').val()),
-                    'feedback.pics':$('#uploadedPics').val()
+                    'feedback.pics': $('#uploadedPics').val()
                 }, function (response) {
                     if (response) {
                         alert('发布成功');
