@@ -18,6 +18,7 @@
         <th>奖励币转激活币</th>
         <th>提现</th>
         <th>系统维护费</th>
+        <th>今日收益</th>
         <th>累计收益</th>
         <th>日期</th>
     </tr>
@@ -35,6 +36,9 @@
             <td>${total.transferToActive}</td>
             <td>${total.withdrawOutput}</td>
             <td>${total.operationFee}</td>
+            <td><fmt:formatNumber
+                    value="${total.output+total.recommendIncome+total.leaderIncome + total.activeIncome+total.transferIncome-total.repurchase-total.transferOutput-total.transferToActive-total.withdrawOutput-total.operationFee}"
+                    pattern="0.00"/></td>
             <td>${total.currentTotal}</td>
             <td>${total.createTime}</td>
         </tr>
