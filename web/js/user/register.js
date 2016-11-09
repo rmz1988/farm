@@ -83,8 +83,46 @@ define(function (require, exports, module) {
             }
         });
 
-        $('#userId,#name,#mobile,#idCard,#bank,#bankAccountName,#bankCard,#recommendUserId,#activatedNo').blur(function () {
+        $('#userId,#name,#mobile,#idCard,#bank,#bankAccountName,#bankCard').blur(function () {
             $(this).valid();
+        });
+
+        $('#recommendUserId').blur(function () {
+            var userId = $(this).val();
+            if ($(this).valid()) {
+                $.post(basePath + '/register/getNameByUserId', {
+                    userId: userId
+                }, function (name) {
+                    if (name != '') {
+                        $('#recommendUserName').html(name);
+                        $('#recommendUserArea').show();
+                    } else {
+                        $('#recommendUserArea').hide();
+                    }
+                })
+            } else {
+                $('#recommendUserName').html('');
+                $('#recommendUserArea').hide();
+            }
+        });
+
+        $('#activatedNo').blur(function () {
+            var activeNo = $(this).val();
+            if ($(this).valid()) {
+                $.post(basePath + '/register/getNameByActiveNo', {
+                    activeNo: activeNo
+                }, function (name) {
+                    if (name != '') {
+                        $('#activeUserName').html(name);
+                        $('#activeUserArea').show();
+                    } else {
+                        $('#activeUserArea').hide();
+                    }
+                })
+            } else {
+                $('#activeUserName').html('');
+                $('#activeUserArea').hide();
+            }
         });
 
         $('#registerBtn').click(function () {

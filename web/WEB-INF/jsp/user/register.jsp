@@ -126,6 +126,10 @@
                         <input type="text" id="recommendUserId" name="recommendUserId" class="form-control"
                                placeholder="请填写您的推荐人编号" maxlength="60">
                     </div>
+                    <div id="recommendUserArea" class="col-md-6 col-md-offset-2" style="display:none;">
+                        <span>推荐人：</span>
+                        <span id="recommendUserName"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
@@ -135,6 +139,10 @@
                     <div class="col-md-6">
                         <input type="text" id="activatedNo" name="activatedNo" class="form-control"
                                placeholder="请填写您的激活中心编号：3位数字" maxlength="3">
+                    </div>
+                    <div id="activeUserArea" class="col-md-6 col-md-offset-2" style="display:none;">
+                        <span>激活人：</span>
+                        <span id="activeUserName"></span>
                     </div>
                 </div>
                 <div class="form-group">

@@ -35,6 +35,23 @@ public class RegisterController extends Controller {
 	}
 
 	/**
+	 * 获取用户姓名
+	 */
+	public void getNameByUserId() {
+		String userId = getPara("userId");
+		User user = User.dao.findById(userId);
+
+		render(new JsonRender(user == null ? "" : user.getStr("name")).forIE());
+	}
+
+	public void getNameByActiveNo() {
+		String activeNo = getPara("activeNo");
+		User user = User.dao.findFirst("select * from user where activeNo = ?", activeNo);
+
+		render(new JsonRender(user == null ? "" : user.getStr("name")).forIE());
+	}
+
+	/**
 	 * 注册
 	 */
 	public void doRegister() {
