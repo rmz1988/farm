@@ -14,7 +14,11 @@
 </head>
 <body>
 <div class="container">
-    <div class="title"></div>
+    <div class="title">
+        <div class="title-brand">
+            开鑫牧场
+        </div>
+    </div>
     <div class="row">
         <ol class="breadcrumb">
             <li>当前位置：</li>

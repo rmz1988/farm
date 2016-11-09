@@ -3,4 +3,11 @@
 <%@attribute name="dictgroup" required="true" rtexprvalue="false" %>
 <%@attribute name="value" required="true" rtexprvalue="true" %>
 
-<%=Dict.dao.getDictValue(dictgroup, value)%>
+<%
+    Dict dict = Dict.dao.findFirst("select * from dict where dictGroup = ? and dictName = ?", dictgroup, value);
+    String dictValue = "";
+    if (dict != null) {
+        dictValue = dict.getStr("dictValue");
+    }
+%>
+<%=dictValue %>

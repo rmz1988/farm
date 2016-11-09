@@ -10,11 +10,12 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#farmMenu">
+                    data-target="#farmMenu" style="color:#fff;">
                 <span class="sr-only">菜单</span>
+                <%--<span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>--%>
+                更多
             </button>
             <a class="navbar-title navbar-brand" href="${basePath}/">开鑫牧场</a>
         </div>
