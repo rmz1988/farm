@@ -48,8 +48,8 @@
         </div>
     </form>
 </div>
-<div style="position: absolute;left:0;bottom:0;width: 100%;">
-    <jsp:include page="/foot.jsp" flush="true"/>
-</div>
+<%--<div style="position: absolute;left:0;bottom:0;width: 100%;">--%>
+    <%--<jsp:include page="/foot.jsp" flush="true"/>--%>
+<%--</div>--%>
 </body>
 </html>
