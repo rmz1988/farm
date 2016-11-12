@@ -62,7 +62,7 @@ define(function (require, exports, module) {
             rules: {
                 oldTradePwd: {
                     required: true,
-                    loginPwd: true
+                    tradePwd: true
                 },
                 tradePwd: {
                     required: true
@@ -75,7 +75,7 @@ define(function (require, exports, module) {
             messages: {
                 oldTradePwd: {
                     required: '请输入原交易密码',
-                    loginPwd: '交易密码不正确'
+                    tradePwd: '交易密码不正确'
                 },
                 tradePwd: {
                     required: '请输入新交易密码'
