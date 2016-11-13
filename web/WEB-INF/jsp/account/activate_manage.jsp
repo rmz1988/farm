@@ -25,6 +25,11 @@
         </ol>
         <div class="content">
             <c:choose>
+                <c:when test="${canVisit == false}">
+                    <span class="rule-tip-lg">
+                        激活管理允许访问时间：每天6:00 —— 23:00
+                    </span>
+                </c:when>
                 <c:when test="${empty user.activeNo}">
                <span class="rule-tip-lg">
                    您暂不具备激活中心管理权限，请点击菜单【账号管理】-【申请激活中心】进行申请。

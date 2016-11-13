@@ -3,8 +3,10 @@ package com.ingkoo.farm.service;
 import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.PetLifecycle;
 import com.ingkoo.farm.model.User;
+import com.ingkoo.farm.utils.DateUtils;
 import com.ingkoo.farm.utils.Money;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +17,15 @@ import java.util.List;
 public class MoneyService {
 
 	public static final Object MONEY_LOCK = new Object();
+
+	/**
+	 * 当前时间段是否可以访问页面
+	 * 早6点到晚11点可以访问
+	 */
+	public boolean canVisit() {
+		int currentTime = Integer.parseInt(DateUtils.format(new Date(), "HH"));
+		return currentTime >= 6 && currentTime < 23;
+	}
 
 	/**
 	 * 判断今日收入是否达到上限
