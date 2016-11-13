@@ -43,16 +43,21 @@
                                     <c:if test="${isFeed == 1}">disabled</c:if>>
                                 喂养
                             </button>
+                            <span id="feedTip">
                             <c:if test="${isFeed == 1}">
                                 （今日已喂养）
                             </c:if>
+                            </span>
                             <span class="rule-tip">每日喂养产生30/39元，每天只能喂养1次。</span>
                         </p>
                         <p>
                             <button id="repurchaseBtn" type="button" class="btn btn-info btn-lg"
-                                    <c:if test="${total <= pet.price || repurchase >= repurchaseLimit}">disabled</c:if>>
+                                    <c:if test="${total + 0 <= pet.price + 0 || repurchase + 0 >= repurchaseLimit + 0}">disabled</c:if>>
                                 复购
                             </button>
+                            <span id="repurchaseTip">
+
+                            </span>
                             <span class="rule-tip">复购将消耗${pet.price}奖励币，当前奖励币：${total}。</span>
                             <span class="rule-tip">每天复购不超过${repurchaseLimit}次，今日已复购${repurchase}次。</span>
                         </p>

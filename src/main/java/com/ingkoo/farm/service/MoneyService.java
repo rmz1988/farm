@@ -20,11 +20,9 @@ public class MoneyService {
 	 * 判断今日收入是否达到上限
 	 */
 	public boolean isOverDailyIncome(String userId) {
-		synchronized (MONEY_LOCK) {
-			User user = User.dao.findById(userId);
-			return Double.parseDouble(user.getStr("todayIncome")) >=
-					Double.parseDouble(OtherRate.dao.findById("daily_input_limit").getStr("rate"));
-		}
+		User user = User.dao.findById(userId);
+		return Double.parseDouble(user.getStr("todayIncome")) >=
+				Double.parseDouble(OtherRate.dao.findById("daily_input_limit").getStr("rate"));
 	}
 
 	/**
@@ -49,17 +47,15 @@ public class MoneyService {
 	 * @param userId 用户id
 	 */
 	public String getPetDailyOutput(String userId) {
-		synchronized (MONEY_LOCK) {
-			List<PetLifecycle> petLifecycleList = PetLifecycle.dao
-					.find("select * from pet_lifecycle where userId = ? and status = '1' and liveDays > 0", userId);
+		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
+				.find("select * from pet_lifecycle where userId = ? and status = '1' and liveDays > 0", userId);
 
-			Money output = new Money("0.00");
-			for (PetLifecycle lifecycle : petLifecycleList) {
-				output = output.add(lifecycle.getStr("dailyOutput"));
-			}
-
-			return output.toString();
+		Money output = new Money("0.00");
+		for (PetLifecycle lifecycle : petLifecycleList) {
+			output = output.add(lifecycle.getStr("dailyOutput"));
 		}
+
+		return output.toString();
 	}
 
 	/**
@@ -85,16 +81,14 @@ public class MoneyService {
 	 * @param userId 用户id
 	 */
 	public String getTotalOutput(String userId) {
-		synchronized (MONEY_LOCK) {
-			List<PetLifecycle> petLifecycleList = PetLifecycle.dao
-					.find("select * from pet_lifecycle where userId = ? and liveDays > 0", userId);
+		List<PetLifecycle> petLifecycleList = PetLifecycle.dao
+				.find("select * from pet_lifecycle where userId = ? and liveDays > 0", userId);
 
-			Money output = new Money("0.00");
-			for (PetLifecycle lifecycle : petLifecycleList) {
-				output = output.add(lifecycle.getStr("totalOutput"));
-			}
-
-			return output.toString();
+		Money output = new Money("0.00");
+		for (PetLifecycle lifecycle : petLifecycleList) {
+			output = output.add(lifecycle.getStr("totalOutput"));
 		}
+
+		return output.toString();
 	}
 }

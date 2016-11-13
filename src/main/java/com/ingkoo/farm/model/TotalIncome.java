@@ -257,7 +257,7 @@ public class TotalIncome extends Model<TotalIncome> {
 						.findFirst("select * from total_income where userId = ? and createTime = ?",
 								user.getStr("userId"), yesterday);
 				new TotalIncome().set("operationFee", output)
-						.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
+						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
@@ -297,7 +297,7 @@ public class TotalIncome extends Model<TotalIncome> {
 						.findFirst("select * from total_income where userId = ? and createTime = ?",
 								user.getStr("userId"), yesterday);
 				new TotalIncome().set("withdrawOutput", output)
-						.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
+						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
@@ -337,7 +337,7 @@ public class TotalIncome extends Model<TotalIncome> {
 						.findFirst("select * from total_income where userId = ? and createTime = ?",
 								user.getStr("userId"), yesterday);
 				new TotalIncome().set("transferOutput", output)
-						.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
+						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
@@ -378,7 +378,7 @@ public class TotalIncome extends Model<TotalIncome> {
 						.findFirst("select * from total_income where userId = ? and createTime = ?",
 								user.getStr("userId"), yesterday);
 				new TotalIncome().set("transferToActive", output)
-						.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
+						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
@@ -417,7 +417,7 @@ public class TotalIncome extends Model<TotalIncome> {
 						.findFirst("select * from total_income where userId = ? and createTime = ?",
 								user.getStr("userId"), yesterday);
 				new TotalIncome().set("repurchase", output)
-						.set("currentTotal", yesterdayIncome.getStr("currentTotal"))
+						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
