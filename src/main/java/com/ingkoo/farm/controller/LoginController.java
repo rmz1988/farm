@@ -2,6 +2,7 @@ package com.ingkoo.farm.controller;
 
 import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.User;
+import com.ingkoo.farm.service.MoneyService;
 import com.ingkoo.farm.utils.MD5;
 import com.jfinal.core.Controller;
 import com.jfinal.core.JFinal;
@@ -16,6 +17,8 @@ import javax.servlet.http.Cookie;
  */
 public class LoginController extends Controller {
 
+	private MoneyService moneyService = new MoneyService();
+
 	public void index() {
 		setAttr("qq", OtherRate.dao.findById("qq").getStr("rate"));
 		render("login.jsp");
@@ -28,7 +31,9 @@ public class LoginController extends Controller {
 		User loginUser = getModel(User.class, "user");
 		User user = User.dao.findById(loginUser.getStr("userId"));
 		String loginResult;
-		if (user != null && user.getStr("loginPwd").equals(MD5.encrypt(loginUser.getStr("loginPwd")))) {
+		if (!moneyService.canVisit()) {
+			loginResult = "4";
+		} else if (user != null && user.getStr("loginPwd").equals(MD5.encrypt(loginUser.getStr("loginPwd")))) {
 			if ("2".equals(user.getStr("status"))) {
 				user.put("pet", user.getUserPet());
 				setSessionAttr("user", user);

@@ -37,7 +37,7 @@
                         <c:choose>
                             <c:when test="${canVisit == false}">
                                 <span class="rule-tip-lg">
-                                    允许喂养与复购时间：每天6:00 —— 23:00
+                                    允许喂养与复购时间：每天7:00 —— 24:00
                                 </span>
                             </c:when>
                             <c:otherwise>

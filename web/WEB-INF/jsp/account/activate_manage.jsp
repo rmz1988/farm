@@ -27,7 +27,7 @@
             <c:choose>
                 <c:when test="${canVisit == false}">
                     <span class="rule-tip-lg">
-                        激活管理允许访问时间：每天6:00 —— 23:00
+                        激活管理允许访问时间：每天7:00 —— 24:00
                     </span>
                 </c:when>
                 <c:when test="${empty user.activeNo}">

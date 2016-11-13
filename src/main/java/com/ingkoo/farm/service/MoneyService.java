@@ -24,7 +24,7 @@ public class MoneyService {
 	 */
 	public boolean canVisit() {
 		int currentTime = Integer.parseInt(DateUtils.format(new Date(), "HH"));
-		return currentTime >= 6 && currentTime < 23;
+		return currentTime >= 7 && currentTime < 24;
 	}
 
 	/**

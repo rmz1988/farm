@@ -21,7 +21,7 @@ define(function (require, exports, module) {
                 },
                 idCard: {
                     required: true,
-                    validIdCard: true,
+                    //validIdCard: true,
                     uniqueIdCard: true
                 },
                 mobile: {
@@ -56,7 +56,7 @@ define(function (require, exports, module) {
                 },
                 idCard: {
                     required: '请填写身份证号码',
-                    validIdCard: '身份证号码不合法',
+                    //validIdCard: '身份证号码不合法',
                     uniqueIdCard: '该身份证已注册'
                 },
                 mobile: {
