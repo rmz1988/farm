@@ -44,7 +44,7 @@
     </bean>
     <bean id="leaderIncomeJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="leaderIncomeJobDetail"/>
-        <property name="cronExpression" value="0 10 23 * * ?"/>
+        <property name="cronExpression" value="0 10 0 * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
