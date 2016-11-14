@@ -80,7 +80,7 @@ public class MoneyService {
 					.find("select * from pet_lifecycle where status = '1' and liveDays > 0 and userId = ?", userId);
 			for (PetLifecycle lifecycle : lifecycleList) {
 				lifecycle.set("totalOutput",
-						new Money(lifecycle.getStr("totalOutput")).add(dailyOutput).toString())
+						new Money(lifecycle.getStr("totalOutput")).add(lifecycle.getStr("dailyOutput")).toString())
 						.update();
 			}
 		}

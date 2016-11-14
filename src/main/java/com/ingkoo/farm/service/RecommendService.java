@@ -49,9 +49,12 @@ public class RecommendService {
 
 			//修改推荐人金币余额和当天已获得收益,添加已推荐人数量
 			recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
-					.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString())
-					.set("recommendCount", recommendUser.getInt("recommendCount") + 1)
-					.update();
+					.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString());
+			if ("0".equals(type)) {
+				recommendUser.set("recommendCount", recommendUser.getInt("recommendCount") + 1);
+			}
+			recommendUser.update();
+
 			//记录推荐奖励日志
 			new RecommendIncome().set("recommendUserId", user.getStr("userId"))
 					.set("name", user.getStr("name"))
@@ -104,7 +107,8 @@ public class RecommendService {
 		}
 
 		recommendResult[0] = teamCount;
-		recommendResult[1] = Db.queryLong("select count(*) from user where recommendUserId = ? and status = '2'", user.getStr("userId"));
+		recommendResult[1] = Db.queryLong("select count(*) from user where recommendUserId = ? and status = '2'",
+				user.getStr("userId"));
 		recommendResult[2] = recommendLevelList;
 
 		return recommendResult;
