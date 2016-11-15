@@ -17,6 +17,7 @@ import java.util.List;
 public class MoneyService {
 
 	public static final Object MONEY_LOCK = new Object();
+	public static final Object LEADER_LOCK = new Object();
 
 	/**
 	 * 当前时间段是否可以访问页面

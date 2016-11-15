@@ -5,4 +5,4 @@
 <%
     String decryptIdCard = AES.decrypt(value);
 %>
-<%=decryptIdCard.substring(0,4)+"**********"+decryptIdCard.substring(14)%>
+<%=decryptIdCard%>
