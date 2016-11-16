@@ -85,7 +85,7 @@ public class TradeController extends Controller {
 							.set("isWithdraw", "1")
 							.update();
 					//记录用户收入总明细
-					TotalIncome.dao.saveWithdrawOutput(User.dao.findById(user.getStr("userId")), money);
+					new TotalIncome().saveWithdrawOutput(User.dao.findById(user.getStr("userId")), money);
 
 					return true;
 				}
@@ -105,6 +105,7 @@ public class TradeController extends Controller {
 		setAttr("minTransfer", minTransfer);
 		setAttr("user", user);
 		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), minTransfer));
+		setAttr("canTransfer", user.canTransfer());
 
 		render("transfer.jsp");
 	}
@@ -158,10 +159,10 @@ public class TradeController extends Controller {
 							.update();
 
 					//记录双方玩家收入总明细
-					TotalIncome.dao
-							.saveTransferOutput(User.dao.findById(user.getStr("userId")), transferOut.getStr("money"));
-					TotalIncome.dao
-							.saveTrasferIn(User.dao.findById(inUser.getStr("userId")), transferOut.getStr("money"));
+					new TotalIncome().saveTransferOutput(User.dao.findById(user.getStr("userId")),
+							transferOut.getStr("money"));
+					new TotalIncome().saveTrasferIn(User.dao.findById(inUser.getStr("userId")),
+							transferOut.getStr("money"));
 
 					return true;
 				}
@@ -207,7 +208,7 @@ public class TradeController extends Controller {
 							.set("activeMoney", new Money(currentActiveMoney).add(activeMoney).toString())
 							.set("createTime", System.currentTimeMillis()).save();
 
-					TotalIncome.dao.saveTransferToActiveOutput(user, activeMoney);
+					new TotalIncome().saveTransferToActiveOutput(user, activeMoney);
 					return true;
 				}
 			});

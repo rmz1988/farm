@@ -48,6 +48,7 @@
                     <label class="control-label col-md-2">
                         玩家编号：
                     </label>
+
                     <div class="form-text col-md-6">
                         ${user.userId}
                     </div>
@@ -56,6 +57,7 @@
                     <label class="control-label col-md-2">
                         玩家姓名：
                     </label>
+
                     <div class="form-text col-md-6">
                         ${user.name}
                     </div>
@@ -64,6 +66,7 @@
                     <label class="control-label col-md-2">
                         转出到玩家编号：
                     </label>
+
                     <div class="col-md-6">
                         <input type="text" id="userId" name="userId" class="form-control" placeholder="请输入转出玩家编号">
                     </div>
@@ -72,6 +75,7 @@
                     <label class="control-label col-md-2">
                         转出金额：
                     </label>
+
                     <div class="col-md-6">
                         <input type="number" id="money" name="money" class="form-control"
                                placeholder="请输入转出金额，只能是${minTransfer}的倍数">
@@ -81,13 +85,16 @@
                     <label class="control-label col-md-2">
                         交易密码：
                     </label>
+
                     <div class="col-md-6">
                         <input type="password" id="tradePwd" name="tradePwd" class="form-control" placeholder="请输入交易密码">
                     </div>
                 </div>
                 <input type="hidden" id="max" value="${user.money}"/>
-                <input type="hidden" id="times" value="${minTransfer}" />
-                <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2">提交</button>
+                <input type="hidden" id="times" value="${minTransfer}"/>
+                <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"
+                        <c:if test="${canTransfer == false}">disabled </c:if>>提交
+                </button>
             </form>
             <hr>
             <div class="panel panel-warning">
@@ -96,9 +103,10 @@
                 </div>
                 <div class="panel-body">
                     <span class="rule-tip-lg">
-                        1、金币互转金额只能是${minTransfer}的倍数；<br/>
-                        2、金币互转直接计入对方奖励币余额，操作不可撤销；<br/>
-                        3、金币互转不收取手续费，每天互转次数无限制。
+                        1、每名玩家须在宠物首轮满15天后才可互转金币；<br/>
+                        2、金币互转金额只能是${minTransfer}的倍数；<br/>
+                        3、金币互转直接计入对方奖励币余额，操作不可撤销；<br/>
+                        4、金币互转不收取手续费，每天互转次数无限制。
                     </span>
                 </div>
             </div>

@@ -35,7 +35,7 @@ public class PetController extends Controller {
 	public void index() {
 		setAttr("current", "pet");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("canVisit",moneyService.canVisit());
+		setAttr("canVisit", moneyService.canVisit());
 		setAttr("total", user.getStr("money"));
 		setAttr("isFeed", user.getStr("isFeed"));
 		setAttr("repurchase", user.getInt("todayRepurchase"));
@@ -68,13 +68,13 @@ public class PetController extends Controller {
 			return;
 		}
 
-		new User().set("userId", userId).set("isFeed", "1").update();
 		synchronized (MoneyService.MONEY_LOCK) {
 			final User user = User.dao.findById(userId);
 
 			//判断当日已收入是否超过上限
-			if (!moneyService.isOverDailyIncome(userId)) {
+			if (!moneyService.isOverDailyIncome(userId) && "0".equals(user.getStr("isFeed"))) {
 				//修改用户状态，今日已喂养
+				new User().set("userId", userId).set("isFeed", "1").update();
 				//用户余额以及每日收入增加当日产币量
 				final String dailyPetOutput = moneyService.getPetDailyOutput(userId);
 				String actualIncome = moneyService.actualIncome(userId, dailyPetOutput);
@@ -84,7 +84,7 @@ public class PetController extends Controller {
 				//修改宠物生命周期
 				moneyService.saveDailyOutput(userId, actualIncome);
 				//记录总收益记录
-				TotalIncome.dao.savePetOutput(user, actualIncome);
+				new TotalIncome().savePetOutput(user, actualIncome);
 				//计算领导奖，该用户上级的日产币额收益，记录相应收益记录
 				es.submit(new Runnable() {
 
@@ -130,7 +130,7 @@ public class PetController extends Controller {
 			//扣除宠物价格，增加个人复购次数，以及今日复购次数
 			user.set("money", new Money(user.getStr("money")).subtract(pet.getStr("price")).toString())
 					.update();
-			TotalIncome.dao.saveRepurchaseOutput(user, pet.getStr("price"));
+			new TotalIncome().saveRepurchaseOutput(user, pet.getStr("price"));
 
 			//该用户的推荐人获得复购金额的10%，记录推荐人的推荐奖记录，记录推荐人的总收益记录
 			if (StringUtils.isNotEmpty(user.getStr("recommendUserId")) &&

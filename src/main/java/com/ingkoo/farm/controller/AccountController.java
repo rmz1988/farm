@@ -205,7 +205,7 @@ public class AccountController extends Controller {
 									.set("createTime", System.currentTimeMillis())
 									.set("userId", user.getStr("userId"))
 									.save();
-							TotalIncome.dao.saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
+							new TotalIncome().saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
 						}
 
 						return true;

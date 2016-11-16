@@ -26,4 +26,11 @@ public class User extends Model<User> {
 						get("userId"), get("petNo"))
 				.isEmpty();
 	}
+
+	public boolean canTransfer() {
+		return !PetLifecycle.dao
+				.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
+						get("userId"), get("petNo"))
+				.isEmpty();
+	}
 }

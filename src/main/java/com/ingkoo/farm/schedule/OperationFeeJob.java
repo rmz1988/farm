@@ -21,7 +21,7 @@ public class OperationFeeJob {
 			for (User user : userList) {
 				//减少用户金额，记录用户总收入明细
 				user.set("money", new Money(user.getStr("money")).subtract(operationFee).toString()).update();
-				TotalIncome.dao.saveOperationFee(User.dao.findById(user.getStr("userId")), operationFee);
+				new TotalIncome().saveOperationFee(User.dao.findById(user.getStr("userId")), operationFee);
 			}
 		}
 	}

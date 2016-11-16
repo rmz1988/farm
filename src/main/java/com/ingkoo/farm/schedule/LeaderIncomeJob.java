@@ -19,6 +19,7 @@ public class LeaderIncomeJob {
 
 	public void account() {
 		List<LeaderIncome> leaderIncomeList = LeaderIncome.dao.find("select * from leader_income");
+
 		for (LeaderIncome leaderIncome : leaderIncomeList) {
 
 			synchronized (MoneyService.MONEY_LOCK) {
@@ -31,7 +32,7 @@ public class LeaderIncomeJob {
 							.set("todayIncome", new Money(user.getStr("todayIncome")).add(actualIncome).toString())
 							.update();
 
-					TotalIncome.dao.saveLeaderIncome(user, actualIncome);
+					new TotalIncome().saveLeaderIncome(user, actualIncome);
 				}
 				leaderIncome.delete();
 			}

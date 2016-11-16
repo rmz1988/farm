@@ -62,7 +62,7 @@ public class RecommendService {
 					.set("createTime", System.currentTimeMillis())
 					.set("userId", recommendUser.getStr("userId")).save();
 			//记录总收益明细
-			TotalIncome.dao.saveRecommendIncome(recommendUser, recommendIncome);
+			new TotalIncome().saveRecommendIncome(recommendUser, recommendIncome);
 
 			//计算领导奖
 			es.submit(new Runnable() {

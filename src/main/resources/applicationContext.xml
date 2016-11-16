@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="userResetJob" class="com.ingkoo.farm.schedule.UserResetJob"/>
+    <bean id="userResetJob" class="com.ingkoo.farm.schedule.UserResetJob" init-method="reset"/>
     <bean id="userResetJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="userResetJob"/>
         <property name="targetMethod" value="reset"/>
