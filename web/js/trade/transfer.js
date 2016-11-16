@@ -40,6 +40,8 @@ define(function (require, exports, module) {
         });
 
         $('#transferBtn').click(function () {
+            var $btn = $(this);
+            $btn.attr('disabled', true);
             if ($('#transferForm').valid()) {
                 $.post(basePath + '/trade/doTransfer', {
                     'transfer.outUserId': $.trim($('#userId').val()),
@@ -49,7 +51,8 @@ define(function (require, exports, module) {
                         alert('转出成功！');
                         window.location = basePath + '/trade/transfer'
                     } else {
-                        alert('系统繁忙，请稍后重试！')
+                        alert('系统繁忙，请稍后重试！');
+                        $btn.attr('disabled', false);
                     }
                 }, 'json');
             }

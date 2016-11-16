@@ -33,6 +33,8 @@ define(function (require, exports, module) {
         });
 
         $('#withdrawBtn').click(function () {
+            var $btn = $(this);
+            $btn.attr('disabled', true);
             if ($('#withdrawForm').valid()) {
                 $.post(basePath + '/trade/doWithdraw', {
                     money: $.trim($('#money').val())
@@ -42,6 +44,7 @@ define(function (require, exports, module) {
                         window.location = basePath + '/trade/withdraw';
                     } else {
                         alert('系统繁忙，请稍后重试！');
+                        $btn.attr('disabled', false);
                     }
                 }, 'json');
             }
