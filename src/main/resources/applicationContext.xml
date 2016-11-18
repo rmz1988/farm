@@ -11,7 +11,7 @@
     </bean>
     <bean id="userResetTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="userResetJobDetail"/>
-        <property name="cronExpression" value="0 0 0 * * ?"/>
+        <property name="cronExpression" value="0 30 0 * * ?"/>
     </bean>
 
     <bean id="petLifecycleJob" class="com.ingkoo.farm.schedule.PetLifecycleJob"/>
@@ -22,7 +22,7 @@
     </bean>
     <bean id="petLifecycleTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="petLifecycleJobDetail"/>
-        <property name="cronExpression" value="0 0 0 * * ?"/>
+        <property name="cronExpression" value="0 30 0 * * ?"/>
     </bean>
 
     <bean id="operationFeeJob" class="com.ingkoo.farm.schedule.OperationFeeJob"/>
@@ -33,7 +33,7 @@
     </bean>
     <bean id="operationFeeTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="operationFeeJobDetail"/>
-        <property name="cronExpression" value="0 0 0 1 * ?"/>
+        <property name="cronExpression" value="0 30 1 1 * ?"/>
     </bean>
 
     <bean id="leaderIncomeJob" class="com.ingkoo.farm.schedule.LeaderIncomeJob"/>
@@ -44,7 +44,7 @@
     </bean>
     <bean id="leaderIncomeJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="leaderIncomeJobDetail"/>
-        <property name="cronExpression" value="0 30 0 * * ?"/>
+        <property name="cronExpression" value="0 0 1 * * ?"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

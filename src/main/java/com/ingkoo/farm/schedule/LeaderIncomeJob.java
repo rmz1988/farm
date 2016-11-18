@@ -10,7 +10,6 @@ import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Page;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,6 +23,7 @@ public class LeaderIncomeJob {
 	private MoneyService moneyService = new MoneyService();
 
 	public void account() {
+		System.out.println("=================Begin to account leader income ===================");
 		long totalCount = Db.queryLong("select count(*) from leader_income");
 		int pageSize = 1000;
 		int totalPages = ((int) totalCount - 1) / pageSize + 1;
@@ -71,6 +71,8 @@ public class LeaderIncomeJob {
 
 			}
 		});
+
+		System.out.println("============================End to account leader income==========================");
 
 	}
 }
