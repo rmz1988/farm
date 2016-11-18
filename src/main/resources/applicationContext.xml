@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="userResetJob" class="com.ingkoo.farm.schedule.UserResetJob" init-method="reset"/>
+    <bean id="userResetJob" class="com.ingkoo.farm.schedule.UserResetJob"/>
     <bean id="userResetJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="userResetJob"/>
         <property name="targetMethod" value="reset"/>
@@ -36,7 +36,7 @@
         <property name="cronExpression" value="0 0 0 1 * ?"/>
     </bean>
 
-    <bean id="leaderIncomeJob" class="com.ingkoo.farm.schedule.LeaderIncomeJob" init-method="account"/>
+    <bean id="leaderIncomeJob" class="com.ingkoo.farm.schedule.LeaderIncomeJob"/>
     <bean id="leaderIncomeJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="leaderIncomeJob"/>
         <property name="targetMethod" value="account"/>
