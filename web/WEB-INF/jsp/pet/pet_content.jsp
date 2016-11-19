@@ -19,7 +19,7 @@
     <tbody>
     <c:forEach var="lifecycle" items="${page.list}" varStatus="st">
         <tr>
-            <td>第${page.totalRow - st.index}轮</td>
+            <td>第${page.totalRow - (page.pageNumber-1)*page.pageSize - st.index}轮</td>
             <td>
                 <data:date value="${lifecycle.createTime}" fmt="yyyy-MM-dd"/>
             </td>

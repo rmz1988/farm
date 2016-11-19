@@ -44,8 +44,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("recommendIncome", income)
 						.set("currentTotal",
 								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
@@ -86,8 +87,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("output", income)
 						.set("currentTotal",
 								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
@@ -128,8 +130,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("leaderIncome", income)
 						.set("currentTotal",
 								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
@@ -171,8 +174,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("transferIncome", income)
 						.set("currentTotal",
 								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
@@ -213,8 +217,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("activeIncome", income)
 						.set("currentTotal",
 								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
@@ -254,8 +259,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("operationFee", output)
 						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
@@ -294,8 +300,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("withdrawOutput", output)
 						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
@@ -334,8 +341,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("transferOutput", output)
 						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
@@ -375,8 +383,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("transferToActive", output)
 						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
@@ -414,8 +423,9 @@ public class TotalIncome extends Model<TotalIncome> {
 						.update();
 			} else {
 				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst("select * from total_income where userId = ? and createTime = ?",
-								user.getStr("userId"), yesterday);
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("repurchase", output)
 						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
