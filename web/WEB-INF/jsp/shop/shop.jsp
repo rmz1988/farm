@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-商城</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.shop"/></title>
     <script>
         seajs.use('shop/shop');
     </script>
@@ -19,8 +19,8 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li class="active">商城</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li class="active"><data:i18n key="menu.shop"/></li>
         </ol>
         <div id="content" class="content">
             <jsp:include page="shop_list.jsp" flush="true"/>

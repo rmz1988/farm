@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-个人信息</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.personalInfo"/></title>
     <script>
         seajs.use('user/self');
     </script>
@@ -19,45 +19,45 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li><a href="${basePath}/self">个人信息</a></li>
-            <li class="active">修改登录密码</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><a href="${basePath}/self"><data:i18n key="menu.personalInfo"/></a></li>
+            <li class="active"><data:i18n key="self.changeLoginPwd"/></li>
         </ol>
         <div class="content">
             <form id="loginPwdForm" class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        原登录密码：
+                        <data:i18n key="self.oldLoginPwd"/>：
                     </label>
                     <div class="col-md-6">
                         <input type="password" class="form-control" id="oldLoginPwd" name="oldLoginPwd"
-                               placeholder="请输入原登录密码">
+                               placeholder="<data:i18n key="self.oldLoginPwdTip"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        新登录密码：
+                        <data:i18n key="self.newLoginPwd"/>：
                     </label>
                     <div class="col-md-6">
                         <input type="password" class="form-control" id="loginPwd" name="loginPwd"
-                               placeholder="请输入新登录密码">
+                               placeholder="<data:i18n key="self.newLoginPwdTip"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        新密码确认：
+                        <data:i18n key="self.confirmLoginPwd"/>：
                     </label>
                     <div class="col-md-6">
                         <input type="password" class="form-control" id="repeatLoginPwd" name="repeatLoginPwd"
-                               placeholder="请再次输入新登录密码">
+                               placeholder="<data:i18n key="self.confirmLoginPwdTip"/>">
                     </div>
                 </div>
 
                 <button id="loginPwdChangeBtn" type="button" class="btn btn-success">
-                    提 交
+                    <data:i18n key="submit"/>
                 </button>
                 <button id="backBtn" type="button" class="btn btn-default">
-                    返 回
+                    <data:i18n key="back"/>
                 </button>
             </form>
         </div>

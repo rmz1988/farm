@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/taglib.jsp" %>
 <c:if test="${fn:length(page.list) == 0}">
-    <div class="col-md-12 text-center" style="padding:20px;">没有找到商品</div>
+    <div class="col-md-12 text-center" style="padding:20px;"><data:i18n key="shop.noGoods"/></div>
 </c:if>
 <div class="col-md-12" style="padding:20px;">
     <c:forEach var="goods" items="${page.list}">
@@ -18,16 +18,16 @@
                         ${goods.name}
                 </div>
                 <div class="goods-price text-right" style="padding:4px;color:#51a351;">
-                    <span class="tip">价格：</span>
+                    <span class="tip"><data:i18n key="shop.price"/>：</span>
                     <span class="main">${goods.price}</span>
-                    <span class="tip">元</span>
+                    <span class="tip"><data:i18n key="yuan"/></span>
                 </div>
                 <div class="goods-btn text-center">
                     <button type="button" class="btn btn-success">
-                        购买
+                        <data:i18n key="shop.buy"/>
                     </button>
                     <button type="button" class="btn btn-danger">
-                        加入购物车
+                        <data:i18n key="shop.cart"/>
                     </button>
                 </div>
             </div>

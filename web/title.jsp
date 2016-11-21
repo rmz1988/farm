@@ -7,7 +7,7 @@
 <%@ include file="/taglib.jsp" %>
 <div class="title">
     <div class="title-brand">
-        开鑫牧场
+        <data:i18n key="kxmc"/>
     </div>
     <ul class="title-area pull-right">
         <li>
@@ -23,15 +23,15 @@
             <span>|</span>
         </li>
         <li>
-            <a href="${basePath}/login/logout">退出</a>
+            <a href="${basePath}/login/logout"><data:i18n key="logout"/></a>
         </li>
         <li class="short-hidden"><span>|</span></li>
         <li class="short-hidden">
-            <a href="${basePath}/notice">公告</a>
+            <a href="${basePath}/notice"><data:i18n key="menu.notice"/></a>
         </li>
         <li class="short-hidden"><span>|</span></li>
         <li class="short-hidden">
-            <a href="${basePath}/feedback">反馈</a>
+            <a href="${basePath}/feedback"><data:i18n key="menu.feedback"/></a>
         </li>
     </ul>
 </div>

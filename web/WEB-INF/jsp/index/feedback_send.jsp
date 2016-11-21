@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-反馈</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.feedback"/></title>
     <script>
         seajs.use('user/feedback_publish');
     </script>
@@ -19,44 +19,45 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li><a href="${basePath}">首页</a></li>
-            <li><a href="${basePath}/feedback">反馈</a></li>
-            <li class="active">发布</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><a href="${basePath}"><data:i18n key="home"/></a></li>
+            <li><a href="${basePath}/feedback"><data:i18n key="menu.feedback"/></a></li>
+            <li class="active"><data:i18n key="index.release"/></li>
         </ol>
         <div class="content">
             <form id="feedbackForm" class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        标题：
+                        <data:i18n key="index.title"/>：
                     </label>
 
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="请填写反馈标题">
+                        <input type="text" class="form-control" id="title" name="title"
+                               placeholder="<data:i18n key="index.feedbackTitleTip"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        反馈内容：
+                        <data:i18n key="index.feedbackContent"/>：
                     </label>
 
                     <div class="col-md-8">
                         <textarea class="form-control" name="content" id="content" cols="30" rows="10"
-                                  placeholder="请填写反馈内容"></textarea>
+                                  placeholder="<data:i18n key="index.feedbackContentTip"/>"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <span class="col-md-offset-2 col-md-10 rule-tip-lg">最多上传5张图片,每张大小不超过2Mb</span>
+                    <span class="col-md-offset-2 col-md-10 rule-tip-lg"><data:i18n key="index.imgTip"/></span>
 
                     <div class="col-md-10 col-md-offset-2">
                         <data:imgUpload id="pics" name="pics"/>
                     </div>
                 </div>
                 <button id="feedbackPublishBtn" type="button" class="btn btn-success">
-                    提 交
+                    <data:i18n key="submit"/>
                 </button>
                 <button id="backBtn" type="button" class="btn btn-default">
-                    返 回
+                    <data:i18n key="back"/>
                 </button>
             </form>
         </div>

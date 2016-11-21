@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-推荐列表</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.recommendList"/></title>
 </head>
 <body>
 <div class="container" style="border-radius: 0;">
@@ -16,31 +16,31 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>账号管理</li>
-            <li class="active">推荐列表</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.accountMgmt"/></li>
+            <li class="active"><data:i18n key="menu.recommendList"/></li>
         </ol>
         <div class="content">
             <div class="total-money-area col-md-6">
-                <span>团队人数：${recommendResult[0]}</span>
+                <span><data:i18n key="account.teamMembers"/>：${recommendResult[0]}</span>
             </div>
             <div class="total-money-area col-md-6">
-                <span>直推人数：${recommendResult[1]}</span>
+                <span><data:i18n key="account.recommendMembers"/>：${recommendResult[1]}</span>
             </div>
             <c:forEach var="recommendList" items="${recommendResult[2]}" varStatus="st">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        第${st.index + 1}代
+                        <data:i18n key="account.no"/>${st.index + 1}<data:i18n key="account.generation"/>
                     </div>
                     <div class="panel-body table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>玩家编号</th>
-                                <th>姓名</th>
-                                <th>状态</th>
-                                <th>注册日期</th>
-                                <th>推荐人</th>
+                                <th><data:i18n key="userId"/></th>
+                                <th><data:i18n key="register.name"/></th>
+                                <th><data:i18n key="status"/></th>
+                                <th><data:i18n key="account.registerTime"/></th>
+                                <th><data:i18n key="register.recommendUser"/></th>
                             </tr>
                             </thead>
                             <tbody>

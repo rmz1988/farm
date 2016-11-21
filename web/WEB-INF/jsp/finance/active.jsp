@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-激活收入明细</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.activateIncome"/></title>
     <script>
         seajs.use('finance/active');
     </script>
@@ -19,9 +19,9 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>财务管理</li>
-            <li class="active">激活收入明细</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.financeMgmt"/></li>
+            <li class="active"><data:i18n key="menu.activateIncome"/></li>
         </ol>
         <div id="content" class="content table-responsive">
             <jsp:include page="active_list.jsp" flush="true"/>

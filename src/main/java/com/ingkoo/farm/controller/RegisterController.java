@@ -31,6 +31,7 @@ public class RegisterController extends Controller {
 		setAttr("imgUrl", OtherRate.dao.findById("img_url").getStr("rate"));
 		setAttr("petList", Pet.dao.find("select * from pet"));
 		setAttr("bankList", Dict.dao.find("select * from dict where dictGroup = 'bank'"));
+		setSessionAttr("qq", OtherRate.dao.findById("qq").getStr("rate"));
 		render("register.jsp");
 	}
 

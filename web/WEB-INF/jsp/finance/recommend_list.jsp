@@ -8,10 +8,10 @@
 <table class="table">
     <thead>
     <tr>
-        <th>玩家编号</th>
-        <th>姓名</th>
-        <th>奖励金币</th>
-        <th>时间</th>
+        <th><data:i18n key="userId"/></th>
+        <th><data:i18n key="register.name"/></th>
+        <th><data:i18n key="finance.recommendIncome"/></th>
+        <th><data:i18n key="time"/></th>
     </tr>
     </thead>
     <tbody>

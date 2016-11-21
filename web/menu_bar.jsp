@@ -11,60 +11,64 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#farmMenu" style="color:#fff;">
-                <span class="sr-only">菜单</span>
+                <span class="sr-only"><data:i18n key="menu"/></span>
                 <%--<span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>--%>
-                更多
+                <data:i18n key="menu.more"/>
             </button>
-            <a class="navbar-title navbar-brand" href="${basePath}/">开鑫牧场</a>
+            <a class="navbar-title navbar-brand" href="${basePath}/"><data:i18n key="kxmc"/></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="farmMenu" role="navigation">
             <ul class="nav navbar-nav">
                 <li <c:if test="${current == 'index'}">class="active"</c:if>>
-                    <a href="${basePath}/">首页</a>
+                    <a href="${basePath}/"><data:i18n key="home"/></a>
                 </li>
-                <li <c:if test="${current == 'pet'}">class="active"</c:if>><a href="${basePath}/pet">牧场管理</a></li>
+                <li <c:if test="${current == 'pet'}">class="active"</c:if>><a href="${basePath}/pet"><data:i18n
+                        key="menu.pastureMgmt"/></a></li>
                 <li class="dropdown <c:if test="${current == 'account'}">active</c:if>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        账号管理
+                        <data:i18n key="menu.accountMgmt"/>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="${basePath}/account/recommend">推荐列表</a></li>
-                        <li><a href="${basePath}/account/apply">申请激活中心</a></li>
-                        <li><a href="${basePath}/account/activate">激活管理</a></li>
+                        <li><a href="${basePath}/account/recommend"><data:i18n key="menu.recommendList"/></a></li>
+                        <li><a href="${basePath}/account/apply"><data:i18n key="menu.applyActivate"/></a></li>
+                        <li><a href="${basePath}/account/activate"><data:i18n key="menu.activateMgmt"/></a></li>
                     </ul>
                 </li>
                 <li class="dropdown <c:if test="${current == 'finance'}">active</c:if>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        财务管理
+                        <data:i18n key="menu.financeMgmt"/>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="${basePath}/finance/active">激活收入明细</a></li>
+                        <li><a href="${basePath}/finance/active"><data:i18n key="menu.activateIncome"/></a></li>
                         <%--<li><a href="${basePath}/finance/daily">每日收入列表</a></li>--%>
-                        <li><a href="${basePath}/finance/recommend">推荐奖励</a></li>
-                        <li><a href="${basePath}/finance/total">收入总明细</a></li>
+                        <li><a href="${basePath}/finance/recommend"><data:i18n key="menu.recommendIncome"/></a></li>
+                        <li><a href="${basePath}/finance/total"><data:i18n key="menu.totalIncome"/></a></li>
                     </ul>
                 </li>
                 <li class="dropdown <c:if test="${current == 'trade'}">active</c:if>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        交易管理
+                        <data:i18n key="menu.tradeMgmt"/>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="${basePath}/trade/transfer">金币互转</a></li>
-                        <li><a href="${basePath}/trade/withdraw">金币提现</a></li>
-                        <li><a href="${basePath}/trade/activate/transfer">奖励币转激活币</a></li>
+                        <li><a href="${basePath}/trade/transfer"><data:i18n key="menu.transfer"/></a></li>
+                        <li><a href="${basePath}/trade/withdraw"><data:i18n key="menu.withdraw"/></a></li>
+                        <li><a href="${basePath}/trade/activate/transfer"><data:i18n key="menu.transferToActive"/></a>
+                        </li>
                     </ul>
                 </li>
-                <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="${basePath}/shop">物联网+商城</a></li>
-                <li <c:if test="${current == 'person'}">class="active"</c:if>><a href="${basePath}/self">个人信息</a></li>
-                <li class="short-show"><a href="${basePath}/notice">公告</a></li>
-                <li class="short-show"><a href="${basePath}/feedback">反馈</a></li>
+                <li <c:if test="${current == 'shop'}">class="active"</c:if>><a href="${basePath}/shop"><data:i18n
+                        key="menu.shop"/></a></li>
+                <li <c:if test="${current == 'person'}">class="active"</c:if>><a href="${basePath}/self"><data:i18n
+                        key="menu.personalInfo"/></a></li>
+                <li class="short-show"><a href="${basePath}/notice"><data:i18n key="menu.notice"/></a></li>
+                <li class="short-show"><a href="${basePath}/feedback"><data:i18n key="menu.feedback"/></a></li>
             </ul>
         </div>
     </div>

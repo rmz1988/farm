@@ -8,18 +8,18 @@
 <table class="table">
     <thead>
     <tr>
-        <th>序号</th>
-        <th>领养日期</th>
-        <th>领养天数</th>
-        <th>每日产币</th>
-        <th>已产币</th>
-        <th>状态</th>
+        <th><data:i18n key="pet.no"/></th>
+        <th><data:i18n key="pet.purchaseTime"/></th>
+        <th><data:i18n key="pet.liveDays"/></th>
+        <th><data:i18n key="pet.outputPerDay"/></th>
+        <th><data:i18n key="pet.alreadyOutput"/></th>
+        <th><data:i18n key="status"/></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="lifecycle" items="${page.list}" varStatus="st">
         <tr>
-            <td>第${page.totalRow - (page.pageNumber-1)*page.pageSize - st.index}轮</td>
+            <td><data:i18n key="account.no"/>${page.totalRow - (page.pageNumber-1)*page.pageSize - st.index}<data:i18n key="pet.round"/></td>
             <td>
                 <data:date value="${lifecycle.createTime}" fmt="yyyy-MM-dd"/>
             </td>

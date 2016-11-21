@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-申请激活中心</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.applyActivate"/></title>
     <script>
         seajs.use('account/active_apply');
     </script>
@@ -19,33 +19,33 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>账号管理</li>
-            <li class="active">申请激活中心</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.accountMgmt"/></li>
+            <li class="active"><data:i18n key="menu.applyActivate"/></li>
         </ol>
         <div class="content table-responsive">
             <c:choose>
                 <c:when test="${not empty activeNo}">
-                    <span class="rule-tip-lg">您已具备激活中心权限，请点击菜单【账号管理】-【激活管理】进行操作！</span>
+                    <span class="rule-tip-lg"><data:i18n key="account.haveRight"/></span>
                 </c:when>
                 <c:when test="${recommendCount < 10}">
-                    <span class="rule-tip-lg">您的推荐人数不足10人，暂不能申请激活中心！</span>
+                    <span class="rule-tip-lg"><data:i18n key="account.cannotApply"/></span>
                 </c:when>
                 <c:when test="${not empty activeAuthApply}">
                     <%--展示激活申请列表--%>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>玩家编号</th>
-                            <th>姓名</th>
-                            <th>激活中心编号</th>
-                            <th>申请时间</th>
-                            <th>状态</th>
+                            <th><data:i18n key="userId"/></th>
+                            <th><data:i18n key="account.name"/></th>
+                            <th><data:i18n key="account.activateNo"/></th>
+                            <th><data:i18n key="account.applyTime"/></th>
+                            <th><data:i18n key="status"/></th>
                             <c:if test="${activeAuthApply.status != 0}">
-                                <th>审核时间</th>
+                                <th><data:i18n key="account.auditTime"/></th>
                             </c:if>
                             <c:if test="${activeAuthApply.status == 2}">
-                                <th>操作</th>
+                                <th><data:i18n key="operation"/></th>
                             </c:if>
                         </tr>
                         </thead>
@@ -61,8 +61,9 @@
                             </c:if>
                             <c:if test="${activeAuthApply.status == 2}">
                                 <td>
-                                    <button id="editBtn" name="${activeAuthApply.applyId}" type="button" class="btn btn-info btn-sm">
-                                        编辑
+                                    <button id="editBtn" name="${activeAuthApply.applyId}" type="button"
+                                            class="btn btn-info btn-sm">
+                                        <data:i18n key="edit"/>
                                     </button>
                                 </td>
                             </c:if>
@@ -74,40 +75,45 @@
                     <%--展示申请表单--%>
                     <form id="applyForm" class="form-horizontal" role="form" method="post">
                         <input type="hidden" id="userId" value="${user.userId}">
+
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                玩家编号：
+                                <data:i18n key="userId"/>：
                             </label>
+
                             <div class="col-md-5 form-text">
                                     ${user.userId}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                姓名：
+                                <data:i18n key="register.name"/>：
                             </label>
+
                             <div class="col-md-5 form-text">
                                     ${user.name}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                推荐人数：
+                                <data:i18n key="account.recommendCount"/>：
                             </label>
+
                             <div class="col-md-4 form-text">
                                     ${recommendCount}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">
-                                申请激活码：
+                                <data:i18n key="account.applyActivateNo"/>：
                             </label>
+
                             <div class="col-md-5">
                                 <input type="text" class="form-control" id="activeNo" name="activeNo" maxlength="3"
-                                       placeholder="请输入3位数字，系统内唯一">
+                                       placeholder="<data:i18n key="applyActivateNoTip"/>">
                             </div>
                         </div>
-                        <button id="applyBtn" class="btn btn-success" type="button">提 交</button>
+                        <button id="applyBtn" class="btn btn-success" type="button"><data:i18n key="submit"/></button>
                     </form>
                 </c:otherwise>
             </c:choose>

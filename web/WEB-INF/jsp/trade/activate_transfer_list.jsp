@@ -8,9 +8,9 @@
 <table class="table">
     <thead>
     <tr>
-        <th>转换日期</th>
-        <th>转换金额</th>
-        <th>激活币余额</th>
+        <th><data:i18n key="transferActive.transferTime"/></th>
+        <th><data:i18n key="transferActive.transferAmount"/></th>
+        <th><data:i18n key="transferActive.activeMoneyBalance"/></th>
     </tr>
     </thead>
     <tbody>

@@ -8,13 +8,13 @@
 <table class="table">
     <thead>
     <tr>
-        <th>玩家编号</th>
-        <th>姓名</th>
-        <th>宠物名称</th>
-        <th>购买日期</th>
-        <th>状态</th>
-        <th>激活日期</th>
-        <th>操作</th>
+        <th><data:i18n key="userId"/></th>
+        <th><data:i18n key="register.name"/></th>
+        <th><data:i18n key="account.petName"/></th>
+        <th><data:i18n key="account.buyTime"/></th>
+        <th><data:i18n key="status"/></th>
+        <th><data:i18n key="account.activeTime"/></th>
+        <th><data:i18n key="operation"/></th>
     </tr>
     </thead>
     <tbody>
@@ -29,7 +29,7 @@
             <td>
                 <button type="button" id="${activeApply.applyId}" name="activeBtn" class="btn btn-info btn-sm"
                         <c:if test="${activeApply.status != 0}">disabled </c:if>>
-                    激 活
+                    <data:i18n key="account.activate"/>
                 </button>
             </td>
         </tr>

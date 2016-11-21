@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-个人信息</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.personalInfo"/></title>
     <script>
         seajs.use('user/self');
     </script>
@@ -19,41 +19,41 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li class="active">个人信息</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li class="active"><data:i18n key="menu.personalInfo"/></li>
         </ol>
         <div class="content">
             <p>
-                玩家编号：${user.userId}
+                <data:i18n key="userId"/>：${user.userId}
             </p>
 
             <p>
-                玩家姓名：${user.name}
+                <data:i18n key="register.name"/>：${user.name}
             </p>
 
             <p>
-                手机号码：${user.mobile}
+                <data:i18n key="register.phone"/>：${user.mobile}
             </p>
 
             <p>
-                身份证号码：<data:idCard value="${user.idCard}"/>
+                <data:i18n key="register.idNumber"/>：<data:idCard value="${user.idCard}"/>
             </p>
 
             <p>
-                开户银行：<data:dict dictgroup="bank" value="${user.bank}"/>
+                <data:i18n key="register.bank"/>：<data:dict dictgroup="bank" value="${user.bank}"/>
             </p>
             <p>
-                户名：${user.bankAccountName}
+                <data:i18n key="register.accountName"/>：${user.bankAccountName}
             </p>
             <p>
-                银行卡号：<data:bankcard value="${user.bankCard}"/>
+                <data:i18n key="register.bankCard"/>：<data:bankcard value="${user.bankCard}"/>
             </p>
             <p>
                 <button id="loginPwdBtn" type="button" class="btn btn-success">
-                    修改登录密码
+                    <data:i18n key="self.changeLoginPwd"/>
                 </button>
                 <button id="tradePwdBtn" type="button" class="btn btn-success">
-                    修改交易密码
+                    <data:i18n key="self.changeTradePwd"/>
                 </button>
             </p>
         </div>

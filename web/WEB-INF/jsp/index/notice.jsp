@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-公告</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.notice"/></title>
     <script>
         seajs.use('user/notice');
     </script>
@@ -19,9 +19,9 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li><a href="${basePath}">首页</a></li>
-            <li class="active">公告</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><a href="${basePath}"><data:i18n key="home"/></a></li>
+            <li class="active"><data:i18n key="menu.notice"/></li>
         </ol>
         <div id="content" class="content table-responsive">
             <jsp:include page="notice_list.jsp" flush="true"/>

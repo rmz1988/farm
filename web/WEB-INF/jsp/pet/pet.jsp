@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-牧场管理</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.pastureMgmt"/></title>
     <script>
         seajs.use('pet/pet');
     </script>
@@ -18,15 +18,16 @@
     <jsp:include page="/menu_bar.jsp" flush="true"/>
 
     <input type="hidden" id="overIncome" value="${overIncome}"/>
+
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li class="active">牧场管理</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li class="active"><data:i18n key="menu.pastureMgmt"/></li>
         </ol>
         <div class="content">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    我的宠物
+                    <data:i18n key="index.myPet"/>
                 </div>
                 <div class="panel-body">
                     <div class="pet col-md-4 col-sm-12 col-xs-12">
@@ -37,37 +38,39 @@
                         <c:choose>
                             <c:when test="${canVisit == false}">
                                 <span class="rule-tip-lg">
-                                    允许喂养与复购时间：每天7:00 —— 24:00
+                                    <data:i18n key="pet.visitTime"/>
                                 </span>
                             </c:when>
                             <c:otherwise>
 
                                 <p>
-                                    宠物名称：${sessionScope.user.pet.name}
+                                    <data:i18n key="index.petName"/>：<data:petName
+                                        petNo="${sessionScope.user.pet.petNo}"/>
                                 </p>
 
                                 <p>
                                     <button id="feedBtn" type="button" class="btn btn-success btn-lg"
                                             <c:if test="${isFeed == 1}">disabled</c:if>>
-                                        喂养
+                                        <data:i18n key="pet.feed"/>
                                     </button>
                                     <span id="feedTip">
                             <c:if test="${isFeed == 1}">
-                                （今日已喂养）
+                                （<data:i18n key="pet.alreadyFeed"/>）
                             </c:if>
                             </span>
-                                    <span class="rule-tip">每日喂养产生30/39元，每天只能喂养1次。</span>
+                                    <span class="rule-tip"><data:i18n key="pet.feedRule"/></span>
                                 </p>
                                 <p>
                                     <button id="repurchaseBtn" type="button" class="btn btn-info btn-lg"
                                             <c:if test="${total + 0 <= pet.price + 0 || repurchase + 0 >= repurchaseLimit + 0}">disabled</c:if>>
-                                        复购
+                                        <data:i18n key="pet.repurchase"/>
                                     </button>
                                     <span id="repurchaseTip">
 
                             </span>
-                                    <span class="rule-tip">复购将消耗${pet.price}奖励币，当前奖励币：${total}。</span>
-                                    <span class="rule-tip">每天复购不超过${repurchaseLimit}次，今日已复购${repurchase}次。</span>
+                                    <span class="rule-tip"><data:i18n key="pet.repurchaseTip1"/>${pet.price}<data:i18n key="pet.repurchaseTip2"/>：${total}。</span>
+                                    <span class="rule-tip"><data:i18n
+                                            key="pet.repurchaseTip3"/>${repurchaseLimit}<data:i18n key="pet.repurchaseTip4"/>${repurchase}<data:i18n key="times"/></span>
                                 </p>
                                 <input type="hidden" id="petPrice" value="${pet.price}"/>
                             </c:otherwise>
@@ -77,7 +80,7 @@
             </div>
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    宠物明细（总产币量：${totalOutput}）
+                    <data:i18n key="pet.petDetail"/>（<data:i18n key="pet.totalOutput"/>：${totalOutput}）
                 </div>
                 <div id="content" class="panel-body table-responsive">
                     <jsp:include page="pet_content.jsp" flush="true"/>

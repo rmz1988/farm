@@ -9,8 +9,8 @@
 <table class="table">
     <thead>
     <tr>
-        <th>标题</th>
-        <th>发布时间</th>
+        <th><data:i18n key="index.title"/></th>
+        <th><data:i18n key="index.releaseTime"/></th>
     </tr>
     </thead>
     <tbody>

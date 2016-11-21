@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-金币互转</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.transfer"/></title>
     <script>
         seajs.use('trade/transfer');
     </script>
@@ -19,13 +19,13 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>交易管理</li>
-            <li class="active">金币互转</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.tradeMgmt"/></li>
+            <li class="active"><data:i18n key="menu.transfer"/></li>
         </ol>
         <div class="content">
             <div class="balance-tip col-md-6">
-                <span>奖励币余额：</span>
+                <span><data:i18n key="bonus"/>：</span>
                 <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -34,7 +34,7 @@
                 </span>
             </div>
             <div class="balance-tip col-md-6">
-                <span>可转出奖励币：</span>
+                <span><data:i18n key="transfer.canTransferOut"/>：</span>
                 <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -46,7 +46,7 @@
             <form id="transferForm" action="#" class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        玩家编号：
+                        <data:i18n key="userId"/>：
                     </label>
 
                     <div class="form-text col-md-6">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        玩家姓名：
+                        <data:i18n key="register.name"/>：
                     </label>
 
                     <div class="form-text col-md-6">
@@ -64,55 +64,57 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        转出到玩家编号：
+                        <data:i18n key="transfer.outUserId"/>：
                     </label>
 
                     <div class="col-md-6">
-                        <input type="text" id="userId" name="userId" class="form-control" placeholder="请输入转出玩家编号">
+                        <input type="text" id="userId" name="userId" class="form-control"
+                               placeholder="<data:i18n key="transfer.outUserId"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        转出金额：
+                        <data:i18n key="transfer.amount"/>：
                     </label>
 
                     <div class="col-md-6">
                         <input type="number" id="money" name="money" class="form-control"
-                               placeholder="请输入转出金额，只能是${minTransfer}的倍数">
+                               placeholder="<data:i18n key="transfer.amountTip"/>${minTransfer}<data:i18n key="transfer.amountTip2"/>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        交易密码：
+                        <data:i18n key="register.tradePwd"/>：
                     </label>
 
                     <div class="col-md-6">
-                        <input type="password" id="tradePwd" name="tradePwd" class="form-control" placeholder="请输入交易密码">
+                        <input type="password" id="tradePwd" name="tradePwd" class="form-control"
+                               placeholder="<data:i18n key="transfer.tradePwdTip"/>">
                     </div>
                 </div>
                 <input type="hidden" id="max" value="${user.money}"/>
                 <input type="hidden" id="times" value="${minTransfer}"/>
                 <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"
-                        <c:if test="${canTransfer == false}">disabled </c:if>>提交
+                        <c:if test="${canTransfer == false}">disabled </c:if>><data:i18n key="submit"/>
                 </button>
             </form>
             <hr>
             <div class="panel panel-warning">
                 <div class="panel-heading">
-                    金币互转注意事项
+                    <data:i18n key="transfer.warnings"/>
                 </div>
                 <div class="panel-body">
                     <span class="rule-tip-lg">
-                        1、每名玩家须在宠物首轮满15天后才可互转金币；<br/>
-                        2、金币互转金额只能是${minTransfer}的倍数；<br/>
-                        3、金币互转直接计入对方奖励币余额，操作不可撤销；<br/>
-                        4、金币互转不收取手续费，每天互转次数无限制。
+                        <data:i18n key="transfer.warnTip1"/><br/>
+                        <data:i18n key="transfer.warnTip2"/>${minTransfer}<data:i18n key="transfer.warnTip3"/><br/>
+                        <data:i18n key="transfer.warnTip4"/><br/>
+                        <data:i18n key="transfer.warnTip5"/>
                     </span>
                 </div>
             </div>
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    金币互转记录
+                    <data:i18n key="transfer.record"/>
                 </div>
                 <div id="content" class="panel-body table-responsive">
                     <jsp:include page="transfer_list.jsp" flush="true"/>

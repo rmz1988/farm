@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-反馈</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.feedback"/></title>
     <script>
         seajs.use('user/feedback');
     </script>
@@ -19,13 +19,13 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li><a href="${basePath}">首页</a></li>
-            <li class="active">反馈</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><a href="${basePath}"><data:i18n key="home"/></a></li>
+            <li class="active"><data:i18n key="menu.feedback"/></li>
         </ol>
         <div class="content">
             <button id="feedbackBtn" type="button" class="btn btn-success">
-                问题反馈
+                <data:i18n key="index.feedback"/>
             </button>
             <hr>
             <div id="content" class="table-responsive">

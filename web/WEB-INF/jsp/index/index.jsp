@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场</title>
+    <title><data:i18n key="kxmc"/></title>
 </head>
 <body>
 <div class="container" style="border-radius: 0;">
@@ -16,11 +16,11 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li class="active">首页</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li class="active"><data:i18n key="home"/></li>
         </ol>
         <div class="total-money-area col-md-6">
-            <span>奖励币：</span>
+            <span><data:i18n key="bonus"/>：</span>
             <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
             </span>
@@ -29,7 +29,7 @@
             </span>
         </div>
         <div class="total-money-area col-md-6">
-            <span>激活币：</span>
+            <span><data:i18n key="activateMoney"/>：</span>
             <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
             </span>
@@ -42,31 +42,32 @@
             <div class="base-info col-md-5 col-sm-12 col-xs-12">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        基本信息
+                        <data:i18n key="index.userInfo"/>
                     </div>
                     <div class="panel-body">
                         <p>
-                            玩家编号：${sessionScope.user.userId}
+                            <data:i18n key="index.userId"/>：${sessionScope.user.userId}
                         </p>
 
                         <p>
-                            玩家姓名：${sessionScope.user.name}
+                            <data:i18n key="index.name"/>：${sessionScope.user.name}
                         </p>
 
                         <p>
-                            手机号码：${sessionScope.user.mobile}
+                            <data:i18n key="index.phone"/>：${sessionScope.user.mobile}
                         </p>
 
                         <p>
-                            身份证号码：<data:idCard value="${sessionScope.user.idCard}"/>
+                            <data:i18n key="index.idCard"/>：<data:idCard value="${sessionScope.user.idCard}"/>
                         </p>
 
                         <p>
-                            开户银行：<data:dict dictgroup="bank" value="${sessionScope.user.bank}"/>
+                            <data:i18n key="index.bank"/>：<data:dict dictgroup="bank"
+                                                                     value="${sessionScope.user.bank}"/>
                         </p>
 
                         <p>
-                            银行卡号：<data:bankcard value="${sessionScope.user.bankCard}"/>
+                            <data:i18n key="index.bankCard"/>：<data:bankcard value="${sessionScope.user.bankCard}"/>
                         </p>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
             <div class="pet-info col-md-7 col-sm-12 col-xs-12">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        我的宠物
+                        <data:i18n key="index.myPet"/>
                     </div>
                     <div class="panel-body">
                         <div class="pet col-md-6 col-sm-12 col-xs-12">
@@ -83,23 +84,25 @@
                         </div>
                         <div class="pet-info col-md-6 col-sm-12 col-xs-12">
                             <p>
-                                宠物名称：${pet.name}
+                                <data:i18n key="index.petName"/>：<data:petName petNo="${pet.petNo}"/>
                             </p>
 
                             <p>
-                                价值：${pet.price}元
+                                <data:i18n key="index.petPrice"/>：${pet.price}
+                            <data:i18n key="yuan"/>
                             </p>
 
                             <p>
-                                复购次数：${repurchase}次
+                                <data:i18n key="index.repurchase"/>：${repurchase}
+                            <data:i18n key="times"/>
                             </p>
 
                             <p>
-                                今日是否喂养：<data:dict dictgroup="feedStatus" value="${isFeed}"/>
+                                <data:i18n key="index.feed"/>：<data:dict dictgroup="feedStatus" value="${isFeed}"/>
                             </p>
 
                             <p>
-                                每日币产：30/39元
+                                <data:i18n key="index.output"/>：30/39<data:i18n key="yuan"/>
                             </p>
                         </div>
                     </div>

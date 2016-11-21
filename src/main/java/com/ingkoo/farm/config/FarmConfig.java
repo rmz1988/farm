@@ -1,6 +1,7 @@
 package com.ingkoo.farm.config;
 
 import com.ingkoo.farm.controller.*;
+import com.ingkoo.farm.interceptor.I18NInterceptor;
 import com.ingkoo.farm.interceptor.LoginInterceptor;
 import com.ingkoo.farm.model.*;
 import com.jfinal.config.Constants;
@@ -9,6 +10,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.core.Const;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -16,7 +18,7 @@ import com.jfinal.plugin.spring.SpringPlugin;
 import com.jfinal.render.ViewType;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.swing.*;
+import java.util.Locale;
 
 /**
  * @author lichen
@@ -29,6 +31,7 @@ public class FarmConfig extends JFinalConfig {
 		constants.setEncoding("utf-8");
 		constants.setBaseViewPath("/WEB-INF/jsp");
 		constants.setViewType(ViewType.JSP);
+		constants.setI18n("text", Locale.CHINA, Const.DEFAULT_I18N_MAX_AGE_OF_COOKIE);
 	}
 
 	@Override
@@ -90,6 +93,7 @@ public class FarmConfig extends JFinalConfig {
 
 	@Override
 	public void configInterceptor(Interceptors interceptors) {
+		interceptors.add(new I18NInterceptor());
 		interceptors.add(new LoginInterceptor("/login", "/register", "/check"));
 	}
 

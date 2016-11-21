@@ -43,6 +43,7 @@
     <script type="text/javascript" src="${basePath}/js/frame/sea.js"></script>
     <script>
         var basePath = '${basePath}';
+        var locale = '${locale}';
 
         seajs.config({
             base: '${basePath}/js/',

@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-提现</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.withdraw"/></title>
     <script>
         seajs.use('trade/withdraw');
     </script>
@@ -19,18 +19,18 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>交易管理</li>
-            <li class="active">金币提现</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.tradeMgmt"/></li>
+            <li class="active"><data:i18n key="menu.withdraw"/></li>
         </ol>
         <div class="content">
             <c:choose>
                 <c:when test="${user.isWithdraw == 1}">
-                    <span class="rule-tip-lg">您今日已提现，请明天再来！</span>
+                    <span class="rule-tip-lg"><data:i18n key="withdraw.alreadyTip"/></span>
                 </c:when>
                 <c:otherwise>
                     <div class="balance-tip col-md-6">
-                        <span>奖励币余额：</span>
+                        <span><data:i18n key="bonus"/>：</span>
                         <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -39,7 +39,7 @@
                         </span>
                     </div>
                     <div class="balance-tip col-md-6">
-                        <span>可提现奖励币：</span>
+                        <span><data:i18n key="withdraw.effective"/>：</span>
                         <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
                 </span>
@@ -51,7 +51,7 @@
                     <form id="withdrawForm" action="#" class="form-horizontal" method="post">
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                玩家编号：
+                                <data:i18n key="userId"/>：
                             </label>
                             <div class="form-text col-md-6">
                                     ${user.userId}
@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                玩家姓名：
+                                <data:i18n key="register.name"/>：
                             </label>
                             <div class="form-text col-md-6">
                                     ${user.name}
@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                开户银行：
+                                <data:i18n key="register.bank"/>：
                             </label>
                             <div class="form-text col-md-6">
                                 <data:dict dictgroup="bank" value="${user.bank}"/>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                银行户名：
+                                <data:i18n key="register.accountName"/>：
                             </label>
                             <div class="form-text col-md-6">
                                     ${user.bankAccountName}
@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                银行卡号：
+                                <data:i18n key="register.bankCard"/>：
                             </label>
                             <div class="form-text col-md-6">
                                 <data:bankcard value="${user.bankCard}"/>
@@ -91,35 +91,35 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                提现金额：
+                                <data:i18n key="withdraw.amount"/>：
                             </label>
                             <div class="col-md-6">
                                 <input type="number" id="money" name="money" class="form-control"
-                                       placeholder="请输入提现金额，只能是${minWithdraw}的倍数">
+                                       placeholder="<data:i18n key="withdraw.amountTip"/>${minWithdraw}<data:i18n key="withdraw.amountTip2"/>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                交易密码：
+                                <data:i18n key="register.tradePwd"/>：
                             </label>
                             <div class="col-md-6">
                                 <input type="password" id="tradePwd" name="tradePwd" class="form-control"
-                                       placeholder="请输入交易密码">
+                                       placeholder="<data:i18n key="transfer.tradePwdTip"/>">
                             </div>
                         </div>
                         <input type="hidden" id="max" value="${user.money}">
                         <input type="hidden" id="times" value="${minWithdraw}">
                         <button id="withdrawBtn" type="button" class="btn btn-success col-md-offset-2"
                                 <c:if test="${canWithdraw == false}">disabled</c:if>>
-                            提交
+                            <data:i18n key="submit"/>
                         </button>
                         <c:if test="${canWithdraw == false}">
                             <span style="color:#f00;">
                                 <c:if test="${user.rePurchase > 0}">
-                                    (您的宠物首轮未满15天，不能提现！)
+                                    (<data:i18n key="withdraw.reject1"/>)
                                 </c:if>
                                 <c:if test="${user.rePurchase == 0}">
-                                    (您尚未复购宠物，不能提现！)
+                                    (<data:i18n key="withdraw.reject2"/>)
                                 </c:if>
                             </span>
                         </c:if>
@@ -129,21 +129,21 @@
             <hr>
             <div class="panel panel-warning">
                 <div class="panel-heading">
-                    提现注意事项
+                    <data:i18n key="withdraw.warnings"/>
                 </div>
                 <div class="panel-body">
                     <span class="rule-tip-lg">
-                        1、每名玩家须在宠物首轮满15天，且至少复购一次后才能提现；<br/>
-                        2、每名玩家每天只能提现1次；<br/>
-                        3、每次提现金额只能是${minWithdraw}的倍数；<br/>
-                        4、每次提现需缴纳${fee}%的手续费，该笔费用在提现金额中扣除；<br/>
-                        5、提现申请提交后，将由系统工作人员审核后将金额转入您预留的银行账号。
+                        <data:i18n key="withdraw.warnTip1"/><br/>
+                        <data:i18n key="withdraw.warnTip2"/><br/>
+                        <data:i18n key="withdraw.warnTip3"/>${minWithdraw}<data:i18n key="withdraw.warnTip4"/><br/>
+                        <data:i18n key="withdraw.warnTip5"/>${fee}<data:i18n key="withdraw.warnTip6"/><br/>
+                        <data:i18n key="withdraw.warnTip7"/>
                     </span>
                 </div>
             </div>
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    提现记录
+                    <data:i18n key="withdraw.record"/>
                 </div>
                 <div id="content" class="panel-body table-responsive">
                     <jsp:include page="withdraw_list.jsp" flush="true"/>

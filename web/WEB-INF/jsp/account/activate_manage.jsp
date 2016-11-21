@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-激活管理</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.activateMgmt"/></title>
     <script>
         seajs.use('account/active_manage');
     </script>
@@ -19,37 +19,37 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>账号管理</li>
-            <li class="active">激活中心</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.accountMgmt"/></li>
+            <li class="active"><data:i18n key="menu.activateMgmt"/></li>
         </ol>
         <div class="content">
             <c:choose>
                 <c:when test="${canVisit == false}">
                     <span class="rule-tip-lg">
-                        激活管理允许访问时间：每天7:00 —— 24:00
+                        <data:i18n key="account.visitTime"/>
                     </span>
                 </c:when>
                 <c:when test="${empty user.activeNo}">
                <span class="rule-tip-lg">
-                   您暂不具备激活中心管理权限，请点击菜单【账号管理】-【申请激活中心】进行申请。
+                   <data:i18n key="account.haveNoActiveRight"/>
                </span>
                 </c:when>
                 <c:otherwise>
                     <form class="form-inline" role="form">
                         <div class="form-group">
-                            <label class="label-control">用户编号：</label>
+                            <label class="label-control"><data:i18n key="userId"/>：</label>
                             <input type="text" class="form-control" id="userId" name="userId">
                         </div>
                         <div class="form-group">
-                            <label class="label-control">状态：</label>
+                            <label class="label-control"><data:i18n key="status"/>：</label>
                             <select name="status" id="status" class="form-control">
-                                <option value="">全部</option>
-                                <option value="0">等待激活</option>
-                                <option value="1">已激活</option>
+                                <option value=""><data:i18n key="all"/></option>
+                                <option value="0"><data:i18n key="account.waitForActivate"/></option>
+                                <option value="1"><data:i18n key="account.activated"/></option>
                             </select>
                         </div>
-                        <button id="queryBtn" type="button" class="btn btn-success">查 询</button>
+                        <button id="queryBtn" type="button" class="btn btn-success"><data:i18n key="search"/></button>
                     </form>
                     <hr>
                     <div id="content" class="table-responsive">

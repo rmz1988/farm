@@ -8,12 +8,12 @@
 <table class="table">
     <thead>
     <tr>
-        <th>操作类型</th>
-        <th>转入编号</th>
-        <th>转出编号</th>
-        <th>金额</th>
-        <th>操作日期</th>
-        <th>状态</th>
+        <th><data:i18n key="transfer.type"/></th>
+        <th><data:i18n key="transfer.inId"/></th>
+        <th><data:i18n key="transfer.outId"/></th>
+        <th><data:i18n key="amount"/></th>
+        <th><data:i18n key="transfer.date"/></th>
+        <th><data:i18n key="status"/></th>
     </tr>
     </thead>
     <tbody>

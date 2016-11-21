@@ -8,19 +8,19 @@
 <table class="table">
     <thead>
     <tr>
-        <th>产币量</th>
-        <th>推荐奖</th>
-        <th>领导奖</th>
-        <th>激活奖</th>
-        <th>金币转入</th>
-        <th>复购</th>
-        <th>奖励币转出</th>
-        <th>奖励币转激活币</th>
-        <th>提现</th>
-        <th>系统维护费</th>
-        <th>今日收益</th>
-        <th>累计收益</th>
-        <th>日期</th>
+        <th><data:i18n key="finance.output"/></th>
+        <th><data:i18n key="finance.recommendIncome"/></th>
+        <th><data:i18n key="finance.leaderIncome"/></th>
+        <th><data:i18n key="finance.activeIncome"/></th>
+        <th><data:i18n key="finance.transferIn"/></th>
+        <th><data:i18n key="finance.repurchase"/></th>
+        <th><data:i18n key="finance.transferOut"/></th>
+        <th><data:i18n key="finance.transferToActive"/></th>
+        <th><data:i18n key="finance.withdraw"/></th>
+        <th><data:i18n key="finance.operationFee"/></th>
+        <th><data:i18n key="finance.todayIncome"/></th>
+        <th><data:i18n key="finance.totalIncome"/></th>
+        <th><data:i18n key="date"/></th>
     </tr>
     </thead>
     <tbody>

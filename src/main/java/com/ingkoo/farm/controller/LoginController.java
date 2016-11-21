@@ -4,11 +4,10 @@ import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.service.MoneyService;
 import com.ingkoo.farm.utils.MD5;
+import com.jfinal.core.Const;
 import com.jfinal.core.Controller;
 import com.jfinal.core.JFinal;
 import com.jfinal.render.JsonRender;
-
-import javax.servlet.http.Cookie;
 
 /**
  * 登录
@@ -22,6 +21,12 @@ public class LoginController extends Controller {
 	public void index() {
 		setAttr("qq", OtherRate.dao.findById("qq").getStr("rate"));
 		render("login.jsp");
+	}
+
+	public void setLocale() {
+		String locale = getPara("locale");
+		setCookie(Const.I18N_LOCALE, locale, Const.DEFAULT_I18N_MAX_AGE_OF_COOKIE, JFinal.me().getContextPath());
+		render(new JsonRender(true).forIE());
 	}
 
 	/**

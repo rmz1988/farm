@@ -8,12 +8,12 @@
 <table class="table">
     <thead>
     <tr>
-        <th>提现账号</th>
-        <th>提现金额(元)</th>
-        <th>实到金额(元)</th>
-        <th>手续费(元)</th>
-        <th>提现日期</th>
-        <th>状态</th>
+        <th><data:i18n key="withdraw.account"/></th>
+        <th><data:i18n key="withdraw.amount"/></th>
+        <th><data:i18n key="withdraw.actualAmount"/></th>
+        <th><data:i18n key="withdraw.fees"/></th>
+        <th><data:i18n key="withdraw.date"/></th>
+        <th><data:i18n key="status"/></th>
     </tr>
     </thead>
     <tbody>

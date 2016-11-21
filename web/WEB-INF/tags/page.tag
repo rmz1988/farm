@@ -153,7 +153,12 @@
 <div style="display: block;position:relative;height:50px;clear:both; margin-top: 15px;">
     <div class="form-group pull-right">
         <p class="text-left" style="margin-left: 5px;padding-top:7px;margin-bottom:0;">
-            共
+            <c:if test="${'zh_CN' == locale}">
+                共
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+
+            </c:if>
             <c:choose>
                 <c:when test="${empty page}">
                     0
@@ -162,14 +167,26 @@
                     ${page.totalPage}
                 </c:otherwise>
             </c:choose>
-            页&nbsp;&nbsp;每页显示20条,共<c:choose>
+            <c:if test="${'zh_CN' == locale}">
+                页&nbsp;&nbsp;每页显示20条,共
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+                pages&nbsp;&nbsp;20rows/page,Totals:
+            </c:if>
+            <c:choose>
             <c:when test="${empty page}">
                 0
             </c:when>
             <c:otherwise>
                 ${page.totalRow}
             </c:otherwise>
-        </c:choose>条记录
+        </c:choose>
+            <c:if test="${'zh_CN' == locale}">
+                条记录
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+                records
+            </c:if>
         </p>
     </div>
     <div class="form-group pull-right">
@@ -193,9 +210,23 @@
     </div>
     <!--</div>-->
     <ul class="pagination form-group pull-right" style="margin-top:0;">
-        <li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goFirst()">首页</a>
+        <li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goFirst()">
+            <c:if test="${'zh_CN' == locale}">
+                首页
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+                First
+            </c:if>
+        </a>
         </li>
-        <li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goPrev()">上一页</a>
+        <li <c:if test="${empty page || page.pageNumber == 1}">class="disabled"</c:if>><a href="#" onclick="goPrev()">
+            <c:if test="${'zh_CN' == locale}">
+                上一页
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+                Prev
+            </c:if>
+        </a>
         </li>
         <c:choose>
             <c:when test="${page.pageNumber > 2 && page.pageNumber < page.totalPage - 2}">
@@ -222,10 +253,24 @@
             </c:otherwise>
         </c:choose>
         <li <c:if test="${empty page || page.pageNumber >= page.totalPage}">class="disabled"</c:if>><a href="#"
-                                                                                                       onclick="goNext()">下一页</a>
+                                                                                                       onclick="goNext()">
+            <c:if test="${'zh_CN' == locale}">
+                下一页
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+                Next
+            </c:if>
+        </a>
         </li>
         <li <c:if test="${empty page || page.pageNumber >= page.totalPage}">class="disabled"</c:if>><a href="#"
-                                                                                                       onclick="goLast()">尾页</a>
+                                                                                                       onclick="goLast()">
+            <c:if test="${'zh_CN' == locale}">
+                尾页
+            </c:if>
+            <c:if test="${'en_US' == locale}">
+                Last
+            </c:if>
+        </a>
         </li>
     </ul>
 </div>

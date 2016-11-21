@@ -4,6 +4,15 @@
 define(function (require, exports, module) {
 
     $(function () {
+        $('#lang').change(function () {
+            var locale = $(this).val();
+            $.post(basePath + '/login/setLocale', {
+                locale: locale
+            }, function () {
+                window.location = window.location
+            }, 'json');
+        });
+
         $('#loginBtn').click(function () {
             var userId = $('#userId').val();
             var loginPwd = $('#loginPwd').val();
@@ -29,7 +38,7 @@ define(function (require, exports, module) {
                     alert('玩家尚未激活');
                 } else if (response == '3') {
                     alert('玩家已停用')
-                } else if (response == '4'){
+                } else if (response == '4') {
                     alert('系统正在结算中...\n请于每天7:00——24:00登录')
                 }
             }, 'json');

@@ -10,148 +10,153 @@
     <script>
         seajs.use("user/register");
     </script>
-    <title>开鑫牧场-注册</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="register"/></title>
 </head>
 <body>
 <div class="container">
     <div class="title">
         <div class="title-brand">
-            开鑫牧场
+            <data:i18n key="kxmc"/>
         </div>
     </div>
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li class="active">用户注册</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li class="active"><data:i18n key="register"/></li>
         </ol>
         <div class="content">
             <form id="registerForm" action="#" class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        玩家编号：
+                        <data:i18n key="userId"/>：
                     </label>
 
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="userId" name="userId" placeholder="6位以上数字"
+                        <input type="text" class="form-control" id="userId" name="userId"
+                               placeholder="<data:i18n key="register.userIdTip"/>"
                                maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        玩家姓名：
+                        <data:i18n key="register.name"/>：
                     </label>
 
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="请输入您的姓名"
+                        <input type="text" class="form-control" id="name" name="name"
+                               placeholder="<data:i18n key="register.nameTip"/>"
                                maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        电话：
+                        <data:i18n key="register.phone"/>：
                     </label>
 
                     <div class="col-md-6">
-                        <input type="text" id="mobile" name="mobile" class="form-control" placeholder="请输入联系电话"
+                        <input type="text" id="mobile" name="mobile" class="form-control"
+                               placeholder="<data:i18n key="register.phoneTip"/>"
                                maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        身份证号：
+                        <data:i18n key="register.idNumber"/>：
                     </label>
 
                     <div class="col-md-6">
-                        <input type="text" id="idCard" name="idCard" class="form-control" placeholder="请输入您的身份证号码"
+                        <input type="text" id="idCard" name="idCard" class="form-control"
+                               placeholder="<data:i18n key="register.idNumberTip"/>"
                                maxlength="18">
                     </div>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        开户银行：
+                        <data:i18n key="register.bank"/>：
                     </label>
 
                     <div class="col-md-6">
                         <select id="bank" name="bank" class="form-control">
-                            <option value="">请选择开户银行</option>
+                            <option value=""><data:i18n key="register.bankTip"/></option>
                             <c:forEach var="dict" items="${bankList}">
-                                <option value="${dict.dictName}">${dict.dictValue}</option>
+                                <option value="${dict.dictName}"><data:dict dictgroup="bank"
+                                                                            value="${dict.dictName}"/></option>
                             </c:forEach>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        户名：
+                        <data:i18n key="register.accountName"/>：
                     </label>
 
                     <div class="col-md-6">
                         <input type="text" id="bankAccountName" name="bankAccountName" class="form-control"
-                               placeholder="请输入您的银行开户名称" maxlength="60">
+                               placeholder="<data:i18n key="register.accountNameTip"/>" maxlength="60">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        银行卡号：
+                        <data:i18n key="register.bankCard"/>：
                     </label>
 
                     <div class="col-md-6">
                         <input type="text" id="bankCard" name="bankCard" class="form-control"
-                               placeholder="请输入您的银行卡号" maxlength="60">
+                               placeholder="<data:i18n key="register.bankCardTip"/>" maxlength="60">
                     </div>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        登录密码：
+                        <data:i18n key="register.loginPwd"/>：
                     </label>
 
                     <div class="col-md-6 form-text">
-                        默认：111111，用于登录系统，请激活后自行修改。
+                        <data:i18n key="register.loginPwdTip"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        交易密码：
+                        <data:i18n key="register.tradePwd"/>：
                     </label>
 
                     <div class="col-md-6 form-text">
-                        默认：222222，用于金币互转和提现操作，请激活后自行修改
+                        <data:i18n key="register.tradePwdTip"/>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        推荐人编号：
+                        <data:i18n key="register.recommendId"/>：
                     </label>
 
                     <div class="col-md-6">
                         <input type="text" id="recommendUserId" name="recommendUserId" class="form-control"
-                               placeholder="请填写您的推荐人编号" maxlength="60">
+                               placeholder="<data:i18n key="register.recommendIdTip"/>" maxlength="60">
                     </div>
                     <div id="recommendUserArea" class="col-md-6 col-md-offset-2" style="display:none;">
-                        <span>推荐人：</span>
+                        <span><data:i18n key="register.recommendUser"/>：</span>
                         <span id="recommendUserName"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        激活中心编号：
+                        <data:i18n key="register.activateNo"/>：
                     </label>
 
                     <div class="col-md-6">
                         <input type="text" id="activatedNo" name="activatedNo" class="form-control"
-                               placeholder="请填写您的激活中心编号：3位数字" maxlength="3">
+                               placeholder="<data:i18n key="register.activateNoTip"/>" maxlength="3">
                     </div>
                     <div id="activeUserArea" class="col-md-6 col-md-offset-2" style="display:none;">
-                        <span>激活人：</span>
+                        <span><data:i18n key="register.activateUser"/>：</span>
                         <span id="activeUserName"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        您要购买的宠物：
+                        <data:i18n key="register.yourPet"/>：
                     </label>
 
                     <div class="col-md-10">
@@ -161,14 +166,14 @@
                                     <img src="${imgUrl}${pet.img}" alt="${pet.name}">
                                     <input type="radio" name="petNo" value="${pet.petNo}"
                                            <c:if test="${st.index == 0}">checked</c:if>>
-                                        ${pet.name}
+                                    <data:petName petNo="${pet.petNo}"/>
                                 </label>
                             </div>
                         </c:forEach>
                     </div>
                 </div>
-                <button type="button" id="registerBtn" class="btn btn-success">提交</button>
-                <button type="button" id="backBtn" class="btn btn-default">返回</button>
+                <button type="button" id="registerBtn" class="btn btn-success"><data:i18n key="submit"/></button>
+                <button type="button" id="backBtn" class="btn btn-default"><data:i18n key="back"/></button>
             </form>
         </div>
     </div>

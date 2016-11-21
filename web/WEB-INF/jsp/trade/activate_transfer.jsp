@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-奖励币转激活币</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.transferToActive"/></title>
     <script>
         seajs.use('trade/transferActive');
     </script>
@@ -19,20 +19,20 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li>交易管理</li>
-            <li class="active">奖励币转激活币</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><data:i18n key="menu.tradeMgmt"/></li>
+            <li class="active"><data:i18n key="menu.transferToActive"/></li>
         </ol>
         <div class="content">
             <c:choose>
                 <c:when test="${empty user.activeNo}">
                 <span class="rule-tip-lg">
-                   您暂不具备奖励币转权限，请先申请激活管理权限。
+                   <data:i18n key="transfer.noAuth"/>
                 </span>
                 </c:when>
                 <c:otherwise>
                     <div class="balance-tip col-md-4">
-                        <span>奖励币：</span>
+                        <span><data:i18n key="bonus"/>：</span>
                         <span class="money-img">
                             <img src="${basePath}/images/money.png" alt="">
                         </span>
@@ -41,7 +41,7 @@
                         </span>
                     </div>
                     <div class="balance-tip col-md-4">
-                        <span>可转金额：</span>
+                        <span><data:i18n key="transfer.effective"/>：</span>
                         <span class="money-img">
                             <img src="${basePath}/images/money.png" alt="">
                         </span>
@@ -50,7 +50,7 @@
                         </span>
                     </div>
                     <div class="balance-tip col-md-4">
-                        <span>激活币：</span>
+                        <span><data:i18n key="activateMoney"/>：</span>
                         <span class="money-img">
                             <img src="${basePath}/images/money.png" alt="">
                         </span>
@@ -62,44 +62,44 @@
                     <form id="transferForm" action="#" class="form-horizontal" method="post">
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                转换金额：
+                                <data:i18n key="transfer.money"/>：
                             </label>
 
                             <div class="col-md-6">
                                 <input type="number" id="money" name="money" class="form-control"
-                                       placeholder="请输入转换金额,只能是${minTransfer}的倍数">
+                                       placeholder="<data:i18n key="transfer.moneyTip"/>${minTransfer}<data:i18n key="transfer.moneyTip2"/>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">
-                                交易密码：
+                                <data:i18n key="register.tradePwd"/>：
                             </label>
 
                             <div class="col-md-6">
                                 <input type="password" id="tradePwd" name="tradePwd" class="form-control"
-                                       placeholder="请输入交易密码">
+                                       placeholder="<data:i18n key="transfer.tradePwdTip"/>">
                             </div>
                         </div>
                         <input type="hidden" id="max" value="${user.money}"/>
                         <input type="hidden" id="times" value="${minTransfer}"/>
-                        <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2">提交</button>
+                        <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"><data:i18n key="submit"/></button>
                     </form>
                     <hr>
                     <div class="panel panel-warning">
                         <div class="panel-heading">
-                            奖励币转激活币注意事项
+                            <data:i18n key="transferActive.warnings"/>
                         </div>
                         <div class="panel-body">
                     <span class="rule-tip-lg">
-                        1、奖励币转激活币为立即到账，转换金额只能是${minTransfer}的倍数；<br/>
-                        2、每天转换次数无上限；不收取任何费用；<br/>
-                        3、激活币可用于激活玩家操作，不可提现，不可再次转换为奖励币。
+                        <data:i18n key="transferActive.warnTip1"/>${minTransfer}<data:i18n key="transferActive.warnTip2"/><br/>
+                        <data:i18n key="transferActive.warnTip3"/><br/>
+                        <data:i18n key="transferActive.warnTip4"/>
                     </span>
                         </div>
                     </div>
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            奖励币转激活币记录
+                            <data:i18n key="transferActive.record"/>
                         </div>
                         <div id="content" class="panel-body table-responsive">
                             <jsp:include page="activate_transfer_list.jsp" flush="true"/>

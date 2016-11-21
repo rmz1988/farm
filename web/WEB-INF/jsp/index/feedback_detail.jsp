@@ -7,7 +7,7 @@
 <%@ include file="/common.jsp" %>
 <html>
 <head lang="zh-CN">
-    <title>开鑫牧场-反馈</title>
+    <title><data:i18n key="kxmc"/>-<data:i18n key="menu.feedback"/></title>
     <script>
         seajs.use('user/feedback');
     </script>
@@ -19,16 +19,16 @@
 
     <div class="row">
         <ol class="breadcrumb">
-            <li>当前位置：</li>
-            <li><a href="${basePath}">首页</a></li>
-            <li><a href="${basePath}/feedback">反馈</a></li>
-            <li class="active">详情</li>
+            <li><data:i18n key="currentLocation"/>：</li>
+            <li><a href="${basePath}"><data:i18n key="home"/></a></li>
+            <li><a href="${basePath}/feedback"><data:i18n key="menu.feedback"/></a></li>
+            <li class="active"><data:i18n key="detail"/></li>
         </ol>
         <div class="content">
             <form class="form-horizontal">
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        标题：
+                        <data:i18n key="index.title"/>：
                     </label>
 
                     <div class="col-md-8 form-text">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        反馈时间：
+                        <data:i18n key="index.releaseTime"/>：
                     </label>
 
                     <div class="col-md-8 form-text">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        状态：
+                        <data:i18n key="status"/>：
                     </label>
 
                     <div class="col-md-8 form-text">
@@ -56,7 +56,7 @@
                 <c:if test="${feedback.status == 1}">
                     <div class="form-group">
                         <label class="col-md-2 control-label">
-                            回复时间：
+                            <data:i18n key="index.replyTime"/>：
                         </label>
 
                         <div class="col-md-8 form-text">
@@ -66,7 +66,7 @@
                 </c:if>
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        反馈内容：
+                        <data:i18n key="index.feedbackContent"/>：
                     </label>
 
                     <div class="col-md-8 form-text">
@@ -76,7 +76,7 @@
                 <c:if test="${not empty feedback.pics}">
                     <div class="form-group">
                         <label class="col-md-2 control-label">
-                            反馈图片：
+                            <data:i18n key="index.feedbackImg"/>：
                         </label>
 
                         <div class="col-md-8 form-text">
@@ -91,7 +91,7 @@
                 <c:if test="${feedback.status == 1}">
                     <div class="form-group">
                         <label class="col-md-2 control-label">
-                            回复内容：
+                            <data:i18n key="index.replyContent"/>：
                         </label>
 
                         <div class="col-md-8 form-text">
@@ -101,7 +101,7 @@
                 </c:if>
 
                 <button id="backBtn" type="button" class="btn btn-default">
-                    返 回
+                    <data:i18n key="back"/>
                 </button>
             </form>
         </div>
