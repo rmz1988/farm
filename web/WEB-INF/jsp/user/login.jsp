@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="login-area col-md-6">
-    <div class="login-title col-md-12 text-center">
+    <div class="login-title col-md-12 text-center" style="line-height: 60px;">
         <data:i18n key="kxmc"/>
     </div>
     <form action="#" class="login-form form-horizontal" method="post">

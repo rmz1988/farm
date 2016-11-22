@@ -17,12 +17,12 @@ define(function (require, exports, module) {
                 }
             }, messages: {
                 money: {
-                    required: '请填写转换金额',
-                    maxOfTimes: '转出金额须是' + $('#times').val() + '的倍数，不得超过' + $('#max').val()
+                    required: tools.getText('transferActive.moneyRequired'),
+                    maxOfTimes: tools.getText('transferActive.maxOfTimesTip1') + $('#times').val() + tools.getText('transferActive.maxOfTimesTip2') + $('#max').val()
                 },
                 tradePwd: {
-                    required: '请输入交易密码',
-                    tradePwd: '交易密码不正确'
+                    required: tools.getText('transfer.tradePwdRequired'),
+                    tradePwd: tools.getText('transfer.tradePwdInvalid')
                 }
             }
         });
@@ -39,10 +39,10 @@ define(function (require, exports, module) {
                     'money': $.trim($('#money').val())
                 }, function (response) {
                     if (response) {
-                        alert('转换成功！');
+                        alert(tools.getText('transferActive.success'));
                         window.location = basePath + '/trade/activate/transfer'
                     } else {
-                        alert('系统繁忙，请稍后重试！');
+                        alert(tools.getText('systemError'));
                         $btn.attr('disabled', false);
                     }
                 }, 'json');

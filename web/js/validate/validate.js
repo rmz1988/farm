@@ -270,4 +270,30 @@ define(function (require, exports) {
 
         return result;
     });
+
+    /**
+     * 检查是否满15天
+     */
+    $.validator.addMethod('lessThanDays', function (value, element, params) {
+        var result = true;
+        if (value != '' && params) {
+            $.ajax({
+                url: basePath + '/check/lessThanDays',
+                type: 'post',
+                async: false,
+                data: {
+                    userId: value
+                },
+                dataType: 'json',
+                success: function (response) {
+                    result = response;
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+        }
+
+        return result;
+    });
 });

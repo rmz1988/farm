@@ -3,6 +3,7 @@
  */
 define(function (require, exports, module) {
     var validate = require("validate/validate");
+    var tools = require('tools/tools');
 
     $(function () {
 
@@ -47,38 +48,38 @@ define(function (require, exports, module) {
                 }
             }, messages: {
                 userId: {
-                    required: '请输入玩家编号',
-                    regex: '玩家编号必须是6位以上数字',
-                    uniqueUserId: '该编号已被使用，请更换'
+                    required: tools.getText('register.userIdRequired'),
+                    regex: tools.getText('register.userRegex'),
+                    uniqueUserId: tools.getText('register.uniqueUserId')
                 },
                 name: {
-                    required: '请输入玩家姓名'
+                    required: tools.getText('register.nameRequired')
                 },
                 idCard: {
-                    required: '请填写身份证号码',
+                    required: tools.getText('register.idCardRequired'),
                     //validIdCard: '身份证号码不合法',
-                    uniqueIdCard: '该身份证已注册'
+                    uniqueIdCard: tools.getText('register.uniqueIdCard')
                 },
                 mobile: {
-                    required: '请填写联系电话',
-                    phone: '电话号码不合法'
+                    required: tools.getText('register.mobileRequired'),
+                    phone: tools.getText('register.mobilePhoneTip')
                 },
                 bank: {
-                    required: '请选择开户行'
+                    required: tools.getText('register.bankRequired')
                 },
                 bankAccountName: {
-                    required: '请输入银行开户名'
+                    required: tools.getText('register.accountNameRequired')
                 },
                 bankCard: {
-                    required: '请输入银行卡号'
+                    required: tools.getText('register.bankCardRequired')
                 },
                 recommendUserId: {
-                    required: '请输入推荐玩家编号',
-                    validRecommendId: '无效的推荐玩家编号'
+                    required: tools.getText('register.recommendUserIdRequired'),
+                    validRecommendId: tools.getText('register.recommendUserIdValid')
                 },
                 activatedNo: {
-                    required: '请输入激活中心编号',
-                    validActivatedNo: '无效的激活中心编号'
+                    required: tools.getText('register.activatedNoRequired'),
+                    validActivatedNo: tools.getText('register.activatedNoValid')
                 }
             }
         });
@@ -141,10 +142,10 @@ define(function (require, exports, module) {
                     'user.petNo': $('input[name="petNo"]:checked').val()
                 }, function (response) {
                     if (response) {
-                        alert('注册成功！等待激活中心激活后可登录系统！')
+                        alert(tools.getText('register.success'));
                         window.location = basePath + '/login';
                     } else {
-                        alert('系统繁忙，请稍后重试');
+                        alert(tools.getText('systemError'));
                     }
                 }, 'json');
             }

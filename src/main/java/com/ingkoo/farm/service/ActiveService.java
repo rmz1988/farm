@@ -15,22 +15,24 @@ import java.util.List;
 public class ActiveService {
 
 	public Page<ActiveApply> queryActivatedApplyList(String userId, String status, String activeNo, int pageNumber,
-	                                                int pageSize) {
+	                                                 int pageSize) {
 		List<Object> paramList = new ArrayList<>();
-		StringBuilder sqlBuilder = new StringBuilder("from active_apply where activatedNo = ? ");
+		StringBuilder sqlBuilder =
+				new StringBuilder("from active_apply a,user u where a.userId = u.userId and a.activatedNo = ? ");
 		paramList.add(activeNo);
 
 		if (StringUtils.isNotEmpty(userId)) {
-			sqlBuilder.append("and userId = ? ");
+			sqlBuilder.append("and a.userId = ? ");
 			paramList.add(userId);
 		}
 		if (StringUtils.isNotEmpty(status)) {
-			sqlBuilder.append("and status = ? ");
+			sqlBuilder.append("and a.status = ? ");
 			paramList.add(status);
 		}
 
-		sqlBuilder.append("order by status asc,applyTime desc");
+		sqlBuilder.append("order by a.status asc,applyTime desc");
 
-		return ActiveApply.dao.paginate(pageNumber, pageSize, "select *", sqlBuilder.toString(), paramList.toArray());
+		return ActiveApply.dao
+				.paginate(pageNumber, pageSize, "select a.*,u.petNo", sqlBuilder.toString(), paramList.toArray());
 	}
 }

@@ -1,5 +1,6 @@
 define(function (require, exports, module) {
     var validator = require('validate/validate');
+    var tools = require('tools/tools');
 
     $(function () {
         $('#loginPwdBtn').click(function () {
@@ -26,15 +27,15 @@ define(function (require, exports, module) {
             },
             messages: {
                 oldLoginPwd: {
-                    required: '请输入原登录密码',
-                    loginPwd: '登录密码不正确'
+                    required: tools.getText('self.oldLoginPwdRequired'),
+                    loginPwd: tools.getText('self.oldLoginPwdError')
                 },
                 loginPwd: {
-                    required: '请输入新登录密码'
+                    required: tools.getText('self.loginPwdRequired')
                 },
                 repeatLoginPwd: {
-                    required: '请再次输入新登录密码',
-                    equalTo: '与新登录密码不一致'
+                    required: tools.getText('self.repeatLoginPwdRequired'),
+                    equalTo: tools.getText('self.loginPwdNotSame')
                 }
             }
         });
@@ -49,10 +50,10 @@ define(function (require, exports, module) {
                     loginPwd: $.trim($('#loginPwd').val())
                 }, function (response) {
                     if (response) {
-                        alert('修改成功，请重新登录!');
+                        alert(tools.getText('self.loginPwdSuccess'));
                         window.location = basePath + '/login/logout';
                     } else {
-                        alert('系统繁忙，请稍后重试');
+                        alert(tools.getText('systemError'));
                     }
                 }, 'json');
             }
@@ -74,15 +75,15 @@ define(function (require, exports, module) {
             },
             messages: {
                 oldTradePwd: {
-                    required: '请输入原交易密码',
-                    tradePwd: '交易密码不正确'
+                    required: tools.getText('self.oldTradePwdRequired'),
+                    tradePwd: tools.getText('self.oldTradePwdError')
                 },
                 tradePwd: {
-                    required: '请输入新交易密码'
+                    required: tools.getText('self.tradePwdRequired')
                 },
                 repeatTradePwd: {
-                    required: '请再次输入新交易密码',
-                    equalTo: '与新交易密码不一致'
+                    required: tools.getText('self.repeatTradePwdRequired'),
+                    equalTo: tools.getText('self.tradePwdNotSame')
                 }
             }
         });
@@ -97,10 +98,10 @@ define(function (require, exports, module) {
                     tradePwd: $.trim($('#tradePwd').val())
                 }, function (response) {
                     if (response) {
-                        alert('修改成功!');
+                        alert(tools.getText('self.tradePwdSuccess'));
                         window.location = basePath + '/self';
                     } else {
-                        alert('系统繁忙，请稍后重试');
+                        alert(tools.getText('systemError'));
                     }
                 }, 'json');
             }

@@ -22,7 +22,7 @@
         <tr>
             <td>${activeApply.userId}</td>
             <td>${activeApply.name}</td>
-            <td>${activeApply.petName}</td>
+            <td><data:petName petNo="${activeApply.petNo}"/></td>
             <td><data:date value="${activeApply.applyTime}" fmt="yyyy-MM-dd"/></td>
             <td><data:dict dictgroup="activatedApplyStatus" value="${activeApply.status}"/></td>
             <td><data:date value="${activeApply.statusTime}" fmt="yyyy-MM-dd"/></td>

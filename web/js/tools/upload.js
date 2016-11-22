@@ -2,6 +2,7 @@
  * 图片上传
  */
 define(function (require, exports, module) {
+    var tools = require('tools/tools');
     /* require('jqueryUiWidget');
      require('jqueryFileupload');
      require('jqueryFileuploadTransport');
@@ -16,8 +17,8 @@ define(function (require, exports, module) {
             // The maximum allowed file size in bytes:
             maxFileSize: 2048000, // 2M
             messages: {
-                acceptFileTypes: '仅支持JPG,PNG,GIF格式图片',
-                maxFileSize: '图片最大支持2Mb'
+                acceptFileTypes: tools.getText('upload.acceptFileType'),
+                maxFileSize: tools.getText('upload.maxFileSize')
             },
             start: function (e) {
                 $('#' + fileInputId + 'Progress').css('width', '0');
@@ -38,7 +39,7 @@ define(function (require, exports, module) {
                     $(document).on('click', 'img[id="' + data.result.title + '"]', function () {
                         var $img = $(this);
                         var imgName = $(this).attr('id');
-                        if (confirm('确认删除图片？')) {
+                        if (confirm(tools.getText('upload.deleteImgTip'))) {
                             $.post(delUrl, {
                                 imgName: imgName
                             }, function (response) {
@@ -47,7 +48,7 @@ define(function (require, exports, module) {
                                     $uploadedPics.val($uploadedPics.val().replace(imgName + ';', ''));
                                     $img.remove();
                                 } else {
-                                    alert('系统繁忙，请稍后重试');
+                                    alert(tools.getText('systemError'));
                                 }
                             }, 'json');
                         }

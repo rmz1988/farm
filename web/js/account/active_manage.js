@@ -3,7 +3,7 @@ define(function (require, exports, module) {
 
     $(function () {
         $('#content').on('click', 'button[name="activeBtn"]', function () {
-            if (confirm('确认激活该用户？')) {
+            if (confirm(tools.getText('active.confirm'))) {
                 var $btn = $(this);
                 $(this).attr('disabled',true);
                 var applyId = $(this).attr('id');
@@ -11,10 +11,10 @@ define(function (require, exports, module) {
                     applyId: applyId
                 }, function (response) {
                     if (response) {
-                        alert('激活成功');
+                        alert(tools.getText('active.success'));
                         $('#queryBtn').click();
                     } else {
-                        alert('您的激活币余额不足，不能执行激活操作');
+                        alert(tools.getText('active.activeMoneyNotEnough'));
                         $btn.attr('disabled',false);
                     }
                 }, 'json');

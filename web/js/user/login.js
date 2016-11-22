@@ -2,6 +2,7 @@
  * 登录
  */
 define(function (require, exports, module) {
+    var tools = require('tools/tools');
 
     $(function () {
         $('#lang').change(function () {
@@ -18,11 +19,11 @@ define(function (require, exports, module) {
             var loginPwd = $('#loginPwd').val();
             var rememberUser = $('#rememberUser').is(':checked') ? "1" : '0';
             if ($.trim(userId) == '') {
-                alert('请输入玩家编号');
+                alert(tools.getText('login.userIdTip'));
                 return;
             }
             if ($.trim(loginPwd) == '') {
-                alert('请输入登录密码');
+                alert(tools.getText('login.passwordTip'));
                 return;
             }
             $.post(basePath + '/login/doLogin', {
@@ -33,13 +34,13 @@ define(function (require, exports, module) {
                 if (response == '0') {
                     window.location = basePath + '/';
                 } else if (response == '1') {
-                    alert("玩家编号或密码错误");
+                    alert(tools.getText('login.userIdPwdError'));
                 } else if (response == '2') {
-                    alert('玩家尚未激活');
+                    alert(tools.getText('login.userNotActivate'));
                 } else if (response == '3') {
-                    alert('玩家已停用')
+                    alert(tools.getText('login.userStop'));
                 } else if (response == '4') {
-                    alert('系统正在结算中...\n请于每天7:00——24:00登录')
+                    alert(tools.getText('login.visitTip'));
                 }
             }, 'json');
         });

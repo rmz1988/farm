@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     var validator = require('validate/validate');
     var upload = require('tools/upload');
+    var tools = require('tools/tools');
 
     $(function () {
         upload.imgUpload(basePath + '/feedback/uploadImg', basePath + '/feedback/deleteImg', 'pics');
@@ -16,10 +17,10 @@ define(function (require, exports, module) {
             },
             messages: {
                 title: {
-                    required: '请填写反馈标题'
+                    required: tools.getText('feedback.titleRequired')
                 },
                 content: {
-                    required: '请填写反馈内容'
+                    required: tools.getText('feedback.contentRequired')
                 }
             }
         });
@@ -36,10 +37,10 @@ define(function (require, exports, module) {
                     'feedback.pics': $('#uploadedPics').val()
                 }, function (response) {
                     if (response) {
-                        alert('发布成功');
+                        alert(tools.getText('feedback.success'));
                         window.location = basePath + '/feedback';
                     } else {
-                        alert('系统繁忙，请稍后重试');
+                        alert(tools.getText('systemError'));
                     }
                 }, 'json');
             }

@@ -18,12 +18,12 @@ define(function (require, exports, module) {
             },
             messages: {
                 money: {
-                    required: '请填写提现金额',
-                    maxOfTimes: '提现金额须是' + $('#times').val() + '的倍数，不得超过' + $('#max').val()
+                    required: tools.getText('withdraw.moneyRequired'),
+                    maxOfTimes: tools.getText('withdraw.moneyTip1') + $('#times').val() + tools.getText('withdraw.moneyTip2') + $('#max').val()
                 },
                 tradePwd: {
-                    required: '请输入交易密码',
-                    tradePwd: '交易密码不正确'
+                    required: tools.getText('transfer.tradePwdRequired'),
+                    tradePwd: tools.getText('transfer.tradePwdInvalid')
                 }
             }
         });
@@ -40,10 +40,10 @@ define(function (require, exports, module) {
                     money: $.trim($('#money').val())
                 }, function (response) {
                     if (response) {
-                        alert('提现申请已提交，后台审核后到账！');
+                        alert(tools.getText('withdraw.success'));
                         window.location = basePath + '/trade/withdraw';
                     } else {
-                        alert('系统繁忙，请稍后重试！');
+                        alert(tools.getText('systemError'));
                         $btn.attr('disabled', false);
                     }
                 }, 'json');

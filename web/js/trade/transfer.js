@@ -9,7 +9,8 @@ define(function (require, exports, module) {
             rules: {
                 userId: {
                     required: true,
-                    existsUser: true
+                    existsUser: true,
+                    lessThanDays: true
                 },
                 money: {
                     required: true,
@@ -21,16 +22,17 @@ define(function (require, exports, module) {
                 }
             }, messages: {
                 userId: {
-                    required: '请填写转出玩家编号',
-                    existsUser: '该玩家不存在'
+                    required: tools.getText('transfer.outUserIdRequired'),
+                    existsUser: tools.getText('transfer.existsUser'),
+                    lessThanDays: tools.getText('transfer.cannotTransfer')
                 },
                 money: {
-                    required: '请填写转出金额',
-                    maxOfTimes: '转出金额须是' + $('#times').val() + '的倍数，不得超过' + $('#max').val()
+                    required: tools.getText('transfer.moneyRequired'),
+                    maxOfTimes: tools.getText('transfer.maxOfTimesTip1') + $('#times').val() + tools.getText('transfer.maxOfTimesTip2') + $('#max').val()
                 },
                 tradePwd: {
-                    required: '请输入交易密码',
-                    tradePwd: '交易密码不正确'
+                    required: tools.getText('transfer.tradePwdRequired'),
+                    tradePwd: tools.getText('transfer.tradePwdInvalid')
                 }
             }
         });
@@ -48,10 +50,10 @@ define(function (require, exports, module) {
                     'transfer.money': $.trim($('#money').val())
                 }, function (response) {
                     if (response) {
-                        alert('转出成功！');
+                        alert(tools.getText('transfer.success'));
                         window.location = basePath + '/trade/transfer'
                     } else {
-                        alert('系统繁忙，请稍后重试！');
+                        alert(tools.getText('systemError'));
                         $btn.attr('disabled', false);
                     }
                 }, 'json');

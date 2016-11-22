@@ -1,5 +1,6 @@
 define(function (require, exports, module) {
     var validator = require('validate/validate');
+    var tools = require('tools/tools');
 
     $(function () {
 
@@ -13,9 +14,9 @@ define(function (require, exports, module) {
             },
             messages: {
                 activeNo: {
-                    required: '请输入您要申请的激活中心编号',
-                    regex: '激活中心编号只能是3位数字',
-                    uniqueActiveNo: '该激活中心编号已被使用'
+                    required: tools.getText('active.activeNoRequired'),
+                    regex: tools.getText('active.activeNoRegex'),
+                    uniqueActiveNo: tools.getText('active.uniqueActiveNo')
                 }
             }
         });
@@ -32,10 +33,10 @@ define(function (require, exports, module) {
                     activeNo: $.trim($('#activeNo').val())
                 }, function (response) {
                     if (response) {
-                        alert('您的申请已提交，系统将在4小时内审核！');
+                        alert(tools.getText('active.activeApplySuccess'));
                         window.location = basePath + '/account/apply';
                     } else {
-                        alert('系统繁忙，请稍后重试');
+                        alert(tools.getText('systemError'));
                     }
                 }, 'json');
             }

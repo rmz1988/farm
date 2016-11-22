@@ -93,4 +93,15 @@ public class CheckController extends Controller {
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		render(new JsonRender(user.getStr("tradePwd").equals(MD5.encrypt(getPara("tradePwd")))).forIE());
 	}
+
+	/**
+	 * 是否满15天
+	 */
+	public void lessThanDays() {
+		User user = User.dao.findById(getPara("userId"));
+		render(new JsonRender(
+				user != null && user.getStr("status").equals("2") &&
+						(System.currentTimeMillis() - user.getLong("activateTime")) >= 15 * 24 * 3600 * 1000L)
+				.forIE());
+	}
 }
