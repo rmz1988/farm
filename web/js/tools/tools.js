@@ -152,8 +152,8 @@ define(function (require, exports, module) {
             'self.repeatTradePwdRequired': 'Please input new trade password again',
             'self.tradePwdNotSame': 'Not same as the new trade password',
             'self.tradePwdSuccess': 'Success!',
-            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times',
-            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times'
+            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times today',
+            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times today'
         }
     };
 
