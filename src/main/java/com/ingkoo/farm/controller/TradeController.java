@@ -83,6 +83,7 @@ public class TradeController extends Controller {
 					//修改用户余额及提现状态
 					user.set("money", new Money(user.getStr("money")).subtract(money).toString())
 							.set("isWithdraw", "1")
+							.set("todayLimitMoney", new Money(user.getStr("todayLimitMoney")).add(money).toString())
 							.update();
 					//记录用户收入总明细
 					new TotalIncome().saveWithdrawOutput(User.dao.findById(user.getStr("userId")), money);
@@ -153,6 +154,9 @@ public class TradeController extends Controller {
 							.save();
 					//修改双方玩家余额
 					user.set("money", new Money(user.getStr("money")).subtract(transferOut.getStr("money")).toString())
+							.set("todayLimitMoney",
+									new Money(user.getStr("todayLimitMoney")).add(transferOut.getStr("money"))
+											.toString())
 							.update();
 					User inUser = User.dao.findById(transferOut.getStr("outUserId"));
 					inUser.set("money", new Money(inUser.getStr("money")).add(transferOut.getStr("money")).toString())

@@ -94,6 +94,8 @@
                 </div>
                 <input type="hidden" id="max" value="${user.money}"/>
                 <input type="hidden" id="times" value="${minTransfer}"/>
+                <input type="hidden" id="todayRepurchase" value="${user.todayRepurchase}"/>
+                <input type="hidden" id="todayLimitMoney" value="${user.todayLimitMoney}"/>
                 <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"
                         <c:if test="${canTransfer == false}">disabled </c:if>><data:i18n key="submit"/>
                 </button>

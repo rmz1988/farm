@@ -36,8 +36,18 @@ define(function (require, exports, module) {
             var $btn = $(this);
             $btn.attr('disabled', true);
             if ($('#withdrawForm').valid()) {
+                var todayLimitMoney = Number($('#todayLimitMoney').val());
+                todayLimitMoney = 1000 - todayLimitMoney;
+                var todayRepurchase = Number($('#todayRepurchase').val());
+                var money = Number($.trim($('#money').val()));
+                if (money >= todayLimitMoney && todayRepurchase < 3) {
+                    alert(tools.getText('withdraw.withdrawLimitMoney'));
+                    $btn.attr('disabled', false);
+                    return;
+                }
+
                 $.post(basePath + '/trade/doWithdraw', {
-                    money: $.trim($('#money').val())
+                    money: money
                 }, function (response) {
                     if (response) {
                         alert(tools.getText('withdraw.success'));
@@ -47,6 +57,8 @@ define(function (require, exports, module) {
                         $btn.attr('disabled', false);
                     }
                 }, 'json');
+            } else {
+                $btn.attr('disabled', false);
             }
         });
     });

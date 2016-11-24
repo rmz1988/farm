@@ -77,7 +77,9 @@ define(function (require, exports, module) {
             'self.tradePwdRequired': '请输入新交易密码',
             'self.repeatTradePwdRequired': '请再次输入新交易密码',
             'self.tradePwdNotSame': '与新交易密码不一致',
-            'self.tradePwdSuccess': '修改成功！'
+            'self.tradePwdSuccess': '修改成功！',
+            'transfer.transferLimitMoney': '互转.提现每日累计1000元以上,需当日复购3次才可进行',
+            'withdraw.withdrawLimitMoney': '互转.提现每日累计1000元以上,需当日复购3次才可进行'
         },
         'en_US': {
             'systemError': 'System is busy,please try again later',
@@ -149,7 +151,9 @@ define(function (require, exports, module) {
             'self.tradePwdRequired': 'Please input new trade password',
             'self.repeatTradePwdRequired': 'Please input new trade password again',
             'self.tradePwdNotSame': 'Not same as the new trade password',
-            'self.tradePwdSuccess': 'Success!'
+            'self.tradePwdSuccess': 'Success!',
+            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times',
+            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times'
         }
     };
 

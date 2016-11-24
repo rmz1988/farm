@@ -53,6 +53,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="userId"/>：
                             </label>
+
                             <div class="form-text col-md-6">
                                     ${user.userId}
                             </div>
@@ -61,6 +62,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="register.name"/>：
                             </label>
+
                             <div class="form-text col-md-6">
                                     ${user.name}
                             </div>
@@ -69,6 +71,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="register.bank"/>：
                             </label>
+
                             <div class="form-text col-md-6">
                                 <data:dict dictgroup="bank" value="${user.bank}"/>
                             </div>
@@ -77,6 +80,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="register.accountName"/>：
                             </label>
+
                             <div class="form-text col-md-6">
                                     ${user.bankAccountName}
                             </div>
@@ -85,6 +89,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="register.bankCard"/>：
                             </label>
+
                             <div class="form-text col-md-6">
                                 <data:bankcard value="${user.bankCard}"/>
                             </div>
@@ -93,6 +98,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="withdraw.amount"/>：
                             </label>
+
                             <div class="col-md-6">
                                 <input type="number" id="money" name="money" class="form-control"
                                        placeholder="<data:i18n key="withdraw.amountTip"/>${minWithdraw}<data:i18n key="withdraw.amountTip2"/>">
@@ -102,6 +108,7 @@
                             <label class="control-label col-md-2">
                                 <data:i18n key="register.tradePwd"/>：
                             </label>
+
                             <div class="col-md-6">
                                 <input type="password" id="tradePwd" name="tradePwd" class="form-control"
                                        placeholder="<data:i18n key="transfer.tradePwdTip"/>">
@@ -109,6 +116,8 @@
                         </div>
                         <input type="hidden" id="max" value="${user.money}">
                         <input type="hidden" id="times" value="${minWithdraw}">
+                        <input type="hidden" id="todayRepurchase" value="${user.todayRepurchase}"/>
+                        <input type="hidden" id="todayLimitMoney" value="${user.todayLimitMoney}"/>
                         <button id="withdrawBtn" type="button" class="btn btn-success col-md-offset-2"
                                 <c:if test="${canWithdraw == false}">disabled</c:if>>
                             <data:i18n key="submit"/>

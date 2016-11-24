@@ -45,9 +45,19 @@ define(function (require, exports, module) {
             var $btn = $(this);
             $btn.attr('disabled', true);
             if ($('#transferForm').valid()) {
+                var todayLimitMoney = Number($('#todayLimitMoney').val());
+                todayLimitMoney = 1000 - todayLimitMoney;
+                var todayRepurchase = Number($('#todayRepurchase').val());
+                var money = Number($.trim($('#money').val()));
+                if (money >= todayLimitMoney && todayRepurchase < 3) {
+                    alert(tools.getText('transfer.transferLimitMoney'));
+                    $btn.attr('disabled', false);
+                    return;
+                }
+
                 $.post(basePath + '/trade/doTransfer', {
                     'transfer.outUserId': $.trim($('#userId').val()),
-                    'transfer.money': $.trim($('#money').val())
+                    'transfer.money': money
                 }, function (response) {
                     if (response) {
                         alert(tools.getText('transfer.success'));
@@ -57,6 +67,8 @@ define(function (require, exports, module) {
                         $btn.attr('disabled', false);
                     }
                 }, 'json');
+            }else{
+                $btn.attr('disabled', false);
             }
         });
     });
