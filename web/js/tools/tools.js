@@ -78,9 +78,9 @@ define(function (require, exports, module) {
             'self.repeatTradePwdRequired': '请再次输入新交易密码',
             'self.tradePwdNotSame': '与新交易密码不一致',
             'self.tradePwdSuccess': '修改成功！',
-            'transfer.transferLimitMoney': '互转.提现每日累计1000元以上,需当日复购3次才可进行',
-            'withdraw.withdrawLimitMoney': '互转.提现每日累计1000元以上,需当日复购3次才可进行',
-            'transferActive.transferLimitMoney': '奖励币转激活币每日累计1000元及以上，须当日复购5次才可进行'
+            'transfer.transferLimitMoney': '互转、提现每日累计1000元以上,需当日复购3次才可进行',
+            'withdraw.withdrawLimitMoney': '互转、提现每日累计1000元以上,需当日复购3次才可进行',
+            'transferActive.transferLimitMoney': '互转、提现、转激活币每日累计1000元及以上，须当日复购3次才可进行'
         },
         'en_US': {
             'systemError': 'System is busy,please try again later',
@@ -153,9 +153,9 @@ define(function (require, exports, module) {
             'self.repeatTradePwdRequired': 'Please input new trade password again',
             'self.tradePwdNotSame': 'Not same as the new trade password',
             'self.tradePwdSuccess': 'Success!',
-            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times today',
-            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has up to 1000 yuan,you can continue after repurchasing for 3 times today',
-            'transferActive.transferLimitMoney': 'The amount of transfer to active has up to 1000 yuan,you can continue after repurchasing for 5 times today'
+            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
+            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
+            'transferActive.transferLimitMoney': 'The amount of transfer、withdraw and transfer to active has added up to 1000 yuan,you can continue after repurchasing for 3 times today'
         }
     };
 

@@ -39,7 +39,7 @@ define(function (require, exports, module) {
                 todayLimitMoney = 1000 - todayLimitMoney;
                 var todayRepurchase = Number($('#todayRepurchase').val());
                 var money = Number($.trim($('#money').val()));
-                if (money >= todayLimitMoney && todayRepurchase < 5) {
+                if (money >= todayLimitMoney && todayRepurchase < 3) {
                     alert(tools.getText('transferActive.transferLimitMoney'));
                     $btn.attr('disabled', false);
                     return;

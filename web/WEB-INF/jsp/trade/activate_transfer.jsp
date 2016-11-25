@@ -83,7 +83,7 @@
                         <input type="hidden" id="max" value="${user.money}"/>
                         <input type="hidden" id="times" value="${minTransfer}"/>
                         <input type="hidden" id="todayRepurchase" value="${user.todayRepurchase}"/>
-                        <input type="hidden" id="todayLimitMoney" value="${user.todayTransferActiveLimitMoney}"/>
+                        <input type="hidden" id="todayLimitMoney" value="${user.todayLimitMoney}"/>
                         <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"><data:i18n key="submit"/></button>
                     </form>
                     <hr>
