@@ -24,6 +24,7 @@ public class UserResetJob {
 					.set("todayIncome", "0.00")
 					.set("todayRepurchase", 0)
 					.set("todayLimitMoney", "0.00")
+					.set("todayTransferActiveLimitMoney","0.00")
 					.update();
 		}
 

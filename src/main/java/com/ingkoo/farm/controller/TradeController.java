@@ -205,6 +205,8 @@ public class TradeController extends Controller {
 					String currentActiveMoney = user.getStr("activeMoney");
 					user.set("money", new Money(user.getStr("money")).subtract(activeMoney).toString())
 							.set("activeMoney", new Money(user.getStr("activeMoney")).add(activeMoney).toString())
+							.set("todayTransferActiveLimitMoney",
+									new Money(user.getStr("todayTransferActiveLimitMoney")).add(activeMoney).toString())
 							.update();
 					new TransferToActive().set("transferId", RandomCode.uuid())
 							.set("userId", user.getStr("userId"))
