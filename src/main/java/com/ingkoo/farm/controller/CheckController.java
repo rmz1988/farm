@@ -99,9 +99,6 @@ public class CheckController extends Controller {
 	 */
 	public void lessThanDays() {
 		User user = User.dao.findById(getPara("userId"));
-		render(new JsonRender(
-				user != null && user.getStr("status").equals("2") &&
-						(System.currentTimeMillis() - user.getLong("activateTime")) >= 15 * 24 * 3600 * 1000L)
-				.forIE());
+		render(new JsonRender(user.canTransfer()).forIE());
 	}
 }
