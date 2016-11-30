@@ -6,6 +6,7 @@ import com.ingkoo.farm.model.ActiveIncome;
 import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.Pet;
 import com.ingkoo.farm.model.PetLifecycle;
+import com.ingkoo.farm.model.PurchaseApply;
 import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.service.ActiveService;
@@ -18,10 +19,9 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.render.JsonRender;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 账号管理
@@ -52,6 +52,7 @@ public class AccountController extends Controller {
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		setAttr("user", user);
 		setAttr("recommendCount", user.getInt("recommendCount"));
+		setAttr("teamCount", recommendService.getTeamCount(user));
 		setAttr("activeNo", user.getStr("activeNo"));
 		setAttr("activeAuthApply", ActiveAuthApply.dao
 				.findFirst("select * from active_auth_apply where userId = ?", user.getStr("userId")));
@@ -196,6 +197,10 @@ public class AccountController extends Controller {
 							//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
 							if (!moneyService.isOverDailyIncome(activatedUser.getStr("recommendUserId"))) {
 								recommendService.saveRecommendIncome(activatedUser, "0");
+							} else {
+								User recommendUser = User.dao.findById(activatedUser.getStr("recommendUserId"));
+								recommendUser.set("recommendCount", recommendUser.getInt("recommendCount") + 1)
+										.update();
 							}
 
 							//操作员记录激活收益
@@ -218,5 +223,73 @@ public class AccountController extends Controller {
 		});
 
 		render(new JsonRender(result).forIE());
+	}
+
+	/**
+	 * 金币收购
+	 */
+	public void purchase() {
+		setAttr("current", "account");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		setAttr("canPurchase", StringUtils.isNotEmpty(user.getStr("activeNo")));
+		render("money_purchase.jsp");
+	}
+
+	public void queryPurchaseSendList() {
+		User user = getSessionAttr("user");
+		setAttr("page", PurchaseApply.dao
+				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+						"from purchase_apply where userId = ? order by oppositeStatusTime desc",
+						user.getStr("userId")));
+		render("purchase_send_list.jsp");
+	}
+
+	public void queryPurchaseReceiveList() {
+		User user = getSessionAttr("user");
+		setAttr("page", PurchaseApply.dao
+				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+						"from purchase_apply where oppositeUserId = ? order by statusTime desc",
+						user.getStr("userId")));
+		render("purchase_receive_list.jsp");
+	}
+
+	/**
+	 * 我要收购
+	 */
+	@ActionKey("/account/purchase/list")
+	public void wantPurchase() {
+		setAttr("current", "account");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+
+		render("purchase.jsp");
+	}
+
+	public void queryPurchaseList() {
+
+		render("purchase_list.jsp");
+	}
+
+	/**
+	 * 申请收购
+	 */
+	@ActionKey("/account/purchase/apply")
+	public void purchaseApply() {
+		setAttr("current", "account");
+		render("purchase_apply.jsp");
+	}
+
+	public void doPurchaseApply() {
+	}
+
+	/**
+	 * 同意收购
+	 */
+	@ActionKey("/account/purchase/agree")
+	public void purchaseAgree() {
+		setAttr("current", "account");
+		render("purchase_agree.jsp");
+	}
+
+	public void doAgree() {
 	}
 }

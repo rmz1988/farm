@@ -115,6 +115,36 @@ public class RecommendService {
 	}
 
 	/**
+	 * 查询团队人数
+	 *
+	 * @param user 用户
+	 */
+	public int getTeamCount(User user) {
+		List<User> parentUserList = Arrays.asList(user);
+		int teamCount = 0;
+		List<User> recommendUserList;
+		while (true) {
+			recommendUserList = new ArrayList<>();
+			for (User parentUser : parentUserList) {
+				List<User> userList =
+						User.dao.find("select * from user where recommendUserId = ? and status = '2'",
+								parentUser.getStr("userId"));
+				if (userList.isEmpty()) {
+					continue;
+				}
+				recommendUserList.addAll(userList);
+			}
+			if (recommendUserList.isEmpty()) {
+				break;
+			}
+			teamCount += recommendUserList.size();
+			parentUserList = recommendUserList;
+		}
+
+		return teamCount;
+	}
+
+	/**
 	 * 统计团队收益
 	 *
 	 * @param user 用户

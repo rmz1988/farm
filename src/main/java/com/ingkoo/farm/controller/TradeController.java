@@ -135,11 +135,17 @@ public class TradeController extends Controller {
 
 				@Override
 				public boolean run() throws SQLException {
+					String money = Money.format(Double.parseDouble(transferOut.getStr("money")));
+					String fee = new Money(transferOut.getStr("money")).multiply("0.1").toString();
+					String realMoney = new Money(money).subtract(fee).toString();
+
 					//保存转出记录
 					transferOut.set("transferId", RandomCode.uuid())
 							.set("type", "0")
 							.set("status", "1")
-							.set("money", Money.format(Double.parseDouble(transferOut.getStr("money"))))
+							.set("money", money)
+							.set("fee", fee)
+							.set("realMoney", realMoney)
 							.set("createTime", System.currentTimeMillis())
 							.set("userId", user.getStr("userId"))
 							.save();
@@ -147,26 +153,27 @@ public class TradeController extends Controller {
 					new Transfer().set("transferId", RandomCode.uuid())
 							.set("inUserId", user.getStr("userId"))
 							.set("type", "1")
-							.set("money", transferOut.getStr("money"))
+							.set("money", money)
+							.set("fee", fee)
+							.set("realMoney", realMoney)
 							.set("status", "1")
 							.set("createTime", System.currentTimeMillis())
 							.set("userId", transferOut.getStr("outUserId"))
 							.save();
 					//修改双方玩家余额
-					user.set("money", new Money(user.getStr("money")).subtract(transferOut.getStr("money")).toString())
+					user.set("money", new Money(user.getStr("money")).subtract(money).toString())
 							.set("todayLimitMoney",
-									new Money(user.getStr("todayLimitMoney")).add(transferOut.getStr("money"))
-											.toString())
+									new Money(user.getStr("todayLimitMoney")).add(money).toString())
 							.update();
 					User inUser = User.dao.findById(transferOut.getStr("outUserId"));
-					inUser.set("money", new Money(inUser.getStr("money")).add(transferOut.getStr("money")).toString())
+					inUser.set("money", new Money(inUser.getStr("money")).add(realMoney).toString())
 							.update();
 
 					//记录双方玩家收入总明细
 					new TotalIncome().saveTransferOutput(User.dao.findById(user.getStr("userId")),
-							transferOut.getStr("money"));
+							money);
 					new TotalIncome().saveTrasferIn(User.dao.findById(inUser.getStr("userId")),
-							transferOut.getStr("money"));
+							realMoney);
 
 					return true;
 				}

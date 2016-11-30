@@ -12,6 +12,8 @@
         <th><data:i18n key="transfer.inId"/></th>
         <th><data:i18n key="transfer.outId"/></th>
         <th><data:i18n key="amount"/></th>
+        <th><data:i18n key="withdraw.actualAmount"/></th>
+        <th><data:i18n key="withdraw.fees"/></th>
         <th><data:i18n key="transfer.date"/></th>
         <th><data:i18n key="status"/></th>
     </tr>
@@ -23,6 +25,8 @@
             <td>${transfer.inUserId}</td>
             <td>${transfer.outUserId}</td>
             <td>${transfer.money}</td>
+            <td>${transfer.realMoney}</td>
+            <td>${transfer.fee}</td>
             <td><data:date fmt="yyyy-MM-dd HH:mm:ss" value="${transfer.createTime}"/></td>
             <td><data:dict dictgroup="transferStatus" value="${transfer.status}"/></td>
         </tr>

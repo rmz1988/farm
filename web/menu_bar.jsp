@@ -37,6 +37,7 @@
                         <li><a href="${basePath}/account/recommend"><data:i18n key="menu.recommendList"/></a></li>
                         <li><a href="${basePath}/account/apply"><data:i18n key="menu.applyActivate"/></a></li>
                         <li><a href="${basePath}/account/activate"><data:i18n key="menu.activateMgmt"/></a></li>
+                        <li><a href="${basePath}/account/purchase"><data:i18n key="menu.moneyPurchase"/></a></li>
                     </ul>
                 </li>
                 <li class="dropdown <c:if test="${current == 'finance'}">active</c:if>">
