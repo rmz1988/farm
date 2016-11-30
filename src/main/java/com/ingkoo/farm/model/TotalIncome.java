@@ -7,7 +7,6 @@ import com.ingkoo.farm.utils.Money;
 import com.jfinal.plugin.activerecord.Model;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,6 +47,50 @@ public class TotalIncome extends Model<TotalIncome> {
 								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
 								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("recommendIncome", income)
+						.set("currentTotal",
+								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
+										.add(income).toString())
+						.set("userId", user.getStr("userId"))
+						.set("createTime", todayDate).save();
+			}
+			/*//计算每日团队收益
+			es.submit(new Runnable() {
+
+				@Override
+				public void run() {
+					List<User> userList = User.dao.find("select * from user");
+					for (User user : userList) {
+						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+					}
+				}
+			});*/
+		}
+	}
+
+	/**
+	 * 保存收购收益
+	 *
+	 * @param user   用户
+	 * @param income 收益
+	 */
+	public void savePurchaseIncome(User user, String income) {
+		synchronized (MoneyService.MONEY_LOCK) {
+			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
+			TotalIncome totalIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), todayDate);
+			if (totalIncome != null) {
+				totalIncome
+						.set("purchaseIncome", new Money(totalIncome.getStr("purchaseIncome")).add(income).toString())
+						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
+						.update();
+			} else {
+				TotalIncome yesterdayIncome = TotalIncome.dao
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
+				new TotalIncome().set("purchaseIncome", income)
 						.set("currentTotal",
 								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
 										.add(income).toString())
@@ -427,6 +470,47 @@ public class TotalIncome extends Model<TotalIncome> {
 								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
 								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("repurchase", output)
+						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
+						.set("userId", user.getStr("userId"))
+						.set("createTime", todayDate).save();
+			}
+			/*//计算每日团队收益
+			es.submit(new Runnable() {
+
+				@Override
+				public void run() {
+					List<User> userList = User.dao.find("select * from user");
+					for (User user : userList) {
+						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
+					}
+				}
+			});*/
+		}
+	}
+
+	/**
+	 * 扣除收购支出金额
+	 *
+	 * @param user   用户
+	 * @param output 复购金额
+	 */
+	public void savePurchaseOutput(User user, String output) {
+		synchronized (MoneyService.MONEY_LOCK) {
+			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
+			TotalIncome totalIncome = TotalIncome.dao
+					.findFirst("select * from total_income where userId = ? and createTime = ?",
+							user.getStr("userId"), todayDate);
+			if (totalIncome != null) {
+				totalIncome
+						.set("purchaseOutput", new Money(totalIncome.getStr("purchaseOutput")).add(output).toString())
+						.update();
+			} else {
+				TotalIncome yesterdayIncome = TotalIncome.dao
+						.findFirst(
+								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
+								user.getStr("userId"), user.getStr("userId"));
+				new TotalIncome().set("purchaseOutput", output)
 						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();

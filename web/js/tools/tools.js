@@ -80,7 +80,16 @@ define(function (require, exports, module) {
             'self.tradePwdSuccess': '修改成功！',
             'transfer.transferLimitMoney': '互转、提现每日累计1000元以上,需当日复购3次才可进行',
             'withdraw.withdrawLimitMoney': '互转、提现每日累计1000元以上,需当日复购3次才可进行',
-            'transferActive.transferLimitMoney': '互转、提现、转激活币每日累计1000元及以上，须当日复购3次才可进行'
+            'transferActive.transferLimitMoney': '互转、提现、转激活币每日累计1000元及以上，须当日复购3次才可进行',
+            'purchase.paymentTip':'支付通知已发送，等待对方确认',
+            'purchase.balanceTip':'您的奖励币已少于对方收购金额，暂无法进行收购',
+            'purchase.success':'操作成功',
+            'purchase.finish':'收购完成',
+            'purchase.submitSuccess':'提交成功',
+            'purchase.applySubmit':'申请已提交，等待对方处理',
+            'purchase.moneyRequired':'请输入要收购的金额',
+            'purchase.moneyMin':'至少收购0.01元',
+            'purchase.moneyMax':'收购金额不能超过玩家奖励币余额'
         },
         'en_US': {
             'systemError': 'System is busy,please try again later',
@@ -155,7 +164,16 @@ define(function (require, exports, module) {
             'self.tradePwdSuccess': 'Success!',
             'transfer.transferLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
             'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
-            'transferActive.transferLimitMoney': 'The amount of transfer、withdraw and transfer to active has added up to 1000 yuan,you can continue after repurchasing for 3 times today'
+            'transferActive.transferLimitMoney': 'The amount of transfer、withdraw and transfer to active has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
+            'purchase.paymentTip':'The notice of payment has send,waiting for opposite confirmation',
+            'purchase.balanceTip':'Your bonus has been less than the amount of purchase,cannot continue',
+            'purchase.success':'Success',
+            'purchase.finish':'Purchase finish',
+            'purchase.submitSuccess':'Success',
+            'purchase.applySubmit':'The apply has submit,waiting...',
+            'purchase.moneyRequired':'Please input the amount of purchase',
+            'purchase.moneyMin':'The amount is at least 0.01 yuan',
+            'purchase.moneyMax':'The amount of purchase cannot be greater than opposite bonus'
         }
     };
 

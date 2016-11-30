@@ -25,7 +25,8 @@ public class LoginController extends Controller {
 
 	public void setLocale() {
 		String locale = getPara("locale");
-		setCookie(Const.I18N_LOCALE, locale, Const.DEFAULT_I18N_MAX_AGE_OF_COOKIE, JFinal.me().getContextPath());
+		setCookie(Const.I18N_LOCALE, locale, Const.DEFAULT_I18N_MAX_AGE_OF_COOKIE,
+				"/");
 		render(new JsonRender(true).forIE());
 	}
 

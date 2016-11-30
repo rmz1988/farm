@@ -8,12 +8,13 @@
 <table class="table">
     <thead>
     <tr>
-        <th>被收购人</th>
-        <th>收购金额</th>
-        <th>状态</th>
-        <th>申请时间</th>
-        <th>对方处理时间</th>
-        <th>操作</th>
+        <th><data:i18n key="purchase.purchaseUser"/></th>
+        <th><data:i18n key="purchase.amount"/></th>
+        <th><data:i18n key="status"/></th>
+        <th><data:i18n key="account.applyTime"/></th>
+        <th><data:i18n key="purchase.payAccount"/></th>
+        <th><data:i18n key="purchase.oppositeStatusTime"/></th>
+        <th><data:i18n key="operation"/></th>
     </tr>
     </thead>
     <tbody>
@@ -21,10 +22,22 @@
         <tr>
             <td>${apply.oppositeUserId}</td>
             <td>${apply.money}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><data:dict dictgroup="purchaseSendStatus" value="${apply.status}"/></td>
+            <td><data:date value="${apply.createTime}" fmt="yyyy-MM-dd HH:mm:ss"/></td>
+            <td>
+                <c:if test="${not empty apply.bankCard}">
+                    <data:dict dictgroup="bank" value="${apply.bank}"/> ${apply.accountName}(<data:bankcard
+                        value="${apply.bankCard}" hidden="false"/>)
+                </c:if>
+            </td>
+            <td><data:date value="${apply.oppositeStatusTime}" fmt="yyyy-MM-dd HH:mm:ss"/></td>
+            <td>
+                <c:if test="${apply.status == 1}">
+                    <button id="${apply.applyId}" class="btn btn-info btn-sm" type="button" name="payBtn">
+                        <data:i18n key="purchase.payment"/>
+                    </button>
+                </c:if>
+            </td>
         </tr>
     </c:forEach>
     <data:emptyData cols="6"/>

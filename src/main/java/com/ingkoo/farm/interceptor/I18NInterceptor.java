@@ -20,10 +20,14 @@ public class I18NInterceptor implements Interceptor {
 		Controller controller = actionInvocation.getController();
 		String remoteLang = controller.getRequest().getLocale().toString();
 		String cookieLang = controller.getCookie(Const.I18N_LOCALE);
+		if ("zh_HANS_CN".equals(remoteLang)) {
+			remoteLang = "zh_CN";
+		}
 		if (StringUtils.isEmpty(cookieLang)) {
 			controller.setCookie(Const.I18N_LOCALE, remoteLang, Const.DEFAULT_I18N_MAX_AGE_OF_COOKIE,
-					JFinal.me().getContextPath());
+					"/");
 		}
+
 		controller.setAttr("i18n", I18N.me());
 		controller.setAttr("locale", controller.getCookie(Const.I18N_LOCALE));
 

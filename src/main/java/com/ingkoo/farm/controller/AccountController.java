@@ -1,27 +1,24 @@
 package com.ingkoo.farm.controller;
 
-import com.ingkoo.farm.model.ActiveApply;
-import com.ingkoo.farm.model.ActiveAuthApply;
-import com.ingkoo.farm.model.ActiveIncome;
-import com.ingkoo.farm.model.OtherRate;
-import com.ingkoo.farm.model.Pet;
-import com.ingkoo.farm.model.PetLifecycle;
-import com.ingkoo.farm.model.PurchaseApply;
-import com.ingkoo.farm.model.TotalIncome;
-import com.ingkoo.farm.model.User;
+import com.ingkoo.farm.model.*;
 import com.ingkoo.farm.service.ActiveService;
 import com.ingkoo.farm.service.MoneyService;
 import com.ingkoo.farm.service.RecommendService;
+import com.ingkoo.farm.utils.AES;
 import com.ingkoo.farm.utils.Money;
 import com.ingkoo.farm.utils.RandomCode;
+import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
+import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfinal.render.JsonRender;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 账号管理
@@ -239,7 +236,7 @@ public class AccountController extends Controller {
 		User user = getSessionAttr("user");
 		setAttr("page", PurchaseApply.dao
 				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from purchase_apply where userId = ? order by oppositeStatusTime desc",
+						"from purchase_apply where userId = ? order by createTime desc",
 						user.getStr("userId")));
 		render("purchase_send_list.jsp");
 	}
@@ -248,7 +245,7 @@ public class AccountController extends Controller {
 		User user = getSessionAttr("user");
 		setAttr("page", PurchaseApply.dao
 				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from purchase_apply where oppositeUserId = ? order by statusTime desc",
+						"from purchase_apply where oppositeUserId = ? order by createTime desc",
 						user.getStr("userId")));
 		render("purchase_receive_list.jsp");
 	}
@@ -259,13 +256,27 @@ public class AccountController extends Controller {
 	@ActionKey("/account/purchase/list")
 	public void wantPurchase() {
 		setAttr("current", "account");
-		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 
 		render("purchase.jsp");
 	}
 
 	public void queryPurchaseList() {
+		User user = getSessionAttr("user");
+		String userId = getPara("userId");
+		setAttr("userId", userId);
+		StringBuilder sqlBuilder = new StringBuilder(
+				"from user where status = '2' and userId != ? and userId not in (select oppositeUserId from purchase_apply where userId = ? and status in ('0','1','3')) ");
+		List<Object> paramList = new ArrayList<>();
+		paramList.add(user.getStr("userId"));
+		paramList.add(user.getStr("userId"));
+		if (StringUtils.isNotEmpty(userId)) {
+			sqlBuilder.append("and userId = ? ");
+			paramList.add(userId);
+		}
+		sqlBuilder.append("order by registerTime asc");
 
+		setAttr("page", User.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
+				sqlBuilder.toString(), paramList.toArray()));
 		render("purchase_list.jsp");
 	}
 
@@ -275,10 +286,20 @@ public class AccountController extends Controller {
 	@ActionKey("/account/purchase/apply")
 	public void purchaseApply() {
 		setAttr("current", "account");
+		User user = User.dao.findById(getPara("userId"));
+		setAttr("purchaseUser", user);
 		render("purchase_apply.jsp");
 	}
 
+	@Before(Tx.class)
 	public void doPurchaseApply() {
+		User user = getSessionAttr("user");
+		PurchaseApply purchaseApply = getModel(PurchaseApply.class, "purchaseApply");
+
+		render(new JsonRender(purchaseApply.set("applyId", RandomCode.uuid())
+				.set("userId", user.getStr("userId"))
+				.set("money", Money.format(Double.parseDouble(purchaseApply.getStr("money"))))
+				.set("createTime", System.currentTimeMillis()).save()).forIE());
 	}
 
 	/**
@@ -287,9 +308,79 @@ public class AccountController extends Controller {
 	@ActionKey("/account/purchase/agree")
 	public void purchaseAgree() {
 		setAttr("current", "account");
+		setAttr("applyId", getPara("applyId"));
+		setAttr("bankList", Dict.dao.find("select * from dict where dictGroup = 'bank'"));
 		render("purchase_agree.jsp");
 	}
 
-	public void doAgree() {
+	@Before(Tx.class)
+	public void doPurchaseAgree() {
+		PurchaseApply purchaseApply = getModel(PurchaseApply.class, "purchaseApply");
+		render(new JsonRender(purchaseApply.set("status", "1")
+				.set("bankCard", AES.encrypt(purchaseApply.getStr("bankCard")))
+				.set("oppositeStatusTime", System.currentTimeMillis()).update()).forIE());
+	}
+
+	/**
+	 * 不同意收购
+	 */
+	@Before(Tx.class)
+	public void purchaseDisagree() {
+		String applyId = getPara("applyId");
+		render(new JsonRender(new PurchaseApply().set("applyId", applyId).set("status", "2")
+				.set("oppositeStatusTime", System.currentTimeMillis()).update()).forIE());
+	}
+
+	/**
+	 * 支付确认
+	 */
+	@Before(Tx.class)
+	public void doPurchasePay() {
+		String applyId = getPara("applyId");
+		render(new JsonRender(new PurchaseApply().set("applyId", applyId)
+				.set("status", "3")
+				.set("statusTime", System.currentTimeMillis()).update()).forIE());
+	}
+
+	/**
+	 * 确认收购
+	 */
+	public void doPurchaseConfirm() {
+		final String applyId = getPara("applyId");
+		boolean result = Db.tx(new IAtom() {
+
+			@Override
+			public boolean run() throws SQLException {
+				synchronized (MoneyService.MONEY_LOCK) {
+					PurchaseApply purchaseApply = PurchaseApply.dao.findById(applyId);
+					purchaseApply.set("status", "4").set("oppositeStatusTime", System.currentTimeMillis()).update();
+
+					User user = User.dao.findById(purchaseApply.getStr("userId"));
+					User oppositeUser = User.dao.findById(purchaseApply.getStr("oppositeUserId"));
+
+					user.set("money", new Money(user.getStr("money")).add(purchaseApply.getStr("money")).toString())
+							.update();
+					oppositeUser.set("money",
+							new Money(oppositeUser.getStr("money")).subtract(purchaseApply.getStr("money")).toString())
+							.update();
+
+					new TotalIncome().savePurchaseIncome(user, purchaseApply.getStr("money"));
+					new TotalIncome().savePurchaseOutput(oppositeUser, purchaseApply.getStr("money"));
+				}
+
+				return true;
+			}
+		});
+
+		render(new JsonRender(result).forIE());
+	}
+
+	public void checkBalance() {
+		String applyId = getPara("applyId");
+		PurchaseApply purchaseApply = PurchaseApply.dao.findById(applyId);
+		User oppositeUser = User.dao.findById(purchaseApply.getStr("oppositeUserId"));
+		render(new JsonRender(
+				Double.parseDouble(oppositeUser.getStr("money")) >= Double.parseDouble(purchaseApply.getStr("money")))
+				.forIE());
 	}
 }

@@ -24,16 +24,17 @@
             <li class="active"><data:i18n key="menu.moneyPurchase"/></li>
         </ol>
         <div class="content">
+            <input type="hidden" id="canPurchase" value="${canPurchase}"/>
             <c:choose>
                 <c:when test="${canPurchase == true}">
                     <button id="purchaseBtn" type="button" class="btn btn-success">
-                        我要收购
+                        <data:i18n key="purchase.wantPurchase"/>
                     </button>
-                    <input type="hidden" id="canPurchase" value="${canPurchase}"/>
+
                     <hr/>
                     <div class="panel panel-success">
                         <div class="panel-heading">
-                            我发出的收购申请
+                            <data:i18n key="purchase.send"/>
                         </div>
                         <div id="sendContent" class="panel-body table-responsive">
                             <jsp:include page="purchase_send_list.jsp" flush="true"/>
@@ -41,14 +42,14 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <span class="rule-tip-lg">您不具备激活中心权限，暂不能发起金币收购！</span>
+                    <span class="rule-tip-lg"><data:i18n key="purchase.authTip"/></span>
                     <hr/>
                 </c:otherwise>
             </c:choose>
 
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    我收到的收购申请
+                    <data:i18n key="purchase.receive"/>
                 </div>
                 <div id="receiveContent" class="panel-body table-responsive">
                     <jsp:include page="purchase_receive_list.jsp" flush="true"/>
