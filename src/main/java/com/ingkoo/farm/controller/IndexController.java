@@ -2,6 +2,7 @@ package com.ingkoo.farm.controller;
 
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.service.MoneyService;
+import com.ingkoo.farm.utils.MD5;
 import com.jfinal.core.Controller;
 
 /**
@@ -22,6 +23,13 @@ public class IndexController extends Controller {
 		setAttr("repurchase", user.getInt("rePurchase"));
 		setAttr("pet", user.getUserPet());
 		setAttr("user", user);
+		Object pwdFlag = getSession().getAttribute("pwdFlag");
+		if (pwdFlag == null || !(boolean) pwdFlag) {
+			setAttr("needChangePwd", MD5.encrypt("111111").equals(user.getStr("loginPwd")));
+			setSessionAttr("pwdFlag", true);
+		} else {
+			setAttr("needChangePwd", false);
+		}
 		render("index.jsp");
 	}
 

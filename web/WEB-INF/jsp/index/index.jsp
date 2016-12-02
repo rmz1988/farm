@@ -8,6 +8,10 @@
 <html>
 <head lang="zh-CN">
     <title><data:i18n key="kxmc"/></title>
+
+    <script>
+        seajs.use('user/index');
+    </script>
 </head>
 <body>
 <div class="container" style="border-radius: 0;">
@@ -19,6 +23,7 @@
             <li><data:i18n key="currentLocation"/>：</li>
             <li class="active"><data:i18n key="home"/></li>
         </ol>
+        <input type="hidden" id="needChangePwd" value="${needChangePwd}"/>
         <div class="total-money-area col-md-6">
             <span><data:i18n key="bonus"/>：</span>
             <span class="money-img">
