@@ -16,11 +16,12 @@ public class IndexController extends Controller {
 	public void index() {
 		setAttr("current", "index");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("totalMoney",user.getStr("money"));
-		setAttr("activeMoney",user.getStr("activeMoney"));
-		setAttr("isFeed",user.getStr("isFeed"));
-		setAttr("repurchase",user.getInt("rePurchase"));
-		setAttr("pet",user.getUserPet());
+		setAttr("totalMoney", user.getStr("money"));
+		setAttr("activeMoney", user.getStr("activeMoney"));
+		setAttr("isFeed", user.getStr("isFeed"));
+		setAttr("repurchase", user.getInt("rePurchase"));
+		setAttr("pet", user.getUserPet());
+		setAttr("user", user);
 		render("index.jsp");
 	}
 

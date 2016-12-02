@@ -5,7 +5,7 @@
 
 <%
     String decryptBankcard = AES.decrypt(value);
-    hidden = hidden != null ? hidden : false;
+    hidden = hidden != null ? hidden : true;
 %>
 <%=hidden ? (decryptBankcard.length() > 8 ?
         decryptBankcard.substring(0, 4) + " **** **** " + decryptBankcard.substring(decryptBankcard.length() - 4) :
