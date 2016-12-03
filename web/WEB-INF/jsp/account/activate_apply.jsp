@@ -28,7 +28,7 @@
                 <c:when test="${not empty activeNo}">
                     <span class="rule-tip-lg"><data:i18n key="account.haveRight"/></span>
                 </c:when>
-                <c:when test="${recommendCount < 10 && teamCount >= 100}">
+                <c:when test="${recommendCount < 10 || teamCount < 100}">
                     <span class="rule-tip-lg"><data:i18n key="account.cannotApply"/></span>
                 </c:when>
                 <c:when test="${not empty activeAuthApply}">
