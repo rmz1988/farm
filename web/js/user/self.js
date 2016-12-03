@@ -11,6 +11,10 @@ define(function (require, exports, module) {
             window.location = basePath + '/self/pwd/trade';
         });
 
+        $('#accountBtn').click(function () {
+            window.location = basePath + '/self/account'
+        });
+
         $('#loginPwdForm').validate({
             rules: {
                 oldLoginPwd: {
@@ -96,6 +100,52 @@ define(function (require, exports, module) {
             if ($('#tradePwdForm').valid()) {
                 $.post(basePath + '/self/doTradePwd', {
                     tradePwd: $.trim($('#tradePwd').val())
+                }, function (response) {
+                    if (response) {
+                        alert(tools.getText('self.tradePwdSuccess'));
+                        window.location = basePath + '/self';
+                    } else {
+                        alert(tools.getText('systemError'));
+                    }
+                }, 'json');
+            }
+        });
+
+        $('#changeForm').validate({
+            rules: {
+                bank: {
+                    required: true
+                },
+                bankAccountName: {
+                    required: true
+                },
+                bankCard: {
+                    required: true
+                }
+            }, messages: {
+                bank: {
+                    required: tools.getText('register.bankRequired')
+                },
+                bankAccountName: {
+                    required: tools.getText('register.accountNameRequired')
+                },
+                bankCard: {
+                    required: tools.getText('register.bankCardRequired')
+                }
+            }
+        });
+
+        $('#bankAccountName,#bank,#bankCard').blur(function () {
+            $(this).valid();
+        });
+
+        $('#changeAccountBtn').click(function () {
+            if ($('#changeForm').valid()) {
+                $.post(basePath + '/self/doChangeAccount', {
+                    'user.userId': $('#userId').val(),
+                    'user.bank': $.trim($('#bank').val()),
+                    'user.bankAccountName': $.trim($('#bankAccountName').val()),
+                    'user.bankCard': $.trim($('#bankCard').val())
                 }, function (response) {
                     if (response) {
                         alert(tools.getText('self.tradePwdSuccess'));

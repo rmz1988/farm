@@ -55,6 +55,9 @@
                 <button id="tradePwdBtn" type="button" class="btn btn-success">
                     <data:i18n key="self.changeTradePwd"/>
                 </button>
+                <button id="accountBtn" class="btn btn-success" type="button">
+                    <data:i18n key="self.changeAccount"/>
+                </button>
             </p>
         </div>
     </div>

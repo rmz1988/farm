@@ -1,11 +1,15 @@
 package com.ingkoo.farm.controller;
 
+import com.ingkoo.farm.model.Dict;
 import com.ingkoo.farm.model.User;
+import com.ingkoo.farm.utils.AES;
 import com.ingkoo.farm.utils.MD5;
+import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
+import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfinal.render.JsonRender;
 
 import java.sql.SQLException;
@@ -72,5 +76,24 @@ public class SelfController extends Controller {
 		});
 
 		render(new JsonRender(result).forIE());
+	}
+
+	/**
+	 * 修改银行账户
+	 */
+	@ActionKey("/self/account")
+	public void changeAccount() {
+		setAttr("current", "person");
+		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
+		setAttr("user", user);
+		setAttr("bankList", Dict.dao.find("select * from dict where dictGroup = 'bank'"));
+
+		render("change_account.jsp");
+	}
+
+	@Before(Tx.class)
+	public void doChangeAccount() {
+		User user = getModel(User.class, "user");
+		render(new JsonRender(user.set("bankCard", AES.encrypt(user.getStr("bankCard"))).update()).forIE());
 	}
 }

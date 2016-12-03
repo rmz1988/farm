@@ -8,6 +8,10 @@
 <html>
 <head lang="zh-CN">
     <title><data:i18n key="kxmc"/></title>
+
+    <script>
+        seajs.use('user/index');
+    </script>
 </head>
 <body>
 <div class="container" style="border-radius: 0;">
@@ -19,6 +23,7 @@
             <li><data:i18n key="currentLocation"/>：</li>
             <li class="active"><data:i18n key="home"/></li>
         </ol>
+        <input type="hidden" id="needChangePwd" value="${needChangePwd}"/>
         <div class="total-money-area col-md-6">
             <span><data:i18n key="bonus"/>：</span>
             <span class="money-img">
@@ -46,28 +51,28 @@
                     </div>
                     <div class="panel-body">
                         <p>
-                            <data:i18n key="index.userId"/>：${sessionScope.user.userId}
+                            <data:i18n key="index.userId"/>：${user.userId}
                         </p>
 
                         <p>
-                            <data:i18n key="index.name"/>：${sessionScope.user.name}
+                            <data:i18n key="index.name"/>：${user.name}
                         </p>
 
                         <p>
-                            <data:i18n key="index.phone"/>：${sessionScope.user.mobile}
+                            <data:i18n key="index.phone"/>：${user.mobile}
                         </p>
 
                         <p>
-                            <data:i18n key="index.idCard"/>：<data:idCard value="${sessionScope.user.idCard}"/>
+                            <data:i18n key="index.idCard"/>：<data:idCard value="${user.idCard}"/>
                         </p>
 
                         <p>
                             <data:i18n key="index.bank"/>：<data:dict dictgroup="bank"
-                                                                     value="${sessionScope.user.bank}"/>
+                                                                     value="${user.bank}"/>
                         </p>
 
                         <p>
-                            <data:i18n key="index.bankCard"/>：<data:bankcard value="${sessionScope.user.bankCard}"/>
+                            <data:i18n key="index.bankCard"/>：<data:bankcard value="${user.bankCard}"/>
                         </p>
                     </div>
                 </div>

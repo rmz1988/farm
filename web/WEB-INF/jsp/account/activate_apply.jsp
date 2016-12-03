@@ -110,7 +110,7 @@
 
                             <div class="col-md-5">
                                 <input type="text" class="form-control" id="activeNo" name="activeNo" maxlength="3"
-                                       placeholder="<data:i18n key="applyActivateNoTip"/>">
+                                       placeholder="<data:i18n key="account.applyActivateNoTip"/>">
                             </div>
                         </div>
                         <button id="applyBtn" class="btn btn-success" type="button"><data:i18n key="submit"/></button>
