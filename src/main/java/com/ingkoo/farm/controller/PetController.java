@@ -110,32 +110,34 @@ public class PetController extends Controller {
 		synchronized (MoneyService.MONEY_LOCK) {
 			User user = User.dao.findById(userId);
 			Pet pet = user.getUserPet();
-			//判断是否推荐超过4个人，生成pet lifecycle 活跃0天（收益比例：10%or13%）
-			String dailyOutputRate =
-					user.getInt("recommendCount") < 4 ?
-							OtherRate.dao.findById("redirect_repurchase_rate").getStr("rate") :
-							OtherRate.dao.findById("daily_output_rate").getStr("rate");
-			String dailyOutput = new Money(pet.getStr("price")).multiply(dailyOutputRate).divide(100).toString();
-			new PetLifecycle().set("userId", user.getStr("userId"))
-					.set("petNo", user.getStr("petNo"))
-					.set("liveDays", 0)
-					.set("overtimeDays", pet.getInt("lifecycle"))
-					.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
-					.set("dailyOutput", dailyOutput)
-					.set("dailyOutputRate", dailyOutputRate)
-					.set("totalOutput", "0.00")
-					.set("createTime", System.currentTimeMillis())
-					.set("status", "1")
-					.save();
-			//扣除宠物价格，增加个人复购次数，以及今日复购次数
-			user.set("money", new Money(user.getStr("money")).subtract(pet.getStr("price")).toString())
-					.update();
-			new TotalIncome().saveRepurchaseOutput(user, pet.getStr("price"));
+			if (Double.parseDouble(user.getStr("money")) >= Double.parseDouble(pet.getStr("price"))) {
+				//判断是否推荐超过4个人，生成pet lifecycle 活跃0天（收益比例：10%or13%）
+				String dailyOutputRate =
+						user.getInt("recommendCount") < 4 ?
+								OtherRate.dao.findById("redirect_repurchase_rate").getStr("rate") :
+								OtherRate.dao.findById("daily_output_rate").getStr("rate");
+				String dailyOutput = new Money(pet.getStr("price")).multiply(dailyOutputRate).divide(100).toString();
+				new PetLifecycle().set("userId", user.getStr("userId"))
+						.set("petNo", user.getStr("petNo"))
+						.set("liveDays", 0)
+						.set("overtimeDays", pet.getInt("lifecycle"))
+						.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
+						.set("dailyOutput", dailyOutput)
+						.set("dailyOutputRate", dailyOutputRate)
+						.set("totalOutput", "0.00")
+						.set("createTime", System.currentTimeMillis())
+						.set("status", "1")
+						.save();
+				//扣除宠物价格，增加个人复购次数，以及今日复购次数
+				user.set("money", new Money(user.getStr("money")).subtract(pet.getStr("price")).toString())
+						.update();
+				new TotalIncome().saveRepurchaseOutput(user, pet.getStr("price"));
 
-			//该用户的推荐人获得复购金额的10%，记录推荐人的推荐奖记录，记录推荐人的总收益记录
-			if (StringUtils.isNotEmpty(user.getStr("recommendUserId")) &&
-					!moneyService.isOverDailyIncome(user.getStr("recommendUserId"))) {
-				recommendService.saveRecommendIncome(user, "1");
+				//该用户的推荐人获得复购金额的10%，记录推荐人的推荐奖记录，记录推荐人的总收益记录
+				if (StringUtils.isNotEmpty(user.getStr("recommendUserId")) &&
+						!moneyService.isOverDailyIncome(user.getStr("recommendUserId"))) {
+					recommendService.saveRecommendIncome(user, "1");
+				}
 			}
 		}
 
