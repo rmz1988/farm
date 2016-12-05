@@ -295,10 +295,15 @@ public class AccountController extends Controller {
 	public void doPurchaseApply() {
 		User user = getSessionAttr("user");
 		PurchaseApply purchaseApply = getModel(PurchaseApply.class, "purchaseApply");
+		String money =  Money.format(Double.parseDouble(purchaseApply.getStr("money")));
+		String fee = new Money(money).multiply("0.1").toString();
+		String realMoney = new Money(money).subtract(fee).toString();
 
 		render(new JsonRender(purchaseApply.set("applyId", RandomCode.uuid())
 				.set("userId", user.getStr("userId"))
-				.set("money", Money.format(Double.parseDouble(purchaseApply.getStr("money"))))
+				.set("money", money)
+				.set("fee",fee)
+				.set("realMoney",realMoney)
 				.set("createTime", System.currentTimeMillis()).save()).forIE());
 	}
 
@@ -358,13 +363,13 @@ public class AccountController extends Controller {
 					User user = User.dao.findById(purchaseApply.getStr("userId"));
 					User oppositeUser = User.dao.findById(purchaseApply.getStr("oppositeUserId"));
 
-					user.set("money", new Money(user.getStr("money")).add(purchaseApply.getStr("money")).toString())
+					user.set("money", new Money(user.getStr("money")).add(purchaseApply.getStr("realMoney")).toString())
 							.update();
 					oppositeUser.set("money",
 							new Money(oppositeUser.getStr("money")).subtract(purchaseApply.getStr("money")).toString())
 							.update();
 
-					new TotalIncome().savePurchaseIncome(user, purchaseApply.getStr("money"));
+					new TotalIncome().savePurchaseIncome(user, purchaseApply.getStr("realMoney"));
 					new TotalIncome().savePurchaseOutput(oppositeUser, purchaseApply.getStr("money"));
 				}
 

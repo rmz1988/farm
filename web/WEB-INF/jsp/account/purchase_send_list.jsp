@@ -10,6 +10,8 @@
     <tr>
         <th><data:i18n key="purchase.purchaseUser"/></th>
         <th><data:i18n key="purchase.amount"/></th>
+        <th><data:i18n key="withdraw.fees"/></th>
+        <th><data:i18n key="withdraw.actualAmount"/></th>
         <th><data:i18n key="status"/></th>
         <th><data:i18n key="account.applyTime"/></th>
         <th><data:i18n key="purchase.payAccount"/></th>
@@ -22,6 +24,8 @@
         <tr>
             <td>${apply.oppositeUserId}</td>
             <td>${apply.money}</td>
+            <td>${apply.fee}</td>
+            <td>${apply.realMoney}</td>
             <td><data:dict dictgroup="purchaseSendStatus" value="${apply.status}"/></td>
             <td><data:date value="${apply.createTime}" fmt="yyyy-MM-dd HH:mm:ss"/></td>
             <td>
@@ -40,7 +44,7 @@
             </td>
         </tr>
     </c:forEach>
-    <data:emptyData cols="6"/>
+    <data:emptyData cols="9"/>
     </tbody>
 </table>
 <data:page contentId="sendContent" url="${basePath}/account/queryPurchaseSendList"/>

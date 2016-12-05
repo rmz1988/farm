@@ -105,12 +105,13 @@ public class PetController extends Controller {
 	@Before(Tx.class)
 	public void repurchase() {
 		final String userId = ((User) getSessionAttr("user")).getStr("userId");
-		Db.update("update user set rePurchase = rePurchase+1,todayRepurchase=todayRepurchase + 1 where userId = ?",
-				userId);
 		synchronized (MoneyService.MONEY_LOCK) {
 			User user = User.dao.findById(userId);
 			Pet pet = user.getUserPet();
 			if (Double.parseDouble(user.getStr("money")) >= Double.parseDouble(pet.getStr("price"))) {
+				Db.update(
+						"update user set rePurchase = rePurchase+1,todayRepurchase=todayRepurchase + 1 where userId = ?",
+						userId);
 				//判断是否推荐超过4个人，生成pet lifecycle 活跃0天（收益比例：10%or13%）
 				String dailyOutputRate =
 						user.getInt("recommendCount") < 4 ?
