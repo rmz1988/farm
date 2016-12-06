@@ -44,34 +44,37 @@ public class RecommendService {
 					new Money(pet.getStr("price")).multiply(new Money(recommendRate)).divide(100).toString();
 			final User recommendUser = User.dao.findById(user.getStr("recommendUserId"));
 
-			//判断实际收益
-			final String recommendIncome = moneyService.actualIncome(recommendUser.getStr("userId"), income);
+			if (moneyService.petValid(recommendUser.getStr("userId"))) {
+				//判断实际收益
+				final String recommendIncome = moneyService.actualIncome(recommendUser.getStr("userId"), income);
 
-			//修改推荐人金币余额和当天已获得收益,添加已推荐人数量
-			recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
-					.set("todayIncome", new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString());
-			if ("0".equals(type)) {
-				recommendUser.set("recommendCount", recommendUser.getInt("recommendCount") + 1);
-			}
-			recommendUser.update();
-
-			//记录推荐奖励日志
-			new RecommendIncome().set("recommendUserId", user.getStr("userId"))
-					.set("name", user.getStr("name"))
-					.set("income", recommendIncome)
-					.set("createTime", System.currentTimeMillis())
-					.set("userId", recommendUser.getStr("userId")).save();
-			//记录总收益明细
-			new TotalIncome().saveRecommendIncome(recommendUser, recommendIncome);
-
-			//计算领导奖
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					leaderService.calcLeaderIncome(recommendUser, income);
+				//修改推荐人金币余额和当天已获得收益,添加已推荐人数量
+				recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
+						.set("todayIncome",
+								new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString());
+				if ("0".equals(type)) {
+					recommendUser.set("recommendCount", recommendUser.getInt("recommendCount") + 1);
 				}
-			});
+				recommendUser.update();
+
+				//记录推荐奖励日志
+				new RecommendIncome().set("recommendUserId", user.getStr("userId"))
+						.set("name", user.getStr("name"))
+						.set("income", recommendIncome)
+						.set("createTime", System.currentTimeMillis())
+						.set("userId", recommendUser.getStr("userId")).save();
+				//记录总收益明细
+				new TotalIncome().saveRecommendIncome(recommendUser, recommendIncome);
+
+				//计算领导奖
+				es.submit(new Runnable() {
+
+					@Override
+					public void run() {
+						leaderService.calcLeaderIncome(recommendUser, income);
+					}
+				});
+			}
 		}
 	}
 

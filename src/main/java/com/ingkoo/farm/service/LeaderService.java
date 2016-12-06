@@ -79,12 +79,14 @@ public class LeaderService {
 	 * @param leaderUser 待获取领导奖的用户
 	 */
 	private boolean canGetLeaderIncome(int generation, User leaderUser) {
-		return generation == 1 || generation == 2 && leaderUser.getInt("recommendCount") >= 4 ||
-				generation == 3 && leaderUser.getInt("recommendCount") >= 5 ||
-				generation == 4 && leaderUser.getInt("recommendCount") >= 6 ||
-				generation == 5 && leaderUser.getInt("recommendCount") >= 7 ||
-				generation >= 6 &&
-						Db.queryLong("select count(*) from user where recommendUserId = ? and recommendCount >= 8",
-								leaderUser.getStr("userId")) >= 8;
+		return moneyService.petValid(leaderUser.getStr("userId")) &&
+				(generation == 1 || generation == 2 && leaderUser.getInt("recommendCount") >= 4 ||
+						generation == 3 && leaderUser.getInt("recommendCount") >= 5 ||
+						generation == 4 && leaderUser.getInt("recommendCount") >= 6 ||
+						generation == 5 && leaderUser.getInt("recommendCount") >= 7 ||
+						generation >= 6 &&
+								Db.queryLong(
+										"select count(*) from user where recommendUserId = ? and recommendCount >= 8",
+										leaderUser.getStr("userId")) >= 8);
 	}
 }

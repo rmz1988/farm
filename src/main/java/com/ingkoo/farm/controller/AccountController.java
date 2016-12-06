@@ -188,7 +188,6 @@ public class AccountController extends Controller {
 							//扣除操作员相应（300）激活币，如果激活币不足300，则激活失败；若成功，增加操作员激活奖励（余额）
 							user.set("activeMoney",
 									new Money(user.getStr("activeMoney")).subtract(activeDecrease).toString())
-									.set("money", new Money(user.getStr("money")).add(activeGet).toString())
 									.update();
 
 							//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
@@ -200,14 +199,18 @@ public class AccountController extends Controller {
 										.update();
 							}
 
-							//操作员记录激活收益
-							new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
-									.set("name", activatedUser.getStr("name"))
-									.set("income", activeGet)
-									.set("createTime", System.currentTimeMillis())
-									.set("userId", user.getStr("userId"))
-									.save();
-							new TotalIncome().saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
+							if (moneyService.petValid(user.getStr("userId"))) {
+								user.set("money", new Money(user.getStr("money")).add(activeGet).toString()).update();
+
+								//操作员记录激活收益
+								new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
+										.set("name", activatedUser.getStr("name"))
+										.set("income", activeGet)
+										.set("createTime", System.currentTimeMillis())
+										.set("userId", user.getStr("userId"))
+										.save();
+								new TotalIncome().saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
+							}
 						}
 
 						return true;
@@ -295,15 +298,15 @@ public class AccountController extends Controller {
 	public void doPurchaseApply() {
 		User user = getSessionAttr("user");
 		PurchaseApply purchaseApply = getModel(PurchaseApply.class, "purchaseApply");
-		String money =  Money.format(Double.parseDouble(purchaseApply.getStr("money")));
+		String money = Money.format(Double.parseDouble(purchaseApply.getStr("money")));
 		String fee = new Money(money).multiply("0.1").toString();
 		String realMoney = new Money(money).subtract(fee).toString();
 
 		render(new JsonRender(purchaseApply.set("applyId", RandomCode.uuid())
 				.set("userId", user.getStr("userId"))
 				.set("money", money)
-				.set("fee",fee)
-				.set("realMoney",realMoney)
+				.set("fee", fee)
+				.set("realMoney", realMoney)
 				.set("createTime", System.currentTimeMillis()).save()).forIE());
 	}
 

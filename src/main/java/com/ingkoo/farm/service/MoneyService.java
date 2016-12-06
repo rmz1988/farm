@@ -37,6 +37,11 @@ public class MoneyService {
 				Double.parseDouble(OtherRate.dao.findById("daily_input_limit").getStr("rate"));
 	}
 
+	public boolean petValid(String userId) {
+		return !PetLifecycle.dao.find("select * from pet_lifecycle where status = '1' and userId = ?", userId)
+				.isEmpty();
+	}
+
 	/**
 	 * 获取实际收益
 	 *
