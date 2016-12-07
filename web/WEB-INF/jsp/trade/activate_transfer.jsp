@@ -81,10 +81,14 @@
                             </div>
                         </div>
                         <input type="hidden" id="max" value="${user.money}"/>
-                        <input type="hidden" id="times" value="${minTransfer}"/>
+                        <input type="hidden" id="min" value="${minTransfer}"/>
+                        <input type="hidden" id="times" value="100"/>
                         <input type="hidden" id="todayRepurchase" value="${user.todayRepurchase}"/>
                         <input type="hidden" id="todayLimitMoney" value="${user.todayLimitMoney}"/>
-                        <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"><data:i18n key="submit"/></button>
+                        <button id="transferBtn" type="button" class="btn btn-success col-md-offset-2"
+                                <c:if test="${canTransfer == false}">disabled</c:if>>
+                            <data:i18n key="submit"/>
+                        </button>
                     </form>
                     <hr>
                     <div class="panel panel-warning">
@@ -93,9 +97,12 @@
                         </div>
                         <div class="panel-body">
                     <span class="rule-tip-lg">
-                        <data:i18n key="transferActive.warnTip1"/>${minTransfer}<data:i18n key="transferActive.warnTip2"/><br/>
-                        <data:i18n key="transferActive.warnTip3"/><br/>
-                        <data:i18n key="transferActive.warnTip4"/>
+                        <data:i18n key="transferActive.warnTip1"/><br/>
+                        <data:i18n
+                                key="transferActive.warnTip2"/>${minTransfer}<data:i18n key="transferActive.warnTip3"/>
+                        <br/>
+                        <data:i18n key="transferActive.warnTip4"/><br/>
+                        <data:i18n key="transferActive.warnTip5"/>
                     </span>
                         </div>
                     </div>

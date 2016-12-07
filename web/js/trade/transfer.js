@@ -14,6 +14,7 @@ define(function (require, exports, module) {
                 },
                 money: {
                     required: true,
+                    min: Number($('#min').val()),
                     maxOfTimes: [$('#max').val(), $('#times').val()]
                 },
                 tradePwd: {
@@ -28,6 +29,7 @@ define(function (require, exports, module) {
                 },
                 money: {
                     required: tools.getText('transfer.moneyRequired'),
+                    min: tools.getText('transfer.minTip') + $('#min').val(),
                     maxOfTimes: tools.getText('transfer.maxOfTimesTip1') + $('#times').val() + tools.getText('transfer.maxOfTimesTip2') + $('#max').val()
                 },
                 tradePwd: {
@@ -49,7 +51,7 @@ define(function (require, exports, module) {
                 todayLimitMoney = 1000 - todayLimitMoney;
                 var todayRepurchase = Number($('#todayRepurchase').val());
                 var money = Number($.trim($('#money').val()));
-                if (money >= todayLimitMoney && todayRepurchase < 3) {
+                if (money >= todayLimitMoney && todayRepurchase < 1) {
                     alert(tools.getText('transfer.transferLimitMoney'));
                     $btn.attr('disabled', false);
                     return;
@@ -67,7 +69,7 @@ define(function (require, exports, module) {
                         $btn.attr('disabled', false);
                     }
                 }, 'json');
-            }else{
+            } else {
                 $btn.attr('disabled', false);
             }
         });

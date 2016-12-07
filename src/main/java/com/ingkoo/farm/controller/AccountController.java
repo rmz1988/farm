@@ -231,7 +231,7 @@ public class AccountController extends Controller {
 	public void purchase() {
 		setAttr("current", "account");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("canPurchase", StringUtils.isNotEmpty(user.getStr("activeNo")));
+		setAttr("canPurchase", StringUtils.isNotEmpty(user.getStr("activeNo")) && user.canTransferActive());
 		render("money_purchase.jsp");
 	}
 
@@ -268,7 +268,7 @@ public class AccountController extends Controller {
 		String userId = getPara("userId");
 		setAttr("userId", userId);
 		StringBuilder sqlBuilder = new StringBuilder(
-				"from user where status = '2' and userId != ? and userId not in (select oppositeUserId from purchase_apply where userId = ? and status in ('0','1','3')) ");
+				"from user where status = '2' and rePurchase > 0 and recommendCount > 0 and userId != ? and userId not in (select oppositeUserId from purchase_apply where userId = ? and status in ('0','1','3')) and userId in (select userId from pet_lifecycle where liveDays = 15 and status = '0') ");
 		List<Object> paramList = new ArrayList<>();
 		paramList.add(user.getStr("userId"));
 		paramList.add(user.getStr("userId"));
@@ -291,6 +291,9 @@ public class AccountController extends Controller {
 		setAttr("current", "account");
 		User user = User.dao.findById(getPara("userId"));
 		setAttr("purchaseUser", user);
+		String minPurchase = OtherRate.dao.findById("min_withdraw").getStr("rate");
+		setAttr("minPurchase", minPurchase);
+		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
 		render("purchase_apply.jsp");
 	}
 

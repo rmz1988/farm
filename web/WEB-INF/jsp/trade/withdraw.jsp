@@ -115,7 +115,8 @@
                             </div>
                         </div>
                         <input type="hidden" id="max" value="${user.money}">
-                        <input type="hidden" id="times" value="${minWithdraw}">
+                        <input type="hidden" id="min" value="${minWithdraw}">
+                        <input type="hidden" id="times" value="100">
                         <input type="hidden" id="todayRepurchase" value="${user.todayRepurchase}"/>
                         <input type="hidden" id="todayLimitMoney" value="${user.todayLimitMoney}"/>
                         <button id="withdrawBtn" type="button" class="btn btn-success col-md-offset-2"

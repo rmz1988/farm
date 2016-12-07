@@ -36,7 +36,7 @@ public class TradeController extends Controller {
 		setAttr("minWithdraw", minWithdraw);
 		setAttr("user", user);
 		setAttr("canWithdraw", user.canWithdraw());
-		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), minWithdraw));
+		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
 		setAttr("fee", OtherRate.dao.findById("withdraw_rate").getStr("rate"));
 
 		render("withdraw.jsp");
@@ -105,7 +105,7 @@ public class TradeController extends Controller {
 		String minTransfer = OtherRate.dao.findById("min_withdraw").getStr("rate");
 		setAttr("minTransfer", minTransfer);
 		setAttr("user", user);
-		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), minTransfer));
+		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
 		setAttr("canTransfer", user.canTransfer());
 
 		render("transfer.jsp");
@@ -191,7 +191,8 @@ public class TradeController extends Controller {
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		String minTransfer = OtherRate.dao.findById("min_withdraw").getStr("rate");
 		setAttr("minTransfer", minTransfer);
-		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), minTransfer));
+		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
+		setAttr("canTransfer", user.canTransferActive());
 		setAttr("user", user);
 
 		render("activate_transfer.jsp");

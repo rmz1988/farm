@@ -26,7 +26,9 @@
         <div class="content">
             <form id="purchaseForm" method="post" class="form-horizontal">
                 <input type="hidden" id="purchaseUserId" value="${purchaseUser.userId}">
-                <input type="hidden" id="maxMoney" value="${purchaseUser.money}">
+                <input type="hidden" id="max" value="${purchaseUser.money}">
+                <input type="hidden" id="min" value="${minPurchase}">
+                <input type="hidden" id="times" value="100">
                 <div class="form-group">
                     <label class="control-label col-md-2">
                         <data:i18n key="userId"/>：

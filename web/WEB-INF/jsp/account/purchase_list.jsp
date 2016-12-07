@@ -29,4 +29,4 @@
     <data:emptyData cols="3"/>
     </tbody>
 </table>
-<data:page contentId="content" url="${basePath}/account/queryRepurchaseList" params="userId=${userId}"/>
+<data:page contentId="content" url="${basePath}/account/queryPurchaseList" params="userId=${userId}"/>

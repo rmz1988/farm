@@ -9,6 +9,7 @@ define(function (require, exports, module) {
             rules: {
                 money: {
                     required: true,
+                    min: Number($('#min').val()),
                     maxOfTimes: [$('#max').val(), $('#times').val()]
                 },
                 tradePwd: {
@@ -19,6 +20,7 @@ define(function (require, exports, module) {
             messages: {
                 money: {
                     required: tools.getText('withdraw.moneyRequired'),
+                    min: tools.getText('withdraw.minTip') + $('#min').val(),
                     maxOfTimes: tools.getText('withdraw.moneyTip1') + $('#times').val() + tools.getText('withdraw.moneyTip2') + $('#max').val()
                 },
                 tradePwd: {
@@ -40,7 +42,7 @@ define(function (require, exports, module) {
                 todayLimitMoney = 1000 - todayLimitMoney;
                 var todayRepurchase = Number($('#todayRepurchase').val());
                 var money = Number($.trim($('#money').val()));
-                if (money >= todayLimitMoney && todayRepurchase < 3) {
+                if (money >= todayLimitMoney && todayRepurchase < 1) {
                     alert(tools.getText('withdraw.withdrawLimitMoney'));
                     $btn.attr('disabled', false);
                     return;

@@ -10,8 +10,8 @@ define(function (require, modules, exports) {
             rules: {
                 purchaseMoney: {
                     required: true,
-                    min: 0.01,
-                    max: Number($('#maxMoney').val())
+                    min: Number($('#min').val()),
+                    maxOfTimes: [$('#max').val(), $('#times').val()]
                 },
                 tradePwd: {
                     required: true,
@@ -20,8 +20,8 @@ define(function (require, modules, exports) {
             }, messages: {
                 purchaseMoney: {
                     required: tools.getText('purchase.moneyRequired'),
-                    min: tools.getText('purchase.moneyMin'),
-                    max: tools.getText('purchase.moneyMax')
+                    min: tools.getText('purchase.minTip') + $('#min').val(),
+                    maxOfTimes: tools.getText('purchase.maxOfTimesTip1') + $('#times').val() + tools.getText('purchase.maxOfTimesTip2') + $('#max').val()
                 },
                 tradePwd: {
                     required: tools.getText('transfer.tradePwdRequired'),

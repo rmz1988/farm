@@ -21,16 +21,26 @@ public class User extends Model<User> {
 	 * 能否提现
 	 */
 	public boolean canWithdraw() {
-		return getInt("rePurchase") > 0 && getStr("isWithdraw").equals("0") && !PetLifecycle.dao
-				.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
-						get("userId"), get("petNo"))
-				.isEmpty();
+		return getInt("rePurchase") > 0 && getStr("isWithdraw").equals("0") && getInt("recommendCount") > 0 &&
+				!PetLifecycle.dao
+						.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
+								get("userId"), get("petNo"))
+						.isEmpty();
 	}
 
 	public boolean canTransfer() {
-		return !PetLifecycle.dao
-				.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
-						get("userId"), get("petNo"))
-				.isEmpty();
+		return getInt("rePurchase") > 0 &&
+				!PetLifecycle.dao
+						.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
+								get("userId"), get("petNo"))
+						.isEmpty();
+	}
+
+	public boolean canTransferActive() {
+		return getInt("rePurchase") > 0 && getInt("recommendCount") > 0 &&
+				!PetLifecycle.dao
+						.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
+								get("userId"), get("petNo"))
+						.isEmpty();
 	}
 }

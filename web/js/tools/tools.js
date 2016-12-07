@@ -78,9 +78,9 @@ define(function (require, exports, module) {
             'self.repeatTradePwdRequired': '请再次输入新交易密码',
             'self.tradePwdNotSame': '与新交易密码不一致',
             'self.tradePwdSuccess': '修改成功！',
-            'transfer.transferLimitMoney': '互转、提现每日累计1000元以上,需当日复购3次才可进行',
-            'withdraw.withdrawLimitMoney': '互转、提现每日累计1000元以上,需当日复购3次才可进行',
-            'transferActive.transferLimitMoney': '互转、提现、转激活币每日累计1000元及以上，须当日复购3次才可进行',
+            'transfer.transferLimitMoney': '互转、提现每日累计1000元以上,需当日复购1次才可进行',
+            'withdraw.withdrawLimitMoney': '互转、提现每日累计1000元以上,需当日复购1次才可进行',
+            'transferActive.transferLimitMoney': '互转、提现、转激活币每日累计1000元及以上，须当日复购1次才可进行',
             'purchase.paymentTip': '支付通知已发送，等待对方确认',
             'purchase.balanceTip': '您的奖励币已少于对方收购金额，暂无法进行收购',
             'purchase.success': '操作成功',
@@ -90,7 +90,14 @@ define(function (require, exports, module) {
             'purchase.moneyRequired': '请输入要收购的金额',
             'purchase.moneyMin': '至少收购0.01元',
             'purchase.moneyMax': '收购金额不能超过玩家奖励币余额',
-            'index.changePwdTip': '您的密码为初始密码，请及时修改！'
+            'index.changePwdTip': '您的密码为初始密码，请及时修改！',
+            'purchase.maxOfTimesTip1': '收购金额须是',
+            'withdraw.maxOfTimesTip2': '的倍数，不得超过',
+            'transfer.minTip':'互转金额不得少于',
+            'withdraw.minTip':'提现金额不得少于',
+            'transferActive.minTip':'转激活币金额不得少于',
+            'purchase.minTip':'收购金额不得少于'
+
         },
         'en_US': {
             'systemError': 'System is busy,please try again later',
@@ -163,9 +170,9 @@ define(function (require, exports, module) {
             'self.repeatTradePwdRequired': 'Please input new trade password again',
             'self.tradePwdNotSame': 'Not same as the new trade password',
             'self.tradePwdSuccess': 'Success!',
-            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
-            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
-            'transferActive.transferLimitMoney': 'The amount of transfer、withdraw and transfer to active has added up to 1000 yuan,you can continue after repurchasing for 3 times today',
+            'transfer.transferLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 1 times today',
+            'withdraw.withdrawLimitMoney': 'The amount of transfer and withdraw has added up to 1000 yuan,you can continue after repurchasing for 1 times today',
+            'transferActive.transferLimitMoney': 'The amount of transfer、withdraw and transfer to active has added up to 1000 yuan,you can continue after repurchasing for 1 times today',
             'purchase.paymentTip': 'The notice of payment has send,waiting for opposite confirmation',
             'purchase.balanceTip': 'Your bonus has been less than the amount of purchase,cannot continue',
             'purchase.success': 'Success',
@@ -175,7 +182,13 @@ define(function (require, exports, module) {
             'purchase.moneyRequired': 'Please input the amount of purchase',
             'purchase.moneyMin': 'The amount is at least 0.01 yuan',
             'purchase.moneyMax': 'The amount of purchase cannot be greater than opposite bonus',
-            'index.changePwdTip': 'Your password is initial,please change immediately!'
+            'index.changePwdTip': 'Your password is initial,please change immediately!',
+            'purchase.maxOfTimesTip1': 'The amount must be a multiple of ',
+            'withdraw.maxOfTimesTip2': ',and less than ',
+            'transfer.minTip':'The amount of transfer must not less than ',
+            'withdraw.minTip':'The amount of withdraw must not less than ',
+            'transferActive.minTip':'The amount of transfer to active must not less than ',
+            'purchase.minTip':'The amount of purchase must not less than '
         }
     };
 
