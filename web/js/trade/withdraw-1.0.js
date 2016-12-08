@@ -48,13 +48,17 @@ define(function (require, exports, module) {
                     return;
                 }
 
+                alert(tools.getText('withdraw.timeTip'));
                 $.post(basePath + '/trade/doWithdraw', {
                     money: money
                 }, function (response) {
-                    if (response) {
+                    if (response == 0) {
                         alert(tools.getText('withdraw.success'));
                         window.location = basePath + '/trade/withdraw';
-                    } else {
+                    } else if (response == 1) {
+                        alert(tools.getText('withdraw.minTip') + '300.00');
+                        $btn.attr('disabled', false);
+                    } else if (response == 2) {
                         alert(tools.getText('systemError'));
                         $btn.attr('disabled', false);
                     }

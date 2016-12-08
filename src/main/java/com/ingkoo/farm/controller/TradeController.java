@@ -57,43 +57,52 @@ public class TradeController extends Controller {
 	 * 提现
 	 */
 	public void doWithdraw() {
-		boolean result;
+		int response = 0;
 		synchronized (MoneyService.MONEY_LOCK) {
 			final User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 			final String money = getPara("money");
-			result = Db.tx(new IAtom() {
+			if (Double.parseDouble(money) < 300d) {
+				response = 1;
+			} else {
+				boolean result = Db.tx(new IAtom() {
 
-				@Override
-				public boolean run() throws SQLException {
-					//保存提现记录
-					String feeRate = OtherRate.dao.findById("withdraw_rate").getStr("rate");
-					String fee = new Money(money).multiply(feeRate).divide("100").toString();
-					String realMoney = new Money(money).subtract(fee).toString();
-					new Withdraw().set("withdrawId", RandomCode.uuid())
-							.set("userId", user.getStr("userId"))
-							.set("money", Money.format(Double.parseDouble(money)))
-							.set("bankName", Dict.dao.getDictValue("bank", user.getStr("bank")))
-							.set("cardNo", AES.decrypt(user.getStr("bankCard")))
-							.set("bankAccountName", user.getStr("bankAccountName"))
-							.set("status", "0")
-							.set("createTime", System.currentTimeMillis())
-							.set("realMoney", realMoney)
-							.set("fee", fee)
-							.save();
-					//修改用户余额及提现状态
-					user.set("money", new Money(user.getStr("money")).subtract(money).toString())
-							.set("isWithdraw", "1")
-							.set("todayLimitMoney", new Money(user.getStr("todayLimitMoney")).add(money).toString())
-							.update();
-					//记录用户收入总明细
-					new TotalIncome().saveWithdrawOutput(User.dao.findById(user.getStr("userId")), money);
+					@Override
+					public boolean run() throws SQLException {
+						//保存提现记录
+						String feeRate = OtherRate.dao.findById("withdraw_rate").getStr("rate");
+						String fee = new Money(money).multiply(feeRate).divide("100").toString();
+						String realMoney = new Money(money).subtract(fee).toString();
+						new Withdraw().set("withdrawId", RandomCode.uuid())
+								.set("userId", user.getStr("userId"))
+								.set("money", Money.format(Double.parseDouble(money)))
+								.set("bankName", Dict.dao.getDictValue("bank", user.getStr("bank")))
+								.set("cardNo", AES.decrypt(user.getStr("bankCard")))
+								.set("bankAccountName", user.getStr("bankAccountName"))
+								.set("status", "0")
+								.set("createTime", System.currentTimeMillis())
+								.set("realMoney", realMoney)
+								.set("fee", fee)
+								.save();
+						//修改用户余额及提现状态
+						user.set("money", new Money(user.getStr("money")).subtract(money).toString())
+								.set("isWithdraw", "1")
+								.set("todayLimitMoney", new Money(user.getStr("todayLimitMoney")).add(money).toString())
+								.update();
+						//记录用户收入总明细
+						new TotalIncome().saveWithdrawOutput(User.dao.findById(user.getStr("userId")), money);
 
-					return true;
+						return true;
+					}
+				});
+				if (result) {
+					response = 0;
+				} else {
+					response = 2;
 				}
-			});
+			}
 		}
 
-		render(new JsonRender(result).forIE());
+		render(new JsonRender(response).forIE());
 	}
 
 	/**

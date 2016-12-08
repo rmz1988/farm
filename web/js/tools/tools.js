@@ -93,10 +93,11 @@ define(function (require, exports, module) {
             'index.changePwdTip': '您的密码为初始密码，请及时修改！',
             'purchase.maxOfTimesTip1': '收购金额须是',
             'withdraw.maxOfTimesTip2': '的倍数，不得超过',
-            'transfer.minTip':'互转金额不得少于',
-            'withdraw.minTip':'提现金额不得少于',
-            'transferActive.minTip':'转激活币金额不得少于',
-            'purchase.minTip':'收购金额不得少于'
+            'transfer.minTip': '互转金额不得少于',
+            'withdraw.minTip': '提现金额不得少于',
+            'transferActive.minTip': '转激活币金额不得少于',
+            'purchase.minTip': '收购金额不得少于',
+            'withdraw.timeTip': '周六、周日请勿提现!'
 
         },
         'en_US': {
@@ -185,10 +186,11 @@ define(function (require, exports, module) {
             'index.changePwdTip': 'Your password is initial,please change immediately!',
             'purchase.maxOfTimesTip1': 'The amount must be a multiple of ',
             'withdraw.maxOfTimesTip2': ',and less than ',
-            'transfer.minTip':'The amount of transfer must not less than ',
-            'withdraw.minTip':'The amount of withdraw must not less than ',
-            'transferActive.minTip':'The amount of transfer to active must not less than ',
-            'purchase.minTip':'The amount of purchase must not less than '
+            'transfer.minTip': 'The amount of transfer must not less than ',
+            'withdraw.minTip': 'The amount of withdraw must not less than ',
+            'transferActive.minTip': 'The amount of transfer to active must not less than ',
+            'purchase.minTip': 'The amount of purchase must not less than ',
+            'withdraw.timeTip': 'Do not withdraw at weekend!'
         }
     };
 

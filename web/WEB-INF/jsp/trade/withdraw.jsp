@@ -9,7 +9,7 @@
 <head lang="zh-CN">
     <title><data:i18n key="kxmc"/>-<data:i18n key="menu.withdraw"/></title>
     <script>
-        seajs.use('trade/withdraw');
+        seajs.use('trade/withdraw-1.0');
     </script>
 </head>
 <body>
