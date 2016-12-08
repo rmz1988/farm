@@ -67,7 +67,7 @@
 
                             <div class="col-md-6">
                                 <input type="number" id="money" name="money" class="form-control"
-                                       placeholder="<data:i18n key="transfer.moneyTip"/>${minTransfer}<data:i18n key="transfer.moneyTip2"/>">
+                                       placeholder="<data:i18n key="transfer.moneyTip"/>100<data:i18n key="transfer.moneyTip2"/>">
                             </div>
                         </div>
                         <div class="form-group">
@@ -99,7 +99,7 @@
                     <span class="rule-tip-lg">
                         <data:i18n key="transferActive.warnTip1"/><br/>
                         <data:i18n
-                                key="transferActive.warnTip2"/>${minTransfer}<data:i18n key="transferActive.warnTip3"/>
+                                key="transferActive.warnTip2"/>100<data:i18n key="transferActive.warnTip3"/>
                         <br/>
                         <data:i18n key="transferActive.warnTip4"/><br/>
                         <data:i18n key="transferActive.warnTip5"/>

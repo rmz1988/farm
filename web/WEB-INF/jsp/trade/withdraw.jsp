@@ -101,7 +101,7 @@
 
                             <div class="col-md-6">
                                 <input type="number" id="money" name="money" class="form-control"
-                                       placeholder="<data:i18n key="withdraw.amountTip"/>${minWithdraw}<data:i18n key="withdraw.amountTip2"/>">
+                                       placeholder="<data:i18n key="withdraw.amountTip"/>${minWithdraw}<data:i18n key="withdraw.amountTip2"/>100<data:i18n key="withdraw.amountTip3"/>">
                             </div>
                         </div>
                         <div class="form-group">
@@ -145,9 +145,9 @@
                     <span class="rule-tip-lg">
                         <data:i18n key="withdraw.warnTip1"/><br/>
                         <data:i18n key="withdraw.warnTip2"/><br/>
-                        <data:i18n key="withdraw.warnTip3"/>${minWithdraw}<data:i18n key="withdraw.warnTip4"/><br/>
-                        <data:i18n key="withdraw.warnTip5"/>${fee}<data:i18n key="withdraw.warnTip6"/><br/>
-                        <data:i18n key="withdraw.warnTip7"/>
+                        <data:i18n key="withdraw.warnTip3"/>${minWithdraw}<data:i18n key="withdraw.warnTip4"/>100<data:i18n key="withdraw.warnTip5"/><br/>
+                        <data:i18n key="withdraw.warnTip6"/>${fee}<data:i18n key="withdraw.warnTip7"/><br/>
+                        <data:i18n key="withdraw.warnTip8"/>
                     </span>
                 </div>
             </div>
