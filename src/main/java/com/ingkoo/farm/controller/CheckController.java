@@ -46,7 +46,9 @@ public class CheckController extends Controller {
 	 */
 	public void validRecommendId() {
 		String recommendUserId = getPara("recommendUserId");
-		render(new JsonRender(User.dao.findById(recommendUserId) != null).forIE());
+		render(new JsonRender(
+				User.dao.findFirst("select * from user where userId = ? and status = '2'", recommendUserId) != null)
+				.forIE());
 	}
 
 	/**
