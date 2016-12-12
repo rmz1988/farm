@@ -30,7 +30,7 @@ public class RegisterController extends Controller {
 	public void index() {
 		setAttr("imgUrl", OtherRate.dao.findById("img_url").getStr("rate"));
 		setAttr("petList", Pet.dao.find("select * from pet"));
-		setAttr("bankList", Dict.dao.find("select * from dict where dictGroup = 'bank'"));
+		//setAttr("bankList", Dict.dao.find("select * from dict where dictGroup = 'bank'"));
 		setSessionAttr("qq", OtherRate.dao.findById("qq").getStr("rate"));
 		render("register.jsp");
 	}
@@ -67,14 +67,14 @@ public class RegisterController extends Controller {
 							.set("loginPwd", MD5.encrypt("111111"))
 							.set("tradePwd", MD5.encrypt("222222"))
 							.set("registerTime", System.currentTimeMillis())
-							.set("bankCard", AES.encrypt(user.getStr("bankCard"))).save();
+							.save();
 
 					//记录玩家激活申请
 					new ActiveApply().set("applyId", RandomCode.uuid())
 							.set("userId", user.getStr("userId"))
 							.set("name", user.getStr("name"))
 							.set("petName", Pet.dao.findById(user.getStr("petNo")).getStr("name"))
-							.set("activatedNo", user.getStr("activatedNo"))
+							.set("activateUserId", user.getStr("activateUserId"))
 							.set("status", "0")
 							.set("applyTime", System.currentTimeMillis()).save();
 

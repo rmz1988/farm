@@ -31,14 +31,12 @@ public class RecommendService {
 	 * 保存推荐奖励
 	 *
 	 * @param user 玩家信息
-	 * @param type 0:直推玩家提成，1：玩家复购提成
 	 */
-	public void saveRecommendIncome(User user, String type) {
+	public void saveRecommendIncome(User user) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			Pet pet = Pet.dao.findById(user.getStr("petNo"));
 			//直推提成比例
-			String recommendRate = "0".equals(type) ? OtherRate.dao.findById("redirect_recommend_rate").getStr("rate") :
-					OtherRate.dao.findById("redirect_repurchase_rate").getStr("rate");
+			String recommendRate = OtherRate.dao.findById("redirect_recommend_rate").getStr("rate");
 			//直推收益
 			final String income =
 					new Money(pet.getStr("price")).multiply(new Money(recommendRate)).divide(100).toString();
@@ -51,11 +49,10 @@ public class RecommendService {
 				//修改推荐人金币余额和当天已获得收益,添加已推荐人数量
 				recommendUser.set("money", new Money(recommendUser.getStr("money")).add(recommendIncome).toString())
 						.set("todayIncome",
-								new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString());
-				if ("0".equals(type)) {
-					recommendUser.set("recommendCount", recommendUser.getInt("recommendCount") + 1);
-				}
-				recommendUser.update();
+								new Money(recommendUser.getStr("todayIncome")).add(recommendIncome).toString())
+						.set("recommendCount", recommendUser.getInt("recommendCount") + 1)
+						.set("total", new Money(recommendUser.getStr("total")).add(recommendIncome).toString())
+						.update();
 
 				//记录推荐奖励日志
 				new RecommendIncome().set("recommendUserId", user.getStr("userId"))
@@ -74,6 +71,13 @@ public class RecommendService {
 						leaderService.calcLeaderIncome(recommendUser, income);
 					}
 				});
+			}
+
+			//再上一级用户动态推荐数量+1
+			User recommendUpUser = User.dao.findById(recommendUser.getStr("recommendUserId"));
+			if (recommendUpUser != null) {
+				recommendUpUser.set("activeRecommendCount", recommendUpUser.getInt("activeRecommendCount") + 1)
+						.update();
 			}
 		}
 	}

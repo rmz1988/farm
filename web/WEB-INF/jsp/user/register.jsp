@@ -73,42 +73,6 @@
                 <hr>
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        <data:i18n key="register.bank"/>：
-                    </label>
-
-                    <div class="col-md-6">
-                        <select id="bank" name="bank" class="form-control">
-                            <option value=""><data:i18n key="register.bankTip"/></option>
-                            <c:forEach var="dict" items="${bankList}">
-                                <option value="${dict.dictName}"><data:dict dictgroup="bank"
-                                                                            value="${dict.dictName}"/></option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">
-                        <data:i18n key="register.accountName"/>：
-                    </label>
-
-                    <div class="col-md-6">
-                        <input type="text" id="bankAccountName" name="bankAccountName" class="form-control"
-                               placeholder="<data:i18n key="register.accountNameTip"/>" maxlength="60">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">
-                        <data:i18n key="register.bankCard"/>：
-                    </label>
-
-                    <div class="col-md-6">
-                        <input type="text" id="bankCard" name="bankCard" class="form-control"
-                               placeholder="<data:i18n key="register.bankCardTip"/>" maxlength="60">
-                    </div>
-                </div>
-                <hr>
-                <div class="form-group">
-                    <label class="control-label col-md-2">
                         <data:i18n key="register.loginPwd"/>：
                     </label>
 
@@ -147,7 +111,7 @@
 
                     <div class="col-md-6">
                         <input type="text" id="activatedNo" name="activatedNo" class="form-control"
-                               placeholder="<data:i18n key="register.activateNoTip"/>" maxlength="3">
+                               placeholder="<data:i18n key="register.activateNoTip"/>" maxlength="60">
                     </div>
                     <div id="activeUserArea" class="col-md-6 col-md-offset-2" style="display:none;">
                         <span><data:i18n key="register.activateUser"/>：</span>

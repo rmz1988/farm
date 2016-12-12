@@ -21,7 +21,17 @@ public class TotalIncome extends Model<TotalIncome> {
 
 	public static final TotalIncome dao = new TotalIncome();
 
-	private static ExecutorService es = Executors.newFixedThreadPool(5);
+	public void init(String userId) {
+		final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
+		TotalIncome totalIncome = TotalIncome.dao
+				.findFirst("select * from total_income where userId = ? and createTime = ?",
+						userId, todayDate);
+		if (totalIncome == null) {
+			new TotalIncome()
+					.set("userId", userId)
+					.set("createTime", todayDate).save();
+		}
+	}
 
 	/**
 	 * 保存推荐收益
@@ -32,84 +42,21 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveRecommendIncome(User user, String income) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
 			if (totalIncome != null) {
 				totalIncome
 						.set("recommendIncome", new Money(totalIncome.getStr("recommendIncome")).add(income).toString())
-						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("recommendIncome", income)
-						.set("currentTotal",
-								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
-										.add(income).toString())
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
-	/**
-	 * 保存收购收益
-	 *
-	 * @param user   用户
-	 * @param income 收益
-	 */
-	public void savePurchaseIncome(User user, String income) {
-		synchronized (MoneyService.MONEY_LOCK) {
-			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
-			TotalIncome totalIncome = TotalIncome.dao
-					.findFirst("select * from total_income where userId = ? and createTime = ?",
-							user.getStr("userId"), todayDate);
-			if (totalIncome != null) {
-				totalIncome
-						.set("purchaseIncome", new Money(totalIncome.getStr("purchaseIncome")).add(income).toString())
-						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
-						.update();
-			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
-				new TotalIncome().set("purchaseIncome", income)
-						.set("currentTotal",
-								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
-										.add(income).toString())
-						.set("userId", user.getStr("userId"))
-						.set("createTime", todayDate).save();
-			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
-		}
-	}
 
 	/**
 	 * 保存日产币收益
@@ -120,37 +67,17 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void savePetOutput(User user, String income) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
 			if (totalIncome != null) {
 				totalIncome.set("output", new Money(totalIncome.getStr("output")).add(income).toString())
-						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("output", income)
-						.set("currentTotal",
-								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
-										.add(income).toString())
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
@@ -163,37 +90,17 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveLeaderIncome(User user, String income) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
 			if (totalIncome != null) {
 				totalIncome.set("leaderIncome", new Money(totalIncome.getStr("leaderIncome")).add(income).toString())
-						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("leaderIncome", income)
-						.set("currentTotal",
-								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
-										.add(income).toString())
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
@@ -206,81 +113,18 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveTrasferIn(User user, String income) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
 			if (totalIncome != null) {
 				totalIncome
 						.set("transferIncome", new Money(totalIncome.getStr("transferIncome")).add(income).toString())
-						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("transferIncome", income)
-						.set("currentTotal",
-								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
-										.add(income).toString())
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
-		}
-	}
-
-	/**
-	 * 保存激活收益记录
-	 *
-	 * @param user   用户
-	 * @param income 收入
-	 */
-	public void saveActiveIncome(User user, String income) {
-		synchronized (MoneyService.MONEY_LOCK) {
-			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
-			TotalIncome totalIncome = TotalIncome.dao
-					.findFirst("select * from total_income where userId = ? and createTime = ?",
-							user.getStr("userId"), todayDate);
-			if (totalIncome != null) {
-				totalIncome.set("activeIncome", new Money(totalIncome.getStr("activeIncome")).add(income).toString())
-						.set("currentTotal", new Money(totalIncome.getStr("currentTotal")).add(income).toString())
-						.update();
-			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
-				new TotalIncome().set("activeIncome", income)
-						.set("currentTotal",
-								new Money(yesterdayIncome != null ? yesterdayIncome.getStr("currentTotal") : "0.00")
-										.add(income).toString())
-						.set("userId", user.getStr("userId"))
-						.set("createTime", todayDate).save();
-			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
@@ -293,7 +137,6 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveOperationFee(User user, String output) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
@@ -301,67 +144,10 @@ public class TotalIncome extends Model<TotalIncome> {
 				totalIncome.set("operationFee", new Money(totalIncome.getStr("operationFee")).add(output).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("operationFee", output)
-						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
-		}
-	}
-
-	/**
-	 * 记录提现扣除
-	 *
-	 * @param user   用户
-	 * @param output 提现金额
-	 */
-	public void saveWithdrawOutput(User user, String output) {
-		synchronized (MoneyService.MONEY_LOCK) {
-			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
-			TotalIncome totalIncome = TotalIncome.dao
-					.findFirst("select * from total_income where userId = ? and createTime = ?",
-							user.getStr("userId"), todayDate);
-			if (totalIncome != null) {
-				totalIncome
-						.set("withdrawOutput", new Money(totalIncome.getStr("withdrawOutput")).add(output).toString())
-						.update();
-			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
-				new TotalIncome().set("withdrawOutput", output)
-						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
-						.set("userId", user.getStr("userId"))
-						.set("createTime", todayDate).save();
-			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
@@ -374,7 +160,6 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveTransferOutput(User user, String output) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
@@ -383,26 +168,10 @@ public class TotalIncome extends Model<TotalIncome> {
 						.set("transferOutput", new Money(totalIncome.getStr("transferOutput")).add(output).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("transferOutput", output)
-						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
@@ -415,7 +184,6 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveTransferToActiveOutput(User user, String output) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
@@ -425,26 +193,10 @@ public class TotalIncome extends Model<TotalIncome> {
 								new Money(totalIncome.getStr("transferToActive")).add(output).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("transferToActive", output)
-						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
@@ -457,7 +209,6 @@ public class TotalIncome extends Model<TotalIncome> {
 	public void saveRepurchaseOutput(User user, String output) {
 		synchronized (MoneyService.MONEY_LOCK) {
 			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
 			TotalIncome totalIncome = TotalIncome.dao
 					.findFirst("select * from total_income where userId = ? and createTime = ?",
 							user.getStr("userId"), todayDate);
@@ -465,67 +216,11 @@ public class TotalIncome extends Model<TotalIncome> {
 				totalIncome.set("repurchase", new Money(totalIncome.getStr("repurchase")).add(output).toString())
 						.update();
 			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
 				new TotalIncome().set("repurchase", output)
-						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
 						.set("userId", user.getStr("userId"))
 						.set("createTime", todayDate).save();
 			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
 		}
 	}
 
-	/**
-	 * 扣除收购支出金额
-	 *
-	 * @param user   用户
-	 * @param output 复购金额
-	 */
-	public void savePurchaseOutput(User user, String output) {
-		synchronized (MoneyService.MONEY_LOCK) {
-			final String todayDate = DateUtils.format(new Date(), DateTimeConst.DATE_10);
-			String yesterday = DateUtils.getYesterday(DateTimeConst.DATE_10);
-			TotalIncome totalIncome = TotalIncome.dao
-					.findFirst("select * from total_income where userId = ? and createTime = ?",
-							user.getStr("userId"), todayDate);
-			if (totalIncome != null) {
-				totalIncome
-						.set("purchaseOutput", new Money(totalIncome.getStr("purchaseOutput")).add(output).toString())
-						.update();
-			} else {
-				TotalIncome yesterdayIncome = TotalIncome.dao
-						.findFirst(
-								"select * from total_income where userId = ? and id = (select max(id) from total_income where userId = ?);",
-								user.getStr("userId"), user.getStr("userId"));
-				new TotalIncome().set("purchaseOutput", output)
-						.set("currentTotal", yesterdayIncome == null ? "0.00" : yesterdayIncome.getStr("currentTotal"))
-						.set("userId", user.getStr("userId"))
-						.set("createTime", todayDate).save();
-			}
-			/*//计算每日团队收益
-			es.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					List<User> userList = User.dao.find("select * from user");
-					for (User user : userList) {
-						DailyIncome.dao.addUp(user.getStr("userId"), todayDate);
-					}
-				}
-			});*/
-		}
-	}
 }

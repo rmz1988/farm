@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class ActiveService {
 
-	public Page<ActiveApply> queryActivatedApplyList(String userId, String status, String activeNo, int pageNumber,
+	public Page<ActiveApply> queryActivatedApplyList(String userId, String status, String activateUserId, int pageNumber,
 	                                                 int pageSize) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sqlBuilder =
-				new StringBuilder("from active_apply a,user u where a.userId = u.userId and a.activatedNo = ? ");
-		paramList.add(activeNo);
+				new StringBuilder("from active_apply a,user u where a.userId = u.userId and a.activateUserId = ? ");
+		paramList.add(activateUserId);
 
 		if (StringUtils.isNotEmpty(userId)) {
 			sqlBuilder.append("and a.userId = ? ");

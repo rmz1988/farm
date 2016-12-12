@@ -62,13 +62,14 @@
                                 </p>
                                 <p>
                                     <button id="repurchaseBtn" type="button" class="btn btn-info btn-lg"
-                                            <c:if test="${total + 0 <= pet.price + 0 || repurchase + 0 >= repurchaseLimit + 0}">disabled</c:if>>
+                                            <c:if test="${user.recommendCount == 0 || total + 0 <= pet.price + 0 || repurchase + 0 >= repurchaseLimit + 0}">disabled</c:if>>
                                         <data:i18n key="pet.repurchase"/>
                                     </button>
                                     <span id="repurchaseTip">
 
                             </span>
-                                    <span class="rule-tip"><data:i18n key="pet.repurchaseTip1"/>${pet.price}<data:i18n key="pet.repurchaseTip2"/>：${total}。</span>
+                                    <span class="rule-tip"><data:i18n key="pet.repurchaseTip1"/>${pet.price}<data:i18n key="pet.repurchaseTip2"/>：${total}。<data:i18n
+                                            key="pet.repurchaseTip5"/></span>
                                     <span class="rule-tip"><data:i18n
                                             key="pet.repurchaseTip3"/>${repurchaseLimit}<data:i18n key="pet.repurchaseTip4"/>${repurchase}<data:i18n key="times"/></span>
                                 </p>

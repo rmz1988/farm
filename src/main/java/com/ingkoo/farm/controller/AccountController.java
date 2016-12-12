@@ -135,7 +135,7 @@ public class AccountController extends Controller {
 		setAttr("userId", userId);
 		setAttr("status", status);
 		setAttr("page", activeService
-				.queryActivatedApplyList(userId, status, user.getStr("activeNo"), getParaToInt("pageNumber", 1),
+				.queryActivatedApplyList(userId, status, user.getStr("userId"), getParaToInt("pageNumber", 1),
 						getParaToInt("pageSize", 20)));
 
 		render("activate_manage_list.jsp");
@@ -157,8 +157,7 @@ public class AccountController extends Controller {
 					User outActivatedUser = User.dao.findById(activeApply.getStr("userId"));
 					Pet pet = outActivatedUser.getUserPet();
 
-					final String activeDecrease = OtherRate.dao.findById("active_decrease_rate").getStr("rate");
-					final String activeGet = OtherRate.dao.findById("active_get_rate").getStr("rate");
+					final String activeDecrease = OtherRate.dao.findById("active_decrease_money").getStr("rate");
 
 
 					User outUser = User.dao.findById(sessionUser.getStr("userId"));
@@ -173,11 +172,11 @@ public class AccountController extends Controller {
 						new PetLifecycle().set("userId", outActivatedUser.getStr("userId"))
 								.set("petNo", outActivatedUser.getStr("petNo"))
 								.set("liveDays", 1)
-								.set("overtimeDays", pet.getInt("lifecycle"))
+								.set("overtimeDays", Integer.parseInt(
+										OtherRate.dao.findById("pet_initial_lifecycle").getStr("rate")))
 								.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
-								.set("dailyOutput", Money.format(Double.parseDouble(pet.getStr("dailyOutput"))))
-								.set("dailyOutputRate",
-										OtherRate.dao.findById("daily_output_normal_rate").getStr("rate"))
+								.set("dailyOutput", Money.format(Double.parseDouble(
+										OtherRate.dao.findById("pet_initial_output").getStr("rate"))))
 								.set("totalOutput", "0.00")
 								.set("createTime", System.currentTimeMillis())
 								.set("status", "1")
@@ -185,32 +184,13 @@ public class AccountController extends Controller {
 						synchronized (MoneyService.MONEY_LOCK) {
 							User activatedUser = User.dao.findById(activeApply.getStr("userId"));
 							User user = User.dao.findById(sessionUser.getStr("userId"));
-							//扣除操作员相应（300）激活币，如果激活币不足300，则激活失败；若成功，增加操作员激活奖励（余额）
+							//扣除操作员相应（300）激活币，如果激活币不足300，则激活失败
 							user.set("activeMoney",
 									new Money(user.getStr("activeMoney")).subtract(activeDecrease).toString())
 									.update();
 
-							//计算推荐奖，判断收入是否达到上限，加入推荐人账户，记录推荐奖明细
-							if (!moneyService.isOverDailyIncome(activatedUser.getStr("recommendUserId"))) {
-								recommendService.saveRecommendIncome(activatedUser, "0");
-							} else {
-								User recommendUser = User.dao.findById(activatedUser.getStr("recommendUserId"));
-								recommendUser.set("recommendCount", recommendUser.getInt("recommendCount") + 1)
-										.update();
-							}
-
-							if (moneyService.petValid(user.getStr("userId"))) {
-								user.set("money", new Money(user.getStr("money")).add(activeGet).toString()).update();
-
-								//操作员记录激活收益
-								new ActiveIncome().set("activatedUserId", activatedUser.getStr("userId"))
-										.set("name", activatedUser.getStr("name"))
-										.set("income", activeGet)
-										.set("createTime", System.currentTimeMillis())
-										.set("userId", user.getStr("userId"))
-										.save();
-								new TotalIncome().saveActiveIncome(User.dao.findById(user.getStr("userId")), activeGet);
-							}
+							//计算推荐奖
+							recommendService.saveRecommendIncome(activatedUser);
 						}
 
 						return true;
@@ -225,173 +205,4 @@ public class AccountController extends Controller {
 		render(new JsonRender(result).forIE());
 	}
 
-	/**
-	 * 金币收购
-	 */
-	public void purchase() {
-		setAttr("current", "account");
-		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("canPurchase", StringUtils.isNotEmpty(user.getStr("activeNo")) && user.canTransferActive());
-		render("money_purchase.jsp");
-	}
-
-	public void queryPurchaseSendList() {
-		User user = getSessionAttr("user");
-		setAttr("page", PurchaseApply.dao
-				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from purchase_apply where userId = ? order by createTime desc",
-						user.getStr("userId")));
-		render("purchase_send_list.jsp");
-	}
-
-	public void queryPurchaseReceiveList() {
-		User user = getSessionAttr("user");
-		setAttr("page", PurchaseApply.dao
-				.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-						"from purchase_apply where oppositeUserId = ? order by createTime desc",
-						user.getStr("userId")));
-		render("purchase_receive_list.jsp");
-	}
-
-	/**
-	 * 我要收购
-	 */
-	@ActionKey("/account/purchase/list")
-	public void wantPurchase() {
-		setAttr("current", "account");
-
-		render("purchase.jsp");
-	}
-
-	public void queryPurchaseList() {
-		User user = getSessionAttr("user");
-		String userId = getPara("userId");
-		setAttr("userId", userId);
-		StringBuilder sqlBuilder = new StringBuilder(
-				"from user where status = '2' and rePurchase > 0 and recommendCount > 0 and userId != ? and userId not in (select oppositeUserId from purchase_apply where userId = ? and status in ('0','1','3')) and userId in (select userId from pet_lifecycle where liveDays = 15 and status = '0') ");
-		List<Object> paramList = new ArrayList<>();
-		paramList.add(user.getStr("userId"));
-		paramList.add(user.getStr("userId"));
-		if (StringUtils.isNotEmpty(userId)) {
-			sqlBuilder.append("and userId = ? ");
-			paramList.add(userId);
-		}
-		sqlBuilder.append("order by registerTime asc");
-
-		setAttr("page", User.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
-				sqlBuilder.toString(), paramList.toArray()));
-		render("purchase_list.jsp");
-	}
-
-	/**
-	 * 申请收购
-	 */
-	@ActionKey("/account/purchase/apply")
-	public void purchaseApply() {
-		setAttr("current", "account");
-		User user = User.dao.findById(getPara("userId"));
-		setAttr("purchaseUser", user);
-		String minPurchase = OtherRate.dao.findById("min_withdraw").getStr("rate");
-		setAttr("minPurchase", minPurchase);
-		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
-		render("purchase_apply.jsp");
-	}
-
-	@Before(Tx.class)
-	public void doPurchaseApply() {
-		User user = getSessionAttr("user");
-		PurchaseApply purchaseApply = getModel(PurchaseApply.class, "purchaseApply");
-		String money = Money.format(Double.parseDouble(purchaseApply.getStr("money")));
-		String fee = new Money(money).multiply("0.1").toString();
-		String realMoney = new Money(money).subtract(fee).toString();
-
-		render(new JsonRender(purchaseApply.set("applyId", RandomCode.uuid())
-				.set("userId", user.getStr("userId"))
-				.set("money", money)
-				.set("fee", fee)
-				.set("realMoney", realMoney)
-				.set("createTime", System.currentTimeMillis()).save()).forIE());
-	}
-
-	/**
-	 * 同意收购
-	 */
-	@ActionKey("/account/purchase/agree")
-	public void purchaseAgree() {
-		setAttr("current", "account");
-		setAttr("applyId", getPara("applyId"));
-		setAttr("bankList", Dict.dao.find("select * from dict where dictGroup = 'bank'"));
-		render("purchase_agree.jsp");
-	}
-
-	@Before(Tx.class)
-	public void doPurchaseAgree() {
-		PurchaseApply purchaseApply = getModel(PurchaseApply.class, "purchaseApply");
-		render(new JsonRender(purchaseApply.set("status", "1")
-				.set("bankCard", AES.encrypt(purchaseApply.getStr("bankCard")))
-				.set("oppositeStatusTime", System.currentTimeMillis()).update()).forIE());
-	}
-
-	/**
-	 * 不同意收购
-	 */
-	@Before(Tx.class)
-	public void purchaseDisagree() {
-		String applyId = getPara("applyId");
-		render(new JsonRender(new PurchaseApply().set("applyId", applyId).set("status", "2")
-				.set("oppositeStatusTime", System.currentTimeMillis()).update()).forIE());
-	}
-
-	/**
-	 * 支付确认
-	 */
-	@Before(Tx.class)
-	public void doPurchasePay() {
-		String applyId = getPara("applyId");
-		render(new JsonRender(new PurchaseApply().set("applyId", applyId)
-				.set("status", "3")
-				.set("statusTime", System.currentTimeMillis()).update()).forIE());
-	}
-
-	/**
-	 * 确认收购
-	 */
-	public void doPurchaseConfirm() {
-		final String applyId = getPara("applyId");
-		boolean result = Db.tx(new IAtom() {
-
-			@Override
-			public boolean run() throws SQLException {
-				synchronized (MoneyService.MONEY_LOCK) {
-					PurchaseApply purchaseApply = PurchaseApply.dao.findById(applyId);
-					purchaseApply.set("status", "4").set("oppositeStatusTime", System.currentTimeMillis()).update();
-
-					User user = User.dao.findById(purchaseApply.getStr("userId"));
-					User oppositeUser = User.dao.findById(purchaseApply.getStr("oppositeUserId"));
-
-					user.set("money", new Money(user.getStr("money")).add(purchaseApply.getStr("realMoney")).toString())
-							.update();
-					oppositeUser.set("money",
-							new Money(oppositeUser.getStr("money")).subtract(purchaseApply.getStr("money")).toString())
-							.update();
-
-					new TotalIncome().savePurchaseIncome(user, purchaseApply.getStr("realMoney"));
-					new TotalIncome().savePurchaseOutput(oppositeUser, purchaseApply.getStr("money"));
-				}
-
-				return true;
-			}
-		});
-
-		render(new JsonRender(result).forIE());
-	}
-
-	public void checkBalance() {
-		String applyId = getPara("applyId");
-		PurchaseApply purchaseApply = PurchaseApply.dao.findById(applyId);
-		User oppositeUser = User.dao.findById(purchaseApply.getStr("oppositeUserId"));
-		render(new JsonRender(
-				Double.parseDouble(oppositeUser.getStr("money")) >= Double.parseDouble(purchaseApply.getStr("money")))
-				.forIE());
-	}
 }

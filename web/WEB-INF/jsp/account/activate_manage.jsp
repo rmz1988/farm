@@ -30,11 +30,6 @@
                         <data:i18n key="account.visitTime"/>
                     </span>
                 </c:when>
-                <c:when test="${empty user.activeNo}">
-               <span class="rule-tip-lg">
-                   <data:i18n key="account.haveNoActiveRight"/>
-               </span>
-                </c:when>
                 <c:otherwise>
                     <form class="form-inline" role="form">
                         <div class="form-group">

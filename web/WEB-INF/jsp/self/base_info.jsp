@@ -40,23 +40,11 @@
             </p>
 
             <p>
-                <data:i18n key="register.bank"/>：<data:dict dictgroup="bank" value="${user.bank}"/>
-            </p>
-            <p>
-                <data:i18n key="register.accountName"/>：${user.bankAccountName}
-            </p>
-            <p>
-                <data:i18n key="register.bankCard"/>：<data:bankcard value="${user.bankCard}"/>
-            </p>
-            <p>
                 <button id="loginPwdBtn" type="button" class="btn btn-success">
                     <data:i18n key="self.changeLoginPwd"/>
                 </button>
                 <button id="tradePwdBtn" type="button" class="btn btn-success">
                     <data:i18n key="self.changeTradePwd"/>
-                </button>
-                <button id="accountBtn" class="btn btn-success" type="button">
-                    <data:i18n key="self.changeAccount"/>
                 </button>
             </p>
         </div>

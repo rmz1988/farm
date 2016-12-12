@@ -87,6 +87,7 @@ public class FarmConfig extends JFinalConfig {
 		arp.addMapping("transfer_to_active", "transferId", TransferToActive.class);
 		arp.addMapping("leader_income", LeaderIncome.class);
 		arp.addMapping("purchase_apply", "applyId", PurchaseApply.class);
+		arp.addMapping("feed_income", FeedIncome.class);
 		arp.start();
 
 		plugins.add(new SpringPlugin(new ClassPathXmlApplicationContext("applicationContext.xml")));

@@ -29,7 +29,7 @@ public class User extends Model<User> {
 	}
 
 	public boolean canTransfer() {
-		return getInt("rePurchase") > 0 &&
+		return getInt("rePurchase") > 0 && Double.parseDouble(getStr("money")) > 300 &&
 				!PetLifecycle.dao
 						.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
 								get("userId"), get("petNo"))
@@ -37,7 +37,7 @@ public class User extends Model<User> {
 	}
 
 	public boolean canTransferActive() {
-		return getInt("rePurchase") > 0 && getInt("recommendCount") > 0 &&
+		return getInt("rePurchase") > 0 && Double.parseDouble(getStr("money")) > 300 && getInt("recommendCount") > 0 &&
 				!PetLifecycle.dao
 						.find("select * from pet_lifecycle where userId = ? and petNo = ? and status = '0' and liveDays = 15",
 								get("userId"), get("petNo"))

@@ -28,7 +28,7 @@ public class TradeController extends Controller {
 
 	/**
 	 * 提现
-	 */
+	 *//*
 	public void withdraw() {
 		setAttr("current", "trade");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
@@ -42,9 +42,9 @@ public class TradeController extends Controller {
 		render("withdraw.jsp");
 	}
 
-	/**
+	*//**
 	 * 查询提现记录
-	 */
+	 *//*
 	public void queryWithdrawList() {
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
 		setAttr("page", Withdraw.dao.paginate(getParaToInt("pageNumber", 1), getParaToInt("pageSize", 20), "select *",
@@ -53,9 +53,9 @@ public class TradeController extends Controller {
 		render("withdraw_list.jsp");
 	}
 
-	/**
+	*//**
 	 * 提现
-	 */
+	 *//*
 	public void doWithdraw() {
 		int response = 0;
 		synchronized (MoneyService.MONEY_LOCK) {
@@ -103,7 +103,7 @@ public class TradeController extends Controller {
 		}
 
 		render(new JsonRender(response).forIE());
-	}
+	}*/
 
 	/**
 	 * 互转
@@ -111,7 +111,7 @@ public class TradeController extends Controller {
 	public void transfer() {
 		setAttr("current", "trade");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		String minTransfer = OtherRate.dao.findById("min_withdraw").getStr("rate");
+		String minTransfer = OtherRate.dao.findById("money_limit").getStr("rate");
 		setAttr("minTransfer", minTransfer);
 		setAttr("user", user);
 		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
@@ -198,7 +198,7 @@ public class TradeController extends Controller {
 	@ActionKey("/trade/activate/transfer")
 	public void transferMoney2ActiveMoney() {
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		String minTransfer = OtherRate.dao.findById("min_withdraw").getStr("rate");
+		String minTransfer = OtherRate.dao.findById("money_limit").getStr("rate");
 		setAttr("minTransfer", minTransfer);
 		setAttr("allowMoney", Money.maxOfTimes(user.getStr("money"), "100"));
 		setAttr("canTransfer", user.canTransferActive());

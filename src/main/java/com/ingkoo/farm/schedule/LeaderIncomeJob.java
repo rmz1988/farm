@@ -57,6 +57,7 @@ public class LeaderIncomeJob {
 							user.set("money", new Money(user.getStr("money")).add(actualIncome).toString())
 									.set("todayIncome",
 											new Money(user.getStr("todayIncome")).add(actualIncome).toString())
+									.set("total", new Money(user.getStr("total")).add(actualIncome).toString())
 									.update();
 
 							new TotalIncome().saveLeaderIncome(user, actualIncome);

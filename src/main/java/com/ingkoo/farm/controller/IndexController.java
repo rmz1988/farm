@@ -12,13 +12,12 @@ import com.jfinal.core.Controller;
  */
 public class IndexController extends Controller {
 
-	private MoneyService moneyService = new MoneyService();
-
 	public void index() {
 		setAttr("current", "index");
 		User user = User.dao.findById(((User) getSessionAttr("user")).getStr("userId"));
-		setAttr("totalMoney", user.getStr("money"));
+		setAttr("money", user.getStr("money"));
 		setAttr("activeMoney", user.getStr("activeMoney"));
+		setAttr("total", user.getStr("total"));
 		setAttr("isFeed", user.getStr("isFeed"));
 		setAttr("repurchase", user.getInt("rePurchase"));
 		setAttr("pet", user.getUserPet());

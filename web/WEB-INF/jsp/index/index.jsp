@@ -24,22 +24,31 @@
             <li class="active"><data:i18n key="home"/></li>
         </ol>
         <input type="hidden" id="needChangePwd" value="${needChangePwd}"/>
-        <div class="total-money-area col-md-6">
+        <div class="total-money-area col-md-4">
             <span><data:i18n key="bonus"/>：</span>
             <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
             </span>
             <span id="totalMoney">
-                ${totalMoney}
+                ${money}
             </span>
         </div>
-        <div class="total-money-area col-md-6">
+        <div class="total-money-area col-md-4">
             <span><data:i18n key="activateMoney"/>：</span>
             <span class="money-img">
                 <img src="${basePath}/images/money.png" alt="">
             </span>
             <span id="activeMoney">
                 ${activeMoney}
+            </span>
+        </div>
+        <div class="total-money-area col-md-4">
+            <span><data:i18n key="finance.totalIncome"/>：</span>
+            <span class="money-img">
+                <img src="${basePath}/images/money.png" alt="">
+            </span>
+            <span id="total">
+                ${total}
             </span>
         </div>
         <hr>
@@ -66,14 +75,6 @@
                             <data:i18n key="index.idCard"/>：<data:idCard value="${user.idCard}"/>
                         </p>
 
-                        <p>
-                            <data:i18n key="index.bank"/>：<data:dict dictgroup="bank"
-                                                                     value="${user.bank}"/>
-                        </p>
-
-                        <p>
-                            <data:i18n key="index.bankCard"/>：<data:bankcard value="${user.bankCard}"/>
-                        </p>
                     </div>
                 </div>
             </div>
@@ -107,7 +108,7 @@
                             </p>
 
                             <p>
-                                <data:i18n key="index.output"/>：30/39<data:i18n key="yuan"/>
+                                <data:i18n key="index.output"/>：20/30<data:i18n key="yuan"/>
                             </p>
                         </div>
                     </div>

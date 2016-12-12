@@ -1,5 +1,6 @@
 package com.ingkoo.farm.controller;
 
+import com.ingkoo.farm.model.FeedIncome;
 import com.ingkoo.farm.model.OtherRate;
 import com.ingkoo.farm.model.Pet;
 import com.ingkoo.farm.model.PetLifecycle;
@@ -7,14 +8,12 @@ import com.ingkoo.farm.model.TotalIncome;
 import com.ingkoo.farm.model.User;
 import com.ingkoo.farm.service.LeaderService;
 import com.ingkoo.farm.service.MoneyService;
-import com.ingkoo.farm.service.RecommendService;
 import com.ingkoo.farm.utils.Money;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,7 +28,6 @@ public class PetController extends Controller {
 	private static ExecutorService es = Executors.newFixedThreadPool(5);
 
 	private MoneyService moneyService = new MoneyService();
-	private RecommendService recommendService = new RecommendService();
 	private LeaderService leaderService = new LeaderService();
 
 	public void index() {
@@ -40,6 +38,7 @@ public class PetController extends Controller {
 		setAttr("isFeed", user.getStr("isFeed"));
 		setAttr("repurchase", user.getInt("todayRepurchase"));
 		setAttr("pet", user.getUserPet());
+		setAttr("user", user);
 		setAttr("repurchaseLimit", OtherRate.dao.findById("daily_repurchase_limit").getStr("rate"));
 		setAttr("overIncome", moneyService.isOverDailyIncome(user.getStr("userId")));
 		setAttr("totalOutput", moneyService.getTotalOutput(user.getStr("userId")));
@@ -80,9 +79,15 @@ public class PetController extends Controller {
 				String actualIncome = moneyService.actualIncome(userId, dailyPetOutput);
 				user.set("money", new Money(user.getStr("money")).add(actualIncome).toString())
 						.set("todayIncome", new Money(user.getStr("todayIncome")).add(actualIncome).toString())
+						.set("total", new Money(user.getStr("total")).add(actualIncome).toString())
 						.update();
 				//修改宠物生命周期
 				moneyService.saveDailyOutput(userId, actualIncome);
+				//记录喂养记录
+				new FeedIncome().set("userId", userId)
+						.set("petNo", user.getStr("petNo"))
+						.set("output", actualIncome)
+						.set("createTime", System.currentTimeMillis()).save();
 				//记录总收益记录
 				new TotalIncome().savePetOutput(user, actualIncome);
 				//计算领导奖，该用户上级的日产币额收益，记录相应收益记录
@@ -109,36 +114,29 @@ public class PetController extends Controller {
 			User user = User.dao.findById(userId);
 			Pet pet = user.getUserPet();
 			if (Double.parseDouble(user.getStr("money")) >= Double.parseDouble(pet.getStr("price"))) {
+				//增加个人复购次数，以及今日复购次数
 				Db.update(
 						"update user set rePurchase = rePurchase+1,todayRepurchase=todayRepurchase + 1 where userId = ?",
 						userId);
-				//判断是否推荐超过4个人，生成pet lifecycle 活跃0天（收益比例：10%or13%）
-				String dailyOutputRate =
-						user.getInt("recommendCount") < 4 ?
-								OtherRate.dao.findById("redirect_repurchase_rate").getStr("rate") :
-								OtherRate.dao.findById("daily_output_rate").getStr("rate");
-				String dailyOutput = new Money(pet.getStr("price")).multiply(dailyOutputRate).divide(100).toString();
+				//判断是否推荐超过4个人，生成pet lifecycle 活跃0天
+				String dailyOutput =
+						Money.format(
+								Double.parseDouble(OtherRate.dao.findById("pet_repurchase_output").getStr("rate")));
 				new PetLifecycle().set("userId", user.getStr("userId"))
 						.set("petNo", user.getStr("petNo"))
 						.set("liveDays", 0)
-						.set("overtimeDays", pet.getInt("lifecycle"))
+						.set("overtimeDays",
+								Integer.parseInt(OtherRate.dao.findById("pet_repurchase_lifecycle").getStr("rate")))
 						.set("price", Money.format(Double.parseDouble(pet.getStr("price"))))
 						.set("dailyOutput", dailyOutput)
-						.set("dailyOutputRate", dailyOutputRate)
 						.set("totalOutput", "0.00")
 						.set("createTime", System.currentTimeMillis())
 						.set("status", "1")
 						.save();
-				//扣除宠物价格，增加个人复购次数，以及今日复购次数
+				//扣除宠物价格
 				user.set("money", new Money(user.getStr("money")).subtract(pet.getStr("price")).toString())
 						.update();
 				new TotalIncome().saveRepurchaseOutput(user, pet.getStr("price"));
-
-				//该用户的推荐人获得复购金额的10%，记录推荐人的推荐奖记录，记录推荐人的总收益记录
-				if (StringUtils.isNotEmpty(user.getStr("recommendUserId")) &&
-						!moneyService.isOverDailyIncome(user.getStr("recommendUserId"))) {
-					recommendService.saveRecommendIncome(user, "1");
-				}
 			}
 		}
 

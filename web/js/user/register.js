@@ -29,22 +29,13 @@ define(function (require, exports, module) {
                     required: true,
                     phone: true
                 },
-                bank: {
-                    required: true
-                },
-                bankAccountName: {
-                    required: true
-                },
-                bankCard: {
-                    required: true
-                },
                 recommendUserId: {
                     required: true,
                     validRecommendId: true
                 },
                 activatedNo: {
                     required: true,
-                    validActivatedNo: true
+                    validRecommendId: true
                 }
             }, messages: {
                 userId: {
@@ -64,22 +55,13 @@ define(function (require, exports, module) {
                     required: tools.getText('register.mobileRequired'),
                     phone: tools.getText('register.mobilePhoneTip')
                 },
-                bank: {
-                    required: tools.getText('register.bankRequired')
-                },
-                bankAccountName: {
-                    required: tools.getText('register.accountNameRequired')
-                },
-                bankCard: {
-                    required: tools.getText('register.bankCardRequired')
-                },
                 recommendUserId: {
                     required: tools.getText('register.recommendUserIdRequired'),
                     validRecommendId: tools.getText('register.recommendUserIdValid')
                 },
                 activatedNo: {
                     required: tools.getText('register.activatedNoRequired'),
-                    validActivatedNo: tools.getText('register.activatedNoValid')
+                    validRecommendId: tools.getText('register.activatedNoValid')
                 }
             }
         });
@@ -108,10 +90,10 @@ define(function (require, exports, module) {
         });
 
         $('#activatedNo').blur(function () {
-            var activeNo = $(this).val();
+            var userId = $(this).val();
             if ($(this).valid()) {
-                $.post(basePath + '/register/getNameByActiveNo', {
-                    activeNo: activeNo
+                $.post(basePath + '/register/getNameByUserId', {
+                    userId: userId
                 }, function (name) {
                     if (name != '') {
                         $('#activeUserName').html(name);
@@ -134,11 +116,8 @@ define(function (require, exports, module) {
                     'user.name': $.trim($('#name').val()),
                     'user.mobile': $.trim($('#mobile').val()),
                     'user.idCard': $.trim($('#idCard').val()),
-                    'user.bank': $.trim($('#bank').val()),
-                    'user.bankAccountName': $.trim($('#bankAccountName').val()),
-                    'user.bankCard': $.trim($('#bankCard').val()),
                     'user.recommendUserId': $.trim($('#recommendUserId').val()),
-                    'user.activatedNo': $.trim($('#activatedNo').val()),
+                    'user.activateUserId': $.trim($('#activatedNo').val()),
                     'user.petNo': $('input[name="petNo"]:checked').val()
                 }, function (response) {
                     if (response) {

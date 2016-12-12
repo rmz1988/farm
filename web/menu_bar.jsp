@@ -35,9 +35,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="${basePath}/account/recommend"><data:i18n key="menu.recommendList"/></a></li>
-                        <li><a href="${basePath}/account/apply"><data:i18n key="menu.applyActivate"/></a></li>
+                        <%--<li><a href="${basePath}/account/apply"><data:i18n key="menu.applyActivate"/></a></li>--%>
                         <li><a href="${basePath}/account/activate"><data:i18n key="menu.activateMgmt"/></a></li>
-                        <li><a href="${basePath}/account/purchase"><data:i18n key="menu.moneyPurchase"/></a></li>
+                        <%--<li><a href="${basePath}/account/purchase"><data:i18n key="menu.moneyPurchase"/></a></li>--%>
                     </ul>
                 </li>
                 <li class="dropdown <c:if test="${current == 'finance'}">active</c:if>">
@@ -46,7 +46,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="${basePath}/finance/active"><data:i18n key="menu.activateIncome"/></a></li>
+                        <%--<li><a href="${basePath}/finance/active"><data:i18n key="menu.activateIncome"/></a></li>--%>
                         <%--<li><a href="${basePath}/finance/daily">每日收入列表</a></li>--%>
                         <li><a href="${basePath}/finance/recommend"><data:i18n key="menu.recommendIncome"/></a></li>
                         <li><a href="${basePath}/finance/total"><data:i18n key="menu.totalIncome"/></a></li>
@@ -59,7 +59,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="${basePath}/trade/transfer"><data:i18n key="menu.transfer"/></a></li>
-                        <li><a href="${basePath}/trade/withdraw"><data:i18n key="menu.withdraw"/></a></li>
+                        <%--<li><a href="${basePath}/trade/withdraw"><data:i18n key="menu.withdraw"/></a></li>--%>
                         <li><a href="${basePath}/trade/activate/transfer"><data:i18n key="menu.transferToActive"/></a>
                         </li>
                     </ul>
