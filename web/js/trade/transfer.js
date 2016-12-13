@@ -1,5 +1,5 @@
 define(function (require, exports, module) {
-    var validator = require('validate/validate')
+    var validator = require('validate/validate');
     var tools = require('tools/tools');
 
     $(function () {
@@ -9,8 +9,8 @@ define(function (require, exports, module) {
             rules: {
                 userId: {
                     required: true,
-                    existsUser: true,
-                    lessThanDays: true
+                    existsUser: true
+                    //lessThanDays: true
                 },
                 money: {
                     required: true,
@@ -24,8 +24,8 @@ define(function (require, exports, module) {
             }, messages: {
                 userId: {
                     required: tools.getText('transfer.outUserIdRequired'),
-                    existsUser: tools.getText('transfer.existsUser'),
-                    lessThanDays: tools.getText('transfer.cannotTransfer')
+                    existsUser: tools.getText('transfer.existsUser')
+                    //lessThanDays: tools.getText('transfer.cannotTransfer')
                 },
                 money: {
                     required: tools.getText('transfer.moneyRequired'),
@@ -47,15 +47,15 @@ define(function (require, exports, module) {
             var $btn = $(this);
             $btn.attr('disabled', true);
             if ($('#transferForm').valid()) {
-                var todayLimitMoney = Number($('#todayLimitMoney').val());
+                /*var todayLimitMoney = Number($('#todayLimitMoney').val());
                 todayLimitMoney = 1000 - todayLimitMoney;
-                var todayRepurchase = Number($('#todayRepurchase').val());
+                var todayRepurchase = Number($('#todayRepurchase').val());*/
                 var money = Number($.trim($('#money').val()));
-                if (money >= todayLimitMoney && todayRepurchase < 1) {
+                /*if (money >= todayLimitMoney && todayRepurchase < 1) {
                     alert(tools.getText('transfer.transferLimitMoney'));
                     $btn.attr('disabled', false);
                     return;
-                }
+                }*/
 
                 $.post(basePath + '/trade/doTransfer', {
                     'transfer.outUserId': $.trim($('#userId').val()),

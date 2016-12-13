@@ -31,7 +31,7 @@
             <td><data:dict dictgroup="transferStatus" value="${transfer.status}"/></td>
         </tr>
     </c:forEach>
-    <data:emptyData cols="6"/>
+    <data:emptyData cols="8"/>
     </tbody>
 </table>
 <data:page contentId="content" url="${basePath}/trade/queryTransferList"/>

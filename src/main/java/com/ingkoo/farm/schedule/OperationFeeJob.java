@@ -18,11 +18,13 @@ public class OperationFeeJob {
 
 		synchronized (MoneyService.MONEY_LOCK) {
 			List<User> userList = User.dao.find(
-					"select * from user where status = '2' and rePurchase > 0 and userId in (select userId from pet_lifecycle where liveDays = 15)");
+					"select * from user where status = '2' and recommendCount > 0");
 			for (User user : userList) {
 				//减少用户金额，记录用户总收入明细
-				user.set("money", new Money(user.getStr("money")).subtract(operationFee).toString()).update();
-				new TotalIncome().saveOperationFee(User.dao.findById(user.getStr("userId")), operationFee);
+				if (Double.parseDouble(user.getStr("total")) >= 300d) {
+					user.set("money", new Money(user.getStr("money")).subtract(operationFee).toString()).update();
+					new TotalIncome().saveOperationFee(User.dao.findById(user.getStr("userId")), operationFee);
+				}
 			}
 		}
 	}

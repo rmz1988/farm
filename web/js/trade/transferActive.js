@@ -37,15 +37,15 @@ define(function (require, exports, module) {
             var $btn = $(this);
             $btn.attr('disabled', true);
             if ($('#transferForm').valid()) {
-                var todayLimitMoney = Number($('#todayLimitMoney').val());
+              /*  var todayLimitMoney = Number($('#todayLimitMoney').val());
                 todayLimitMoney = 1000 - todayLimitMoney;
-                var todayRepurchase = Number($('#todayRepurchase').val());
+                var todayRepurchase = Number($('#todayRepurchase').val());*/
                 var money = Number($.trim($('#money').val()));
-                if (money >= todayLimitMoney && todayRepurchase < 1) {
+               /* if (money >= todayLimitMoney && todayRepurchase < 1) {
                     alert(tools.getText('transferActive.transferLimitMoney'));
                     $btn.attr('disabled', false);
                     return;
-                }
+                }*/
 
                 $.post(basePath + '/trade/doTransferToActiveMoney', {
                     'money': money

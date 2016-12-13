@@ -43,6 +43,7 @@
                 </span>
             </div>
             <hr>
+
             <form id="transferForm" action="#" class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="control-label col-md-2">
@@ -101,6 +102,7 @@
                         <c:if test="${canTransfer == false}">disabled </c:if>><data:i18n key="submit"/>
                 </button>
             </form>
+
             <hr>
             <div class="panel panel-warning">
                 <div class="panel-heading">

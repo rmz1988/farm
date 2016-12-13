@@ -176,6 +176,7 @@ public class TradeController extends Controller {
 							.update();
 					User inUser = User.dao.findById(transferOut.getStr("outUserId"));
 					inUser.set("money", new Money(inUser.getStr("money")).add(realMoney).toString())
+							.set("total", new Money(inUser.getStr("total")).add(realMoney).toString())
 							.update();
 
 					//记录双方玩家收入总明细
