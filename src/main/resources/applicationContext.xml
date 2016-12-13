@@ -11,7 +11,7 @@
     </bean>
     <bean id="userResetTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="userResetJobDetail"/>
-        <property name="cronExpression" value="0 1 0 * * ?"/>
+        <property name="cronExpression" value="0 15 0 * * ?"/>
     </bean>
 
     <bean id="petLifecycleJob" class="com.ingkoo.farm.schedule.PetLifecycleJob"/>
@@ -36,7 +36,7 @@
         <property name="cronExpression" value="0 30 1 1 * ?"/>
     </bean>
 
-    <bean id="leaderIncomeJob" class="com.ingkoo.farm.schedule.LeaderIncomeJob" init-method="account"/>
+    <bean id="leaderIncomeJob" class="com.ingkoo.farm.schedule.LeaderIncomeJob"/>
     <bean id="leaderIncomeJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="leaderIncomeJob"/>
         <property name="targetMethod" value="account"/>
